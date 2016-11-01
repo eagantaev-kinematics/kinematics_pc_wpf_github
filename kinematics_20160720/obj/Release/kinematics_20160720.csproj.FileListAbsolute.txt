@@ -1,0 +1,13 @@
+C:\workspace\vsProjects\kinematics\kinematics_20160720\kinematics_20160720\bin\Release\kinematics_20160720.exe.config
+C:\workspace\vsProjects\kinematics\kinematics_20160720\kinematics_20160720\bin\Release\kinematics_20160720.exe
+C:\workspace\vsProjects\kinematics\kinematics_20160720\kinematics_20160720\bin\Release\kinematics_20160720.pdb
+C:\workspace\vsProjects\kinematics\kinematics_20160720\kinematics_20160720\obj\Release\kinematics_20160720.csprojResolveAssemblyReference.cache
+C:\workspace\vsProjects\kinematics\kinematics_20160720\kinematics_20160720\obj\Release\MainWindow.baml
+C:\workspace\vsProjects\kinematics\kinematics_20160720\kinematics_20160720\obj\Release\MainWindow.g.cs
+C:\workspace\vsProjects\kinematics\kinematics_20160720\kinematics_20160720\obj\Release\App.g.cs
+C:\workspace\vsProjects\kinematics\kinematics_20160720\kinematics_20160720\obj\Release\kinematics_20160720_MarkupCompile.cache
+C:\workspace\vsProjects\kinematics\kinematics_20160720\kinematics_20160720\obj\Release\kinematics_20160720.g.resources
+C:\workspace\vsProjects\kinematics\kinematics_20160720\kinematics_20160720\obj\Release\kinematics_20160720.Properties.Resources.resources
+C:\workspace\vsProjects\kinematics\kinematics_20160720\kinematics_20160720\obj\Release\kinematics_20160720.csproj.GenerateResource.Cache
+C:\workspace\vsProjects\kinematics\kinematics_20160720\kinematics_20160720\obj\Release\kinematics_20160720.exe
+C:\workspace\vsProjects\kinematics\kinematics_20160720\kinematics_20160720\obj\Release\kinematics_20160720.pdb

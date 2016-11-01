@@ -1,0 +1,206 @@
+﻿<Window x:Class="kinematics_20160720.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Программа контроля кинематики" Height="980" Width="1543.881" Closed="Window_Closed">
+    <Grid x:Name="tab">
+        <TabControl HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="1515" Height="896">
+
+            <TabItem Header="Модель">
+                <Grid Background="#FFE5E5E5">
+                    <Border BorderThickness="2" BorderBrush="Black" Width="480" Margin="1020,10,9.6,273">
+                        <Image x:Name="model_joints_image" Source="C:\workspace\vsProjects\kinematics\kinematics_20160720\kinematics_20160720\model_schema.jpg" Opacity="1.0" ToolTip="Схема расположения датчиков"/>
+                        <!--<Image x:Name="model_joints_image" Source="pack://application:,,,/Resources/model_schema.jpg" />-->
+                    </Border>
+                    <ComboBox x:Name="standard_channels_combo" HorizontalAlignment="Left" Margin="111,85,0,0" VerticalAlignment="Top" Width="284" ToolTip="Стандартные каналы" Text="Стандартные каналы">
+                        <ComboBoxItem Content="1. Шея 1х3"/>
+                        <ComboBoxItem Content="1.1. Шея сгибание разгибание (сагиттальная)"/>
+                        <ComboBoxItem Content="1.2. Шея наклоны (фронтальная)"/>
+                        <ComboBoxItem Content="1.3. Шея ротация (горизонтальная)"/>
+                        <ComboBoxItem Content="2. Пояснично-грудной 3х5"/>
+                        <ComboBoxItem Content="2.1. Пояснично-грудной сгибание разгибание (сагиттальная)"/>
+                        <ComboBoxItem Content="2.2. Пояснично-грудной наклоны (фронтальная)"/>
+                        <ComboBoxItem Content="2.3. Пояснично-грудной ротация (горизонтальная)"/>
+                        <ComboBoxItem Content="3. Левое плечо 3х7"/>
+                        <ComboBoxItem Content="3.1. Левое плечо сгибание разгибание (сагиттальная)"/>
+                        <ComboBoxItem Content="3.2. Левое плечо отведение приведение (фронтальная)"/>
+                        <ComboBoxItem Content="3.3. Левое плечо ротация (горизонтальная)"/>
+                        <ComboBoxItem Content="4. Правое плечо 3х14"/>
+                        <ComboBoxItem Content="4.1. Правое плечо сгибание разгибание (сагиттальная)"/>
+                        <ComboBoxItem Content="4.2. Правое плечо отведение приведение (фронтальная)"/>
+                        <ComboBoxItem Content="3.3. Правое плечо ротация (горизонтальная)"/>
+                        <ComboBoxItem Content="5. Левый локоть 7х8"/>
+                        <ComboBoxItem Content="6. Правый локоть 14х15"/>
+                        <ComboBoxItem Content="7. Левая кисть 8х9"/>
+                        <ComboBoxItem Content="7.1. Левая кисть сгибание разгибание (сагиттальная)"/>
+                        <ComboBoxItem Content="7.2. Левая кисть отведение приведение (фронтальная)"/>
+                        <ComboBoxItem Content="8. Правая кисть 15х16"/>
+                        <ComboBoxItem Content="8.1. Правая кисть сгибание разгибание (сагиттальная)"/>
+                        <ComboBoxItem Content="8.2. Правая кисть отведение приведение (фронтальная)"/>
+                        <ComboBoxItem Content="9. Левый тазобедренный 5х10"/>
+                        <ComboBoxItem Content="9.1. Левый тазобедренный сгибание разгибание (сагиттальная)"/>
+                        <ComboBoxItem Content="9.2. Левый тазобедренный наклоны (фронтальная)"/>
+                        <ComboBoxItem Content="9.3. Левый тазобедренный ротация (горизонтальная)"/>
+                        <ComboBoxItem Content="10. Правый тазобедренный 5х17"/>
+                        <ComboBoxItem Content="10.1. Правый тазобедренный сгибание разгибание (сагиттальная)"/>
+                        <ComboBoxItem Content="10.2. Правый тазобедренный наклоны (фронтальная)"/>
+                        <ComboBoxItem Content="10.3. Правый тазобедренный ротация (горизонтальная)"/>
+                        <ComboBoxItem Content="11. Левое колено 10х11"/>
+                        <ComboBoxItem Content="12. Правое колено 17х18"/>
+                        <ComboBoxItem Content="13. Левый голеностоп 11х12"/>
+                        <ComboBoxItem Content="13.1. Левый голеностоп сгибание разгибание (сагиттальная)"/>
+                        <ComboBoxItem Content="13.2. Левый голеностоп отведение приведение (фронтальная)"/>
+                        <ComboBoxItem Content="14. Правый голеностоп 18х19"/>
+                        <ComboBoxItem Content="14.1. Правый голеностоп сгибание разгибание (сагиттальная)"/>
+                        <ComboBoxItem Content="14.2. Правый голеностоп отведение приведение (фронтальная)"/>
+                    </ComboBox>
+                    <Label Content="Стандартные каналы" HorizontalAlignment="Left" Margin="111,54,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Нестандартные каналы" HorizontalAlignment="Left" Margin="111,139,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Номер канала" HorizontalAlignment="Left" Margin="111,264,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Название канала" HorizontalAlignment="Left" Margin="210,263,0,0" VerticalAlignment="Top" Width="426" HorizontalContentAlignment="Center"/>
+                    <Label Content="Датчик 1" HorizontalAlignment="Left" Margin="641,263,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Датчик 2" HorizontalAlignment="Left" Margin="705,263,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Добавить/Удалить" HorizontalAlignment="Left" Margin="769,263,0,0" VerticalAlignment="Top" Width="111"/>
+                    <TextBox HorizontalAlignment="Left" Height="23" Margin="138,294,0,0" TextWrapping="Wrap" Text="15" VerticalAlignment="Top" Width="34" HorizontalContentAlignment="Center"/>
+                    <TextBox HorizontalAlignment="Left" Height="23" Margin="210,294,0,0" TextWrapping="Wrap" Text="Нестандартный канал" VerticalAlignment="Top" Width="426"/>
+                    <TextBox HorizontalAlignment="Left" Height="23" Margin="654,294,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="34" HorizontalContentAlignment="Center"/>
+                    <TextBox HorizontalAlignment="Left" Height="23" Margin="718,294,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="34" HorizontalContentAlignment="Center"/>
+                    <Button Content="+" HorizontalAlignment="Left" Margin="808,291,0,0" VerticalAlignment="Top" Width="27" Foreground="Lime" FontSize="16" FontWeight="Bold" VerticalContentAlignment="Top"/>
+                    <ComboBox x:Name="nonstandard_channels_combo" HorizontalAlignment="Left" Margin="111,170,0,0" VerticalAlignment="Top" Width="284" ToolTip="Нестандартные каналы" Text="Стандартные каналы">
+
+                    </ComboBox>
+                    <Label Content="Управление нестандартными каналами" HorizontalAlignment="Left" Margin="111,232,0,0" VerticalAlignment="Top"/>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Регистрация">
+                <Grid Background="#FFE5E5E5">
+
+                    <Border BorderThickness="2" BorderBrush="Black" Canvas.Left="10" Canvas.Top="18" Margin="10,9,100.6,111">
+                        <Grid>
+
+                            <Label x:Name="num_of_cycles_registration_label" Content="Количество циклов 0" HorizontalAlignment="Left" Margin="247,6,0,0" VerticalAlignment="Top" Height="39" Width="232" Canvas.Left="328" Canvas.Top="28" FontSize="18"/>
+                            <Label x:Name="num_of_channel_registartion_label" Content="Канал --" HorizontalAlignment="Left" Margin="66,6,0,0" VerticalAlignment="Top" Height="39" Width="90" Canvas.Left="45" Canvas.Top="28" FontSize="18"/>
+
+                            <Canvas HorizontalAlignment="Left" Height="642" VerticalAlignment="Top" Width="1316" Background="Black" Margin="66,62,0,0"/>
+                            <Slider x:Name="vertical_graph_registration_zoom_slider" HorizontalAlignment="Left" Margin="39,78,0,0" VerticalAlignment="Top" Orientation="Vertical" Height="126" Width="22" Minimum="-10"/>
+                            <Slider x:Name="horizontal_graph_registration_zoom_slider" HorizontalAlignment="Left" Margin="66,709,0,0" VerticalAlignment="Top" Height="22" Width="126" Minimum="-10"/>
+
+                            <Button x:Name="save_registration_button" Content="Сохранить" Margin="218,226,1180.6,88.2"/>
+
+                        </Grid>
+                    </Border>
+
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Обработка">
+                <Grid Background="#FFE5E5E5">
+
+                    <Border
+                        BorderThickness="2"
+                        BorderBrush="Black"
+                        Background="LightGray"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Width="1490"
+                        Height="377" Margin="10,10,0,0">
+
+                        <Canvas HorizontalAlignment="Left" Height="352" Margin="0.4,0.4,0,0" VerticalAlignment="Top" Width="1372">
+                            <Border BorderThickness="2" BorderBrush="Black" Height="339" Canvas.Left="10" Canvas.Top="18" Width="1463">
+                                <Grid>
+                                    <Label Content="Средний цикл" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="22" Height="39" Width="158" Margin="190,0,0,0"/>
+                                    <Canvas x:Name="angle_graph" HorizontalAlignment="Left" Height="159" VerticalAlignment="Top" Width="476" Background="Black" Margin="10,119,0,0"/>
+                                    <Label Content="угол" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="34" Margin="19,88,0,0"/>
+                                    <Canvas x:Name="angle_velocity_graph" HorizontalAlignment="Left" Height="159" VerticalAlignment="Top" Width="433" Background="Black" Margin="543,120,0,0"/>
+                                    <Label Content="угловая скорость" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="105" Margin="543,88,0,0"/>
+                                    <Canvas x:Name="acceleration_graph" HorizontalAlignment="Left" Height="159" VerticalAlignment="Top" Width="437" Background="Black" Margin="1012,120,0,0"/>
+                                    <Label Content="ускорение" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="69" Margin="1088,88,0,0" RenderTransformOrigin="0.689,0.224"/>
+
+                                    <Button x:Name="angle_export_button" Content="Экспорт" Margin="10,283,1374.2,27.2"/>
+                                    <Button x:Name="angle_velocity_export_button" Content="Экспорт" Margin="967,283,417.2,28.2"/>
+                                    <Button x:Name="acceleration_export_button" Content="Экспорт" Margin="1212,282,172.2,28.2"/>
+                                </Grid>
+                            </Border>
+
+                        </Canvas>
+                    </Border>
+                    <Label Content="Канал --" HorizontalAlignment="Left" Margin="31,33,0,0" VerticalAlignment="Top" FontSize="20"/>
+
+                </Grid>
+
+
+            </TabItem>
+
+            <TabItem Header="Анализ">
+                <Grid Background="#FFE5E5E5">
+
+                    <Border
+                        BorderThickness="2"
+                        BorderBrush="Black"
+                        Background="LightGray"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Width="1490"
+                        Height="377" Margin="10,10,0,0">
+
+                        <Canvas HorizontalAlignment="Left" Height="352" Margin="0.4,0.4,0,0" VerticalAlignment="Top" Width="1372">
+
+
+                        </Canvas>
+                    </Border>
+
+                </Grid>
+
+
+            </TabItem>
+
+            <TabItem Header="Данные датчиков">
+                <Grid Background="#FFE5E5E5" Margin="0,0,-0.4,0">
+                    <Label x:Name="data_panel_label" Content="..." HorizontalAlignment="Left" Margin="153,167,0,0" VerticalAlignment="Top" Height="450" Width="1118" Background="LightGray" FontFamily="MS Gothic" FontWeight="Bold" FontSize="20"/>
+                    <Label x:Name="info_panel_label" Content="..." HorizontalAlignment="Left" Height="35" Margin="41,67,0,0" VerticalAlignment="Top" Width="972"/>
+                    <Button x:Name="start_button" Content="Start" HorizontalAlignment="Left" Margin="41,29,0,0" VerticalAlignment="Top" Width="75" Click="start_button_Click"/>
+                    <Button x:Name="stop_button" Content="Stop" HorizontalAlignment="Left" Margin="143,29,0,0" VerticalAlignment="Top" Width="75" Click="stop_button_Click"/>
+                    <Label Content="Гироскоп X" HorizontalAlignment="Left" Margin="180,133,0,0" VerticalAlignment="Top" Width="76"/>
+                    <Label Content="Гироскоп Y" HorizontalAlignment="Left" Margin="300,133,0,0" VerticalAlignment="Top" Width="76"/>
+                    <Label Content="Гироскоп Z" HorizontalAlignment="Left" Margin="420,133,0,0" VerticalAlignment="Top" Width="76"/>
+                    <Label Content="Акселерометр X" HorizontalAlignment="Left" Margin="540,133,0,0" VerticalAlignment="Top" Width="99"/>
+                    <Label Content="Акселерометр Y" HorizontalAlignment="Left" Margin="660,133,0,0" VerticalAlignment="Top" Width="99"/>
+                    <Label Content="Акселерометр Z" HorizontalAlignment="Left" Margin="780,133,0,0" VerticalAlignment="Top" Width="99"/>
+                    <Label Content="Магнитометр X" HorizontalAlignment="Left" Margin="900,133,0,0" VerticalAlignment="Top" Width="96"/>
+                    <Label Content="Магнитометр Y" HorizontalAlignment="Left" Margin="1020,133,0,0" VerticalAlignment="Top" Width="96"/>
+                    <Label Content="Магнитометр Z" HorizontalAlignment="Left" Margin="1140,133,0,0" VerticalAlignment="Top" Width="96"/>
+
+                    <Label Content="Датчик 1" HorizontalAlignment="Left" Margin="82,170,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Датчик 2" HorizontalAlignment="Left" Margin="82,190,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Датчик 3" HorizontalAlignment="Left" Margin="82,210,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Датчик 4" HorizontalAlignment="Left" Margin="82,230,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Датчик 5" HorizontalAlignment="Left" Margin="82,250,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Датчик 6" HorizontalAlignment="Left" Margin="82,270,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Датчик 7" HorizontalAlignment="Left" Margin="82,290,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Датчик 8" HorizontalAlignment="Left" Margin="82,310,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Датчик 9" HorizontalAlignment="Left" Margin="82,330,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Датчик 10" HorizontalAlignment="Left" Margin="82,350,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Датчик 11" HorizontalAlignment="Left" Margin="82,370,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Датчик 12" HorizontalAlignment="Left" Margin="82,390,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Датчик 13" HorizontalAlignment="Left" Margin="82,410,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Датчик 14" HorizontalAlignment="Left" Margin="82,430,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Датчик 15" HorizontalAlignment="Left" Margin="82,450,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Датчик 16" HorizontalAlignment="Left" Margin="82,470,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Датчик 17" HorizontalAlignment="Left" Margin="82,490,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Датчик 18" HorizontalAlignment="Left" Margin="82,510,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Датчик 19" HorizontalAlignment="Left" Margin="82,531,0,0" VerticalAlignment="Top"/>
+
+
+
+                </Grid>
+
+
+            </TabItem>
+
+
+
+
+        </TabControl>
+
+    </Grid>
+</Window>
