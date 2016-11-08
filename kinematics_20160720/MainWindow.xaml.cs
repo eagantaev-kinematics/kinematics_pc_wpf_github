@@ -29,6 +29,8 @@ namespace kinematics_20160720
     /// </summary>
     public partial class MainWindow : Window
     {
+        Segment_cls segment_1;
+
         private Int32 packet_counter = 0;
         private delegate void NoArgDelegate();
 
@@ -55,6 +57,8 @@ namespace kinematics_20160720
             kinematics_listener.Client.Bind(local_kinematics_endpoint);
 
             kinematics_data = new byte[342];
+
+            segment_1 = new Segment_cls(1);
         }
 
         private Thread dataReceivingThread;
@@ -125,6 +129,8 @@ namespace kinematics_20160720
                 }
             }
             data_panel_label.UpdateLayout();
+
+            segment_1.calculate_segment_position(1, kinematics_data);
         }
 
         private void start_button_Click(object sender, RoutedEventArgs e)
@@ -154,4 +160,4 @@ namespace kinematics_20160720
 
 
     }
-}
+}// end namespace kinematics_20160720
