@@ -9,11 +9,25 @@ namespace kinematics_20160720
     public class Segment_cls
     {
         private int segment_id;
-
+        private Double[] segment_axis;
+        private Double X, Y, Z;
+        private Double[] x;
+        private Double[] y;
+        private Double[] z;
+        private Double[] xl;
+        private Double[] yl;
+        private Double[] zl;
 
         public Segment_cls(int Segment_id)
         {
             segment_id = Segment_id;
+            segment_axis = new Double[3];
+            x = new Double[3];
+            y = new Double[3];
+            z = new Double[3];
+            xl = new Double[3];
+            yl = new Double[3];
+            zl = new Double[3];
         }
 
         public void calculate_segment_position(int id, byte[] raw_data_package)
@@ -25,23 +39,30 @@ namespace kinematics_20160720
                 Double[] gyro = new Double[3];
                 Double[] accel = new Double[3];
                 Double[] magnet = new Double[3];
-                Double[] x = new Double[3];
-                Double[] y = new Double[3];
-                Double[] z = new Double[3];
+                
 
                 // fill data arrays
                 int i = id - 1;
                 for (int j = 0; j < 3; j++)
                 {
-                    gyro[j] = (Double)((Int16)raw_data_package[i * 18 + j * 2] + ((Int16)(raw_data_package[i * 18 + j * 2 + 1]) << 8));
+                    Int16 aux = (Int16)(raw_data_package[i * 18 + j * 2 + 1]); // high byte
+                    aux <<= 8; // shift
+                    aux += (Int16)(raw_data_package[i * 18 + j * 2]); // low byte
+                    gyro[j] = (Double)aux;
                 }
                 for (int j = 3; j < 6; j++)
                 {
-                    accel[j-3] = (Double)((Int16)raw_data_package[i * 18 + j * 2] + ((Int16)(raw_data_package[i * 18 + j * 2 + 1]) << 8));
+                    Int16 aux = (Int16)(raw_data_package[i * 18 + j * 2 + 1]); // high byte
+                    aux <<= 8; // shift
+                    aux += (Int16)(raw_data_package[i * 18 + j * 2]); // low byte
+                    accel[j - 3] = (Double)aux;
                 }
                 for (int j = 6; j < 9; j++)
                 {
-                    magnet[j-6] = (Double)((Int16)raw_data_package[i * 18 + j * 2] + ((Int16)(raw_data_package[i * 18 + j * 2 + 1]) << 8));
+                    Int16 aux = (Int16)(raw_data_package[i * 18 + j * 2 + 1]); // high byte
+                    aux <<= 8; // shift
+                    aux += (Int16)(raw_data_package[i * 18 + j * 2]); // low byte
+                    magnet[j - 6] = (Double)aux;
                 }
 
                 // sformirovat' matricu povorota global'naya-v-lokal'noi ****************************************
@@ -143,10 +164,52 @@ namespace kinematics_20160720
                 p[2, 1] = m[2, 0] * M[0, 1] + m[2, 1] * M[1, 1] + m[2, 2] * M[2, 1];
                 p[2, 2] = m[2, 0] * M[0, 2] + m[2, 1] * M[1, 2] + m[2, 2] * M[2, 2];
 
+                xl[0] = M[0, 0];
+                xl[1] = M[1, 0];
+                xl[2] = M[2, 0];
+                yl[0] = M[0, 1];
+                yl[1] = M[1, 1];
+                yl[2] = M[2, 1];
+                zl[0] = M[0, 2];
+                zl[1] = M[1, 2];
+                zl[2] = M[2, 2];
+
+                segment_axis[0] = M[0, 1];
+                segment_axis[1] = M[1, 1];
+                segment_axis[2] = M[2, 1];
+
+                X = segment_axis[0];
+                Y = segment_axis[1];
+                Z = segment_axis[2];
+
             }
             //*/
 
 
         }// end calculate_segment_position
+
+
+        public Double get_X()
+        { return X; }
+
+        public Double get_Y()
+        { return Y; }
+
+        public Double get_Z()
+        { return Z; }
+
+        public Double[] get_x()
+        { return x; }
+        public Double[] get_y()
+        { return y; }
+        public Double[] get_z()
+        { return z; }
+        public Double[] get_xl()
+        { return xl; }
+        public Double[] get_yl()
+        { return yl; }
+        public Double[] get_zl()
+        { return zl; }
+
     }
 }

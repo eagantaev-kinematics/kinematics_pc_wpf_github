@@ -130,7 +130,24 @@ namespace kinematics_20160720
             }
             data_panel_label.UpdateLayout();
 
+            segment_x_loc.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", segment_1.get_x()[0], segment_1.get_x()[1], segment_1.get_x()[2]);
+            segment_y_loc.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", segment_1.get_y()[0], segment_1.get_y()[1], segment_1.get_y()[2]);
+            segment_z_loc.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", segment_1.get_z()[0], segment_1.get_z()[1], segment_1.get_z()[2]);
+            segment_x_glob.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", segment_1.get_xl()[0], segment_1.get_xl()[1], segment_1.get_xl()[2]);
+            segment_y_glob.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", segment_1.get_yl()[0], segment_1.get_yl()[1], segment_1.get_yl()[2]);
+            segment_z_glob.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", segment_1.get_zl()[0], segment_1.get_zl()[1], segment_1.get_zl()[2]);
+
+
             segment_1.calculate_segment_position(1, kinematics_data);
+            String x_str = segment_1.get_X().ToString();
+            if (x_str.Length > 7) x_str = x_str.Substring(0, 7);
+            String y_str = segment_1.get_Y().ToString();
+            if (y_str.Length > 7) y_str = y_str.Substring(0, 7);
+            String z_str = segment_1.get_Z().ToString();
+            if (z_str.Length > 7) z_str = z_str.Substring(0, 7);
+
+            String segment_axis_string = "<" + x_str + ", " + y_str + ", " + z_str + ">";
+            segment_axis.Content = segment_axis_string;
         }
 
         private void start_button_Click(object sender, RoutedEventArgs e)

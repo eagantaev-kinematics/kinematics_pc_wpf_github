@@ -189,6 +189,13 @@
                     <Label Content="Датчик 17" HorizontalAlignment="Left" Margin="82,490,0,0" VerticalAlignment="Top"/>
                     <Label Content="Датчик 18" HorizontalAlignment="Left" Margin="82,510,0,0" VerticalAlignment="Top"/>
                     <Label Content="Датчик 19" HorizontalAlignment="Left" Margin="82,531,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="segment_axis" Content="&lt;&gt;" HorizontalAlignment="Left" Margin="1012,643,0,0" VerticalAlignment="Top" Width="256" Background="LightGray"/>
+                    <Label x:Name="segment_x_loc" Content="&lt;&gt;" HorizontalAlignment="Left" Margin="156,643,0,0" VerticalAlignment="Top" Width="256" Background="LightGray"/>
+                    <Label x:Name="segment_y_loc" Content="&lt;&gt;" HorizontalAlignment="Left" Margin="156,675,0,0" VerticalAlignment="Top" Width="256" Background="LightGray"/>
+                    <Label x:Name="segment_z_loc" Content="&lt;&gt;" HorizontalAlignment="Left" Margin="156,707,0,0" VerticalAlignment="Top" Width="256" Background="LightGray"/>
+                    <Label x:Name="segment_x_glob" Content="&lt;&gt;" HorizontalAlignment="Left" Margin="424,643,0,0" VerticalAlignment="Top" Width="256" Background="LightGray"/>
+                    <Label x:Name="segment_y_glob" Content="&lt;&gt;" HorizontalAlignment="Left" Margin="424,675,0,0" VerticalAlignment="Top" Width="256" Background="LightGray"/>
+                    <Label x:Name="segment_z_glob" Content="&lt;&gt;" HorizontalAlignment="Left" Margin="424,707,0,0" VerticalAlignment="Top" Width="256" Background="LightGray"/>
 
 
 
