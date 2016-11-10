@@ -30,7 +30,7 @@ namespace kinematics_20160720
             zl = new Double[3];
         }
 
-        public void calculate_segment_position(int id, byte[] raw_data_package)
+        public void calculate_segment_position(byte[] raw_data_package)
         {
             //*
             // zabrat' dannye svoego datchika
@@ -42,7 +42,8 @@ namespace kinematics_20160720
                 
 
                 // fill data arrays
-                int i = id - 1;
+                //int i = segment_id - 1;
+                int i = 1;
                 for (int j = 0; j < 3; j++)
                 {
                     Int16 aux = (Int16)(raw_data_package[i * 18 + j * 2 + 1]); // high byte

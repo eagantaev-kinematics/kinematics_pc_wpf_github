@@ -109,16 +109,16 @@
                             <Border BorderThickness="2" BorderBrush="Black" Height="339" Canvas.Left="10" Canvas.Top="18" Width="1463">
                                 <Grid>
                                     <Label Content="Средний цикл" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="22" Height="39" Width="158" Margin="190,0,0,0"/>
-                                    <Canvas x:Name="angle_graph" HorizontalAlignment="Left" Height="159" VerticalAlignment="Top" Width="476" Background="Black" Margin="10,119,0,0"/>
+                                    <Canvas x:Name="angle_graph" HorizontalAlignment="Left" Height="159" VerticalAlignment="Top" Width="450" Background="Black" Margin="10,119,0,0"/>
                                     <Label Content="угол" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="34" Margin="19,88,0,0"/>
-                                    <Canvas x:Name="angle_velocity_graph" HorizontalAlignment="Left" Height="159" VerticalAlignment="Top" Width="433" Background="Black" Margin="543,120,0,0"/>
-                                    <Label Content="угловая скорость" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="105" Margin="543,88,0,0"/>
-                                    <Canvas x:Name="acceleration_graph" HorizontalAlignment="Left" Height="159" VerticalAlignment="Top" Width="437" Background="Black" Margin="1012,120,0,0"/>
-                                    <Label Content="ускорение" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="69" Margin="1088,88,0,0" RenderTransformOrigin="0.689,0.224"/>
+                                    <Canvas x:Name="angle_velocity_graph" HorizontalAlignment="Left" Height="159" VerticalAlignment="Top" Width="450" Background="Black" Margin="481,120,0,0"/>
+                                    <Label Content="угловая скорость" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="105" Margin="487,88,0,0"/>
+                                    <Canvas x:Name="acceleration_graph" HorizontalAlignment="Left" Height="159" VerticalAlignment="Top" Width="450" Background="Black" Margin="952,120,0,0"/>
+                                    <Label Content="ускорение" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="69" Margin="956,88,0,0" RenderTransformOrigin="0.689,0.224"/>
 
                                     <Button x:Name="angle_export_button" Content="Экспорт" Margin="10,283,1374.2,27.2"/>
-                                    <Button x:Name="angle_velocity_export_button" Content="Экспорт" Margin="967,283,417.2,28.2"/>
-                                    <Button x:Name="acceleration_export_button" Content="Экспорт" Margin="1212,282,172.2,28.2"/>
+                                    <Button x:Name="angle_velocity_export_button" Content="Экспорт" Margin="483,283,901.2,28.2"/>
+                                    <Button x:Name="acceleration_export_button" Content="Экспорт" Margin="954,282,430.2,28.2"/>
                                 </Grid>
                             </Border>
 
@@ -189,13 +189,15 @@
                     <Label Content="Датчик 17" HorizontalAlignment="Left" Margin="82,490,0,0" VerticalAlignment="Top"/>
                     <Label Content="Датчик 18" HorizontalAlignment="Left" Margin="82,510,0,0" VerticalAlignment="Top"/>
                     <Label Content="Датчик 19" HorizontalAlignment="Left" Margin="82,531,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="segment_axis" Content="&lt;&gt;" HorizontalAlignment="Left" Margin="1012,643,0,0" VerticalAlignment="Top" Width="256" Background="LightGray"/>
+                    <Label x:Name="segment1_axis" Content="&lt;&gt;" HorizontalAlignment="Left" Margin="1012,643,0,0" VerticalAlignment="Top" Width="256" Background="LightGray"/>
                     <Label x:Name="segment_x_loc" Content="&lt;&gt;" HorizontalAlignment="Left" Margin="156,643,0,0" VerticalAlignment="Top" Width="256" Background="LightGray"/>
                     <Label x:Name="segment_y_loc" Content="&lt;&gt;" HorizontalAlignment="Left" Margin="156,675,0,0" VerticalAlignment="Top" Width="256" Background="LightGray"/>
                     <Label x:Name="segment_z_loc" Content="&lt;&gt;" HorizontalAlignment="Left" Margin="156,707,0,0" VerticalAlignment="Top" Width="256" Background="LightGray"/>
                     <Label x:Name="segment_x_glob" Content="&lt;&gt;" HorizontalAlignment="Left" Margin="424,643,0,0" VerticalAlignment="Top" Width="256" Background="LightGray"/>
                     <Label x:Name="segment_y_glob" Content="&lt;&gt;" HorizontalAlignment="Left" Margin="424,675,0,0" VerticalAlignment="Top" Width="256" Background="LightGray"/>
                     <Label x:Name="segment_z_glob" Content="&lt;&gt;" HorizontalAlignment="Left" Margin="424,707,0,0" VerticalAlignment="Top" Width="256" Background="LightGray"/>
+                    <Label x:Name="segment2_axis" Content="&lt;&gt;" HorizontalAlignment="Left" Margin="1012,675,0,0" VerticalAlignment="Top" Width="256" Background="LightGray"/>
+                    <Label x:Name="segment_1_2_angle" Content="&lt;&gt;" HorizontalAlignment="Left" Margin="1012,707,0,0" VerticalAlignment="Top" Width="256" Background="LightGray"/>
 
 
 
