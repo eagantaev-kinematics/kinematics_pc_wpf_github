@@ -8,6 +8,7 @@ namespace kinematics_20160720
 {
     public class Segment_cls
     {
+        private raw_kinematics_data_cls raw_data;
         private int segment_id;
         private Double[] segment_axis;
         private Double X, Y, Z;
@@ -18,8 +19,9 @@ namespace kinematics_20160720
         private Double[] yl;
         private Double[] zl;
 
-        public Segment_cls(int Segment_id)
+        public Segment_cls(int Segment_id, raw_kinematics_data_cls Raw_data)
         {
+            raw_data = Raw_data;
             segment_id = Segment_id;
             segment_axis = new Double[3];
             x = new Double[3];
@@ -30,11 +32,11 @@ namespace kinematics_20160720
             zl = new Double[3];
         }
 
-        public void calculate_segment_position(byte[] raw_data_package)
+        public void calculate_segment_position()
         {
             //*
             // zabrat' dannye svoego datchika
-            if(raw_data_package.Length == 342)
+            if(raw_data.Kinematics_Data.Length == raw_data.Raw_Data_Length)
             {
                 Double[] gyro = new Double[3];
                 Double[] accel = new Double[3];
@@ -42,27 +44,27 @@ namespace kinematics_20160720
                 
 
                 // fill data arrays
-                //int i = segment_id - 1;
-                int i = 1;
+                //int i = 1;
+                int i = segment_id - 1;
                 for (int j = 0; j < 3; j++)
                 {
-                    Int16 aux = (Int16)(raw_data_package[i * 18 + j * 2 + 1]); // high byte
+                    Int16 aux = (Int16)(raw_data.Kinematics_Data[i * 18 + j * 2 + 1]); // high byte
                     aux <<= 8; // shift
-                    aux += (Int16)(raw_data_package[i * 18 + j * 2]); // low byte
+                    aux += (Int16)(raw_data.Kinematics_Data[i * 18 + j * 2]); // low byte
                     gyro[j] = (Double)aux;
                 }
                 for (int j = 3; j < 6; j++)
                 {
-                    Int16 aux = (Int16)(raw_data_package[i * 18 + j * 2 + 1]); // high byte
+                    Int16 aux = (Int16)(raw_data.Kinematics_Data[i * 18 + j * 2 + 1]); // high byte
                     aux <<= 8; // shift
-                    aux += (Int16)(raw_data_package[i * 18 + j * 2]); // low byte
+                    aux += (Int16)(raw_data.Kinematics_Data[i * 18 + j * 2]); // low byte
                     accel[j - 3] = (Double)aux;
                 }
                 for (int j = 6; j < 9; j++)
                 {
-                    Int16 aux = (Int16)(raw_data_package[i * 18 + j * 2 + 1]); // high byte
+                    Int16 aux = (Int16)(raw_data.Kinematics_Data[i * 18 + j * 2 + 1]); // high byte
                     aux <<= 8; // shift
-                    aux += (Int16)(raw_data_package[i * 18 + j * 2]); // low byte
+                    aux += (Int16)(raw_data.Kinematics_Data[i * 18 + j * 2]); // low byte
                     magnet[j - 6] = (Double)aux;
                 }
 

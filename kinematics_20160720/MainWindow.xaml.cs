@@ -29,6 +29,7 @@ namespace kinematics_20160720
     /// </summary>
     public partial class MainWindow : Window
     {
+        raw_kinematics_data_cls raw_data;
         Segment_cls[] segments;
 
         private Int32 packet_counter = 0;
@@ -42,7 +43,7 @@ namespace kinematics_20160720
 
 
         //udp***
-        byte[] kinematics_data;
+        //byte[] kinematics_data;
 
         string debug_string = "no data\n";
 
@@ -56,15 +57,17 @@ namespace kinematics_20160720
             kinematics_listener = new UdpClient();
             kinematics_listener.Client.Bind(local_kinematics_endpoint);
 
-            kinematics_data = new byte[342];
-
+            //kinematics_data = new byte[342];
+            raw_data = new raw_kinematics_data_cls();
             segments = new Segment_cls[20];
 
             for(int i=1; i<=19; i++)
             {
-                segments[i] = new Segment_cls(i);
+                segments[i] = new Segment_cls(i, raw_data);
             }
             segments[0] = null;
+
+            
         }
 
         private Thread dataReceivingThread;
@@ -88,7 +91,7 @@ namespace kinematics_20160720
                     try
                     {
                         // udp
-                        kinematics_data = kinematics_listener.Receive(ref remote_endpoint);
+                        raw_data.Kinematics_Data = kinematics_listener.Receive(ref remote_endpoint);
                         packet_counter++;
                         //debug_string = "received - " + kinematics_data.Length + " udp data\n";
                         debug_string = "packet counter - " + packet_counter.ToString() + "\n";
@@ -115,7 +118,7 @@ namespace kinematics_20160720
             
             //kinematics_data = new byte[342];
             //if(true)
-            if (kinematics_data.Length == 342)
+            if (raw_data.Kinematics_Data.Length == raw_data.Raw_Data_Length)
             {
                 data_panel_label.Content = "";
                 //data_panel_label.Content += "    гироскоп Х      гироскоп Y      гироскоп Z  акселерометр X  акселерометр Y  акселерометр Z   магнетометр X   магнетометр Y   магнетометр Z\n";
@@ -126,7 +129,7 @@ namespace kinematics_20160720
                     string data_string = "";
                     for(int j=0; j<9; j++)
                     {
-                        Int16 data = (Int16)((Int16)kinematics_data[i*18 + j*2] + ((Int16)(kinematics_data[i*18 + j*2 + 1])<<8));
+                        Int16 data = (Int16)((Int16)raw_data.Kinematics_Data[i * 18 + j * 2] + ((Int16)(raw_data.Kinematics_Data[i * 18 + j * 2 + 1]) << 8));
                         //data_string += data.ToString() + "  ";
                         data_string += String.Format("{0, 10}  ", data);
                     }
@@ -136,10 +139,12 @@ namespace kinematics_20160720
             }
             data_panel_label.UpdateLayout();
 
-            segments[1].calculate_segment_position(kinematics_data);
-            segments[2].calculate_segment_position(kinematics_data);
+            //segments[1].calculate_segment_position(kinematics_data);
+            //segments[2].calculate_segment_position(kinematics_data);
+            for (int i = 1; i <= 19; i++)
+                segments[i].calculate_segment_position();
 
-            segment_x_loc.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", segments[1].get_xl()[0], segments[1].get_xl()[1], segments[1].get_xl()[2]);
+                segment_x_loc.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", segments[1].get_xl()[0], segments[1].get_xl()[1], segments[1].get_xl()[2]);
             segment_y_loc.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", segments[1].get_yl()[0], segments[1].get_yl()[1], segments[1].get_yl()[2]);
             segment_z_loc.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", segments[1].get_zl()[0], segments[1].get_zl()[1], segments[1].get_zl()[2]);
             segment_x_glob.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", segments[2].get_xl()[0], segments[2].get_xl()[1], segments[2].get_xl()[2]);
