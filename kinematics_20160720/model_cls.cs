@@ -16,6 +16,10 @@ namespace kinematics_20160720
         }
 
         private List<channel_cls> channels;
+        public List<channel_cls> Channels
+        {
+            get { return channels; }
+        }
         private int number_of_channels = 0;
 
         public model_cls(raw_kinematics_data_cls raw_data)

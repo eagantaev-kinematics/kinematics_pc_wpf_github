@@ -60,7 +60,13 @@ namespace kinematics_20160720
             //kinematics_data = new byte[342];
             raw_data = new raw_kinematics_data_cls();
             model = new model_cls(raw_data);
-
+            // fill model
+            model.add_channel(new angle_cls(model.Segments[1], model.Segments[2]));
+            model.add_channel(new angle_cls(model.Segments[1], model.Segments[3]));
+            model.add_channel(new angle_cls(model.Segments[1], model.Segments[4]));
+            model.add_channel(new angle_cls(model.Segments[2], model.Segments[3]));
+            model.add_channel(new angle_cls(model.Segments[2], model.Segments[4]));
+            model.add_channel(new angle_cls(model.Segments[3], model.Segments[4]));
             
         }
 
@@ -137,7 +143,10 @@ namespace kinematics_20160720
             //segments[2].calculate_segment_position(kinematics_data);
             for (int i = 1; i <= 19; i++)
                 model.Segments[i].calculate_segment_position();
+            (model.Channels.ToArray())[0].Angle.calculate();
+            Double angle = (model.Channels.ToArray())[0].Angle.Angle;
 
+            /*
             segment_x_loc.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", model.Segments[1].get_xl()[0], model.Segments[1].get_xl()[1], model.Segments[1].get_xl()[2]);
             segment_y_loc.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", model.Segments[1].get_yl()[0], model.Segments[1].get_yl()[1], model.Segments[1].get_yl()[2]);
             segment_z_loc.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", model.Segments[1].get_zl()[0], model.Segments[1].get_zl()[1], model.Segments[1].get_zl()[2]);
@@ -155,10 +164,12 @@ namespace kinematics_20160720
             Double n2 = Math.Sqrt(X2*X2 + Y2*Y2 + Z2*Z2);
             Double angle_1_2 = Math.Acos((X1*X2 + Y1*Y2 + Z1*Z2)/n1/n2);
             angle_1_2 = angle_1_2 * 180.0 / Math.PI;
+            //*/
 
-            segment1_axis.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", X1, Y1, Z1);
-            segment2_axis.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", X2, Y2, Z2);
-            segment_1_2_angle.Content = String.Format("{0,10:F3}", angle_1_2);
+            //segment1_axis.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", X1, Y1, Z1);
+            //segment2_axis.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", X2, Y2, Z2);
+
+            segment_1_2_angle.Content = String.Format("{0,10:F3}", angle);
             //********************************************************************
             
         }
