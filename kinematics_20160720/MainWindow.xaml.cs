@@ -42,8 +42,6 @@ namespace kinematics_20160720
         IPEndPoint local_kinematics_endpoint = new IPEndPoint(0, 0);
 
 
-        //udp***
-        //byte[] kinematics_data;
 
         string debug_string = "no data\n";
 
@@ -57,7 +55,6 @@ namespace kinematics_20160720
             kinematics_listener = new UdpClient();
             kinematics_listener.Client.Bind(local_kinematics_endpoint);
 
-            //kinematics_data = new byte[342];
             raw_data = new raw_kinematics_data_cls();
             model = new model_cls(raw_data);
             // fill model
@@ -93,7 +90,6 @@ namespace kinematics_20160720
                         // udp
                         raw_data.Kinematics_Data = kinematics_listener.Receive(ref remote_endpoint);
                         packet_counter++;
-                        //debug_string = "received - " + kinematics_data.Length + " udp data\n";
                         debug_string = "packet counter - " + packet_counter.ToString() + "\n";
                     }
                     catch (Exception e)
@@ -116,21 +112,15 @@ namespace kinematics_20160720
             info_panel_label.UpdateLayout();
 
             
-            //kinematics_data = new byte[342];
-            //if(true)
             if (raw_data.Kinematics_Data.Length == raw_data.Raw_Data_Length)
             {
                 data_panel_label.Content = "";
-                //data_panel_label.Content += "    гироскоп Х      гироскоп Y      гироскоп Z  акселерометр X  акселерометр Y  акселерометр Z   магнетометр X   магнетометр Y   магнетометр Z\n";
-                //data_panel_label.UpdateLayout();
-
                 for(int i=0; i<19; i++)
                 {
                     string data_string = "";
                     for(int j=0; j<9; j++)
                     {
                         Int16 data = (Int16)((Int16)raw_data.Kinematics_Data[i * 18 + j * 2] + ((Int16)(raw_data.Kinematics_Data[i * 18 + j * 2 + 1]) << 8));
-                        //data_string += data.ToString() + "  ";
                         data_string += String.Format("{0, 10}  ", data);
                     }
                     data_string += "\n";
@@ -139,12 +129,14 @@ namespace kinematics_20160720
             }
             data_panel_label.UpdateLayout();
 
-            //segments[1].calculate_segment_position(kinematics_data);
-            //segments[2].calculate_segment_position(kinematics_data);
             for (int i = 1; i <= 19; i++)
                 model.Segments[i].calculate_segment_position();
             (model.Channels.ToArray())[0].Angle.calculate();
-            Double angle = (model.Channels.ToArray())[0].Angle.Angle;
+            (model.Channels.ToArray())[1].Angle.calculate();
+            (model.Channels.ToArray())[2].Angle.calculate();
+            Double angle1 = (model.Channels.ToArray())[0].Angle.Angle;
+            Double angle2 = (model.Channels.ToArray())[1].Angle.Angle;
+            Double angle3 = (model.Channels.ToArray())[2].Angle.Angle;
 
             /*
             segment_x_loc.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", model.Segments[1].get_xl()[0], model.Segments[1].get_xl()[1], model.Segments[1].get_xl()[2]);
@@ -166,10 +158,9 @@ namespace kinematics_20160720
             angle_1_2 = angle_1_2 * 180.0 / Math.PI;
             //*/
 
-            //segment1_axis.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", X1, Y1, Z1);
-            //segment2_axis.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", X2, Y2, Z2);
-
-            segment_1_2_angle.Content = String.Format("{0,10:F3}", angle);
+            segment1_axis.Content = String.Format("{0,10:F3}", angle1);
+            segment2_axis.Content = String.Format("{0,10:F3}", angle2);
+            segment_1_2_angle.Content = String.Format("{0,10:F3}", angle3);
             //********************************************************************
             
         }
