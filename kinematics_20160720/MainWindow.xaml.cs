@@ -30,7 +30,7 @@ namespace kinematics_20160720
     public partial class MainWindow : Window
     {
         raw_kinematics_data_cls raw_data;
-        Segment_cls[] segments;
+        model_cls model;
 
         private Int32 packet_counter = 0;
         private delegate void NoArgDelegate();
@@ -59,13 +59,7 @@ namespace kinematics_20160720
 
             //kinematics_data = new byte[342];
             raw_data = new raw_kinematics_data_cls();
-            segments = new Segment_cls[20];
-
-            for(int i=1; i<=19; i++)
-            {
-                segments[i] = new Segment_cls(i, raw_data);
-            }
-            segments[0] = null;
+            model = new model_cls(raw_data);
 
             
         }
@@ -142,21 +136,21 @@ namespace kinematics_20160720
             //segments[1].calculate_segment_position(kinematics_data);
             //segments[2].calculate_segment_position(kinematics_data);
             for (int i = 1; i <= 19; i++)
-                segments[i].calculate_segment_position();
+                model.Segments[i].calculate_segment_position();
 
-                segment_x_loc.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", segments[1].get_xl()[0], segments[1].get_xl()[1], segments[1].get_xl()[2]);
-            segment_y_loc.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", segments[1].get_yl()[0], segments[1].get_yl()[1], segments[1].get_yl()[2]);
-            segment_z_loc.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", segments[1].get_zl()[0], segments[1].get_zl()[1], segments[1].get_zl()[2]);
-            segment_x_glob.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", segments[2].get_xl()[0], segments[2].get_xl()[1], segments[2].get_xl()[2]);
-            segment_y_glob.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", segments[2].get_yl()[0], segments[2].get_yl()[1], segments[2].get_yl()[2]);
-            segment_z_glob.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", segments[2].get_zl()[0], segments[2].get_zl()[1], segments[2].get_zl()[2]);
+            segment_x_loc.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", model.Segments[1].get_xl()[0], model.Segments[1].get_xl()[1], model.Segments[1].get_xl()[2]);
+            segment_y_loc.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", model.Segments[1].get_yl()[0], model.Segments[1].get_yl()[1], model.Segments[1].get_yl()[2]);
+            segment_z_loc.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", model.Segments[1].get_zl()[0], model.Segments[1].get_zl()[1], model.Segments[1].get_zl()[2]);
+            segment_x_glob.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", model.Segments[2].get_xl()[0], model.Segments[2].get_xl()[1], model.Segments[2].get_xl()[2]);
+            segment_y_glob.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", model.Segments[2].get_yl()[0], model.Segments[2].get_yl()[1], model.Segments[2].get_yl()[2]);
+            segment_z_glob.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", model.Segments[2].get_zl()[0], model.Segments[2].get_zl()[1], model.Segments[2].get_zl()[2]);
 
-            Double X1 = segments[1].get_X();
-            Double X2 = segments[2].get_X();
-            Double Y1 = segments[1].get_Y();
-            Double Y2 = segments[2].get_Y();
-            Double Z1 = segments[1].get_Z();
-            Double Z2 = segments[2].get_Z();
+            Double X1 = model.Segments[1].get_X();
+            Double X2 = model.Segments[2].get_X();
+            Double Y1 = model.Segments[1].get_Y();
+            Double Y2 = model.Segments[2].get_Y();
+            Double Z1 = model.Segments[1].get_Z();
+            Double Z2 = model.Segments[2].get_Z();
             Double n1 = Math.Sqrt(X1*X1 + Y1*Y1 + Z1*Z1);
             Double n2 = Math.Sqrt(X2*X2 + Y2*Y2 + Z2*Z2);
             Double angle_1_2 = Math.Acos((X1*X2 + Y1*Y2 + Z1*Z2)/n1/n2);
