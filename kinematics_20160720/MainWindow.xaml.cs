@@ -133,10 +133,10 @@ namespace kinematics_20160720
                 model.Segments[i].calculate_segment_position();
             (model.Channels.ToArray())[0].Angle.calculate();
             (model.Channels.ToArray())[1].Angle.calculate();
-            (model.Channels.ToArray())[2].Angle.calculate();
+            (model.Channels.ToArray())[3].Angle.calculate();
             Double angle1 = (model.Channels.ToArray())[0].Angle.Angle;
             Double angle2 = (model.Channels.ToArray())[1].Angle.Angle;
-            Double angle3 = (model.Channels.ToArray())[2].Angle.Angle;
+            Double angle3 = (model.Channels.ToArray())[3].Angle.Angle;
 
             /*
             segment_x_loc.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", model.Segments[1].get_xl()[0], model.Segments[1].get_xl()[1], model.Segments[1].get_xl()[2]);
