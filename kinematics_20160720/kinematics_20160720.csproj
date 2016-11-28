@@ -56,6 +56,7 @@
     </ApplicationDefinition>
     <Compile Include="angle_cls.cs" />
     <Compile Include="channel_cls.cs" />
+    <Compile Include="histogram_cls.cs" />
     <Compile Include="model_cls.cs" />
     <Compile Include="raw_kinematics_data_cls.cs" />
     <Compile Include="segment_cls.cs" />
