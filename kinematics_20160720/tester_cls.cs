@@ -29,5 +29,21 @@ namespace kinematics_20160720
                 return result;
         }
 
+        public static bool equality(int right_answer, int result)
+        {
+            if (right_answer == result)
+                return true;
+            else
+                return false;
+        }
+
+        public static bool epsilon_equality(double right_answer, double result, double epsilon)
+        {
+            if (Math.Abs(right_answer - result) <= epsilon)
+                return true;
+            else
+                return false;
+        }
+
     }
 }

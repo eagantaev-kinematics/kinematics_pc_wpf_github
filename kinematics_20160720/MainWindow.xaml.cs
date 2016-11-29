@@ -210,6 +210,8 @@ namespace kinematics_20160720
             test_results_panel.Content += "\r\n --> ";
 
             test_results_panel.Content += histogram.bubble_sort_test().ToString() + " bubble_sort_test \r\n --> ";
+            test_results_panel.Content += histogram.mean_calculation_test().ToString() + " mean_calculation_test \r\n --> ";
+            test_results_panel.Content += histogram.sigma_calculation_test().ToString() + " sigma_calculation_test \r\n --> ";
         }
 
 
