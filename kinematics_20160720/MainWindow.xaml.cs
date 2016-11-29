@@ -29,8 +29,12 @@ namespace kinematics_20160720
     /// </summary>
     public partial class MainWindow : Window
     {
+        // *****
         raw_kinematics_data_cls raw_data;
         model_cls model;
+
+        //***** calibration
+        histogram_cls histogram;
 
         private Int32 packet_counter = 0;
         private delegate void NoArgDelegate();
@@ -53,7 +57,15 @@ namespace kinematics_20160720
             local_kinematics_endpoint.Port = 112;
 
             kinematics_listener = new UdpClient();
-            kinematics_listener.Client.Bind(local_kinematics_endpoint);
+
+            try
+            {
+                kinematics_listener.Client.Bind(local_kinematics_endpoint);
+            }
+            catch (Exception e)
+            {
+                
+            }
 
             raw_data = new raw_kinematics_data_cls();
             model = new model_cls(raw_data);
@@ -64,6 +76,9 @@ namespace kinematics_20160720
             model.add_channel(new angle_cls(model.Segments[2], model.Segments[3]));
             model.add_channel(new angle_cls(model.Segments[2], model.Segments[4]));
             model.add_channel(new angle_cls(model.Segments[3], model.Segments[4]));
+
+
+            histogram = new histogram_cls(160, 25, 10, 40);
             
         }
 
@@ -188,6 +203,13 @@ namespace kinematics_20160720
         private void Window_Closed(object sender, EventArgs e)
         {
             Environment.Exit(0);
+        }
+
+        private void main_window_Loaded(object sender, RoutedEventArgs e)
+        {
+            test_results_panel.Content += "\r\n --> ";
+
+            test_results_panel.Content += histogram.bubble_sort_test().ToString() + " bubble_sort_test \r\n --> ";
         }
 
 

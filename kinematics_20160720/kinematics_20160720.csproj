@@ -60,6 +60,7 @@
     <Compile Include="model_cls.cs" />
     <Compile Include="raw_kinematics_data_cls.cs" />
     <Compile Include="segment_cls.cs" />
+    <Compile Include="tester_cls.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

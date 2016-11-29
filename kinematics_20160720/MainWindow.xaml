@@ -1,7 +1,7 @@
-﻿<Window x:Class="kinematics_20160720.MainWindow"
+﻿<Window x:Name="main_window" x:Class="kinematics_20160720.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Программа контроля кинематики" Height="830" Width="1539.105" Closed="Window_Closed">
+        Title="Программа контроля кинематики" Height="830" Width="1539.105" Closed="Window_Closed" Loaded="main_window_Loaded">
     <Grid x:Name="tab">
         <TabControl HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="1515" Height="781">
 
@@ -261,6 +261,24 @@
                         </Grid>
                         
                     </Grid>
+
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Тесты">
+                <Grid Background="#FFE5E5E5" ShowGridLines="True" Margin="0,0,4.6,-3.2">
+                    <!-- 1 row -->
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <!-- 1 column -->
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="test_results_panel" Content="Результаты тестов:" HorizontalAlignment="Left" Height="687" Margin="20,25,0,0" VerticalAlignment="Top" Width="1429"/>
+
+                    <!-- Place elements in grid -->
+                    
 
                 </Grid>
             </TabItem>
