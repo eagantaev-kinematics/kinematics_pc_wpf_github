@@ -19,6 +19,13 @@ namespace kinematics_20160720
         private Double[] yl;
         private Double[] zl;
 
+        private sensor_cls Sensor;
+        public sensor_cls sensor
+        {
+            set { Sensor = value; }
+            get { return Sensor; }
+        }
+
         public Segment_cls(int Segment_id, raw_kinematics_data_cls Raw_data)
         {
             raw_data = Raw_data;
@@ -30,6 +37,8 @@ namespace kinematics_20160720
             xl = new Double[3];
             yl = new Double[3];
             zl = new Double[3];
+
+            Sensor = new sensor_cls();
         }
 
         public void calculate_segment_position()
@@ -67,6 +76,16 @@ namespace kinematics_20160720
                     aux += (Int16)(raw_data.Kinematics_Data[i * 18 + j * 2]); // low byte
                     magnet[j - 6] = (Double)aux;
                 }
+
+                Sensor.accelerometer.x = (int)accel[0];
+                Sensor.accelerometer.y = (int)accel[1];
+                Sensor.accelerometer.z = (int)accel[2];
+                Sensor.gyroscope.x = (int)gyro[0];
+                Sensor.gyroscope.y = (int)accel[1];
+                Sensor.gyroscope.z = (int)accel[2];
+                Sensor.magnetometer.x = (int)magnet[0];
+                Sensor.magnetometer.y = (int)magnet[1];
+                Sensor.magnetometer.z = (int)magnet[2];
 
                 // sformirovat' matricu povorota global'naya-v-lokal'noi ****************************************
                 // 1) normiruem vektory uskoreniya i magnitnogo polya

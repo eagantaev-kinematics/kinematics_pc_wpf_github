@@ -258,8 +258,54 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
+                            <!-- Place elements in grid -->
+                            <Label Grid.Row="2" Grid.Column="1" x:Name="hist_1_1_label" Content="" />
+
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="2" ShowGridLines="True">
+                            <!-- 2 rows -->
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="5*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <!-- 1 column -->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <!-- Place elements in grid -->
+                            <Label Grid.Row="2" Grid.Column="1" x:Name="hist_1_2_label" Content="" />
+
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="3" ShowGridLines="True">
+                            <!-- 2 rows -->
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="5*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <!-- 1 column -->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <!-- Place elements in grid -->
+                            <Label Grid.Row="2" Grid.Column="1" x:Name="hist_1_3_label" Content="" />
+
+                        </Grid>
+                        <Grid Grid.Row="2" Grid.Column="1" ShowGridLines="True">
+                            <!-- 2 rows -->
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="5*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <!-- 1 column -->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <!-- Place elements in grid -->
+                            <Label Grid.Row="2" Grid.Column="1" x:Name="hist_2_1_label" Content="" />
+
                         </Grid>
                         
+
                     </Grid>
 
                 </Grid>
@@ -275,14 +321,31 @@
                         <!-- 1 column -->
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Label x:Name="test_results_panel" Content="Результаты тестов:" HorizontalAlignment="Left" Height="687" Margin="20,25,0,0" VerticalAlignment="Top" Width="1429"/>
+                    <Label  x:Name="test_results_panel" Content="Результаты тестов:" HorizontalAlignment="Left" Height="687" Margin="20,25,0,0" VerticalAlignment="Top" Width="1429"/>
 
                     <!-- Place elements in grid -->
-                    
+
 
                 </Grid>
             </TabItem>
 
+            <TabItem Header="Служебные">
+                <Grid Background="#FFE5E5E5" ShowGridLines="True" Margin="0,0,4.6,-3.2">
+                    <!-- 1 row -->
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <!-- 1 column -->
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="debug_info_panel" Content="" HorizontalAlignment="Left" Height="687" Margin="20,25,0,0" VerticalAlignment="Top" Width="1429"/>
+
+                    <!-- Place elements in grid -->
+
+
+                </Grid>
+            </TabItem>
 
         </TabControl>
 

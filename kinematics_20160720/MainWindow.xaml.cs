@@ -53,7 +53,13 @@ namespace kinematics_20160720
         {
             InitializeComponent();
 
-            local_kinematics_endpoint.Address = IPAddress.Parse("192.168.1.1");
+            string Host = System.Net.Dns.GetHostName();
+            debug_info_panel.Content += "my host -> " + Host + "\r\n";
+            string IP1 = System.Net.Dns.GetHostByName(Host).AddressList[0].ToString();
+            debug_info_panel.Content += "my ip -> " + IP1 + "\r\n";
+
+            //local_kinematics_endpoint.Address = IPAddress.Parse("192.168.1.1");
+            local_kinematics_endpoint.Address = IPAddress.Parse(IP1);
             local_kinematics_endpoint.Port = 112;
 
             kinematics_listener = new UdpClient();
@@ -78,7 +84,8 @@ namespace kinematics_20160720
             model.add_channel(new angle_cls(model.Segments[3], model.Segments[4]));
 
 
-            histogram = new histogram_cls(160, 25, 10, 40);
+            histogram = new histogram_cls(160, 13, 40);  // object just to run tests
+            //model.Segments[1].sensor.accelerometer.histogram = new histogram_cls(160, 13, 40);
             
         }
 
@@ -123,10 +130,11 @@ namespace kinematics_20160720
 
         private void UpdateUserInterface()
         {
+            
+
             info_panel_label.Content = debug_string;
             info_panel_label.UpdateLayout();
 
-            
             if (raw_data.Kinematics_Data.Length == raw_data.Raw_Data_Length)
             {
                 data_panel_label.Content = "";
@@ -143,9 +151,10 @@ namespace kinematics_20160720
                 }
             }
             data_panel_label.UpdateLayout();
-
+            
             for (int i = 1; i <= 19; i++)
                 model.Segments[i].calculate_segment_position();
+            //*
             (model.Channels.ToArray())[0].Angle.calculate();
             (model.Channels.ToArray())[1].Angle.calculate();
             (model.Channels.ToArray())[3].Angle.calculate();
@@ -153,31 +162,49 @@ namespace kinematics_20160720
             Double angle2 = (model.Channels.ToArray())[1].Angle.Angle;
             Double angle3 = (model.Channels.ToArray())[3].Angle.Angle;
 
-            /*
-            segment_x_loc.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", model.Segments[1].get_xl()[0], model.Segments[1].get_xl()[1], model.Segments[1].get_xl()[2]);
-            segment_y_loc.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", model.Segments[1].get_yl()[0], model.Segments[1].get_yl()[1], model.Segments[1].get_yl()[2]);
-            segment_z_loc.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", model.Segments[1].get_zl()[0], model.Segments[1].get_zl()[1], model.Segments[1].get_zl()[2]);
-            segment_x_glob.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", model.Segments[2].get_xl()[0], model.Segments[2].get_xl()[1], model.Segments[2].get_xl()[2]);
-            segment_y_glob.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", model.Segments[2].get_yl()[0], model.Segments[2].get_yl()[1], model.Segments[2].get_yl()[2]);
-            segment_z_glob.Content = String.Format("<{0,7:F3}, {1,7:F3}, {2,7:F3}>", model.Segments[2].get_zl()[0], model.Segments[2].get_zl()[1], model.Segments[2].get_zl()[2]);
-
-            Double X1 = model.Segments[1].get_X();
-            Double X2 = model.Segments[2].get_X();
-            Double Y1 = model.Segments[1].get_Y();
-            Double Y2 = model.Segments[2].get_Y();
-            Double Z1 = model.Segments[1].get_Z();
-            Double Z2 = model.Segments[2].get_Z();
-            Double n1 = Math.Sqrt(X1*X1 + Y1*Y1 + Z1*Z1);
-            Double n2 = Math.Sqrt(X2*X2 + Y2*Y2 + Z2*Z2);
-            Double angle_1_2 = Math.Acos((X1*X2 + Y1*Y2 + Z1*Z2)/n1/n2);
-            angle_1_2 = angle_1_2 * 180.0 / Math.PI;
-            //*/
 
             segment1_axis.Content = String.Format("{0,10:F3}", angle1);
             segment2_axis.Content = String.Format("{0,10:F3}", angle2);
             segment_1_2_angle.Content = String.Format("{0,10:F3}", angle3);
             //********************************************************************
-            
+            //*/
+
+            //*
+            model.Segments[1].sensor.accelerometer.histogram_x.add_value(model.Segments[1].sensor.accelerometer.x);
+            if(packet_counter % 40 == 0)
+            {
+                hist_1_1_label.Content = "";
+                for (int i = 0; i < model.Segments[1].sensor.accelerometer.histogram_x.bins.Length; i++)
+                    hist_1_1_label.Content += model.Segments[1].sensor.accelerometer.histogram_x.bins[i].ToString() + " ";
+                hist_1_1_label.Content += "|| " + model.Segments[1].sensor.accelerometer.histogram_x.main_bin.ToString();
+            }
+            model.Segments[1].sensor.accelerometer.histogram_y.add_value(model.Segments[1].sensor.accelerometer.y);
+            if (packet_counter % 40 == 0)
+            {
+                hist_1_2_label.Content = "";
+                for (int i = 0; i < model.Segments[1].sensor.accelerometer.histogram_y.bins.Length; i++)
+                    hist_1_2_label.Content += model.Segments[1].sensor.accelerometer.histogram_y.bins[i].ToString() + " ";
+                hist_1_2_label.Content += "|| " + model.Segments[1].sensor.accelerometer.histogram_y.main_bin.ToString();
+            }
+            model.Segments[1].sensor.accelerometer.histogram_z.add_value(model.Segments[1].sensor.accelerometer.z);
+            if (packet_counter % 40 == 0)
+            {
+                hist_1_3_label.Content = "";
+                for (int i = 0; i < model.Segments[1].sensor.accelerometer.histogram_z.bins.Length; i++)
+                    hist_1_3_label.Content += model.Segments[1].sensor.accelerometer.histogram_z.bins[i].ToString() + " ";
+                hist_1_3_label.Content += "|| " + model.Segments[1].sensor.accelerometer.histogram_z.main_bin.ToString();
+            }
+            //*/
+            //*
+            model.Segments[2].sensor.accelerometer.histogram_x.add_value(model.Segments[2].sensor.accelerometer.x);
+            if (packet_counter % 40 == 0)
+            {
+                hist_2_1_label.Content = "";
+                for (int i = 0; i < model.Segments[2].sensor.accelerometer.histogram_x.bins.Length; i++)
+                    hist_2_1_label.Content += model.Segments[2].sensor.accelerometer.histogram_x.bins[i].ToString() + " ";
+                hist_2_1_label.Content += "|| " + model.Segments[2].sensor.accelerometer.histogram_x.main_bin.ToString();
+            }
+            //*/
         }
 
         private void start_button_Click(object sender, RoutedEventArgs e)
@@ -202,6 +229,8 @@ namespace kinematics_20160720
 
         private void Window_Closed(object sender, EventArgs e)
         {
+            dataReceivingThread.Abort();
+            Thread.Sleep(2000);
             Environment.Exit(0);
         }
 
@@ -212,6 +241,7 @@ namespace kinematics_20160720
             test_results_panel.Content += histogram.bubble_sort_test().ToString() + " bubble_sort_test \r\n --> ";
             test_results_panel.Content += histogram.mean_calculation_test().ToString() + " mean_calculation_test \r\n --> ";
             test_results_panel.Content += histogram.sigma_calculation_test().ToString() + " sigma_calculation_test \r\n --> ";
+            test_results_panel.Content += histogram.bins_calculation_test().ToString() + " bins_calculation_test \r\n --> ";
         }
 
 

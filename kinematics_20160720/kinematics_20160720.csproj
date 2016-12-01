@@ -54,12 +54,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="accelerometer_cls.cs" />
     <Compile Include="angle_cls.cs" />
     <Compile Include="channel_cls.cs" />
+    <Compile Include="gyroscope_cls.cs" />
     <Compile Include="histogram_cls.cs" />
+    <Compile Include="magnetometer_cls.cs" />
     <Compile Include="model_cls.cs" />
     <Compile Include="raw_kinematics_data_cls.cs" />
     <Compile Include="segment_cls.cs" />
+    <Compile Include="sensor_cls.cs" />
     <Compile Include="tester_cls.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

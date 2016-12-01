@@ -6,24 +6,43 @@ using System.Threading.Tasks;
 
 namespace kinematics_20160720
 {
-    class histogram_cls
+    public class histogram_cls
     {
         private int BUFFER_LENGTH;
         private int BINS_NUMBER;
-        private double BIN_WIDTH;
+        private int MIN_MAX_CUT_LENGTH;
 
         private int[] buffer;
-        private int[] bins;
+        private int[] buffer_sorted;
+        private double mean;
+        private double sigma;
+        private double low_edge, high_edge;
+        private double bin_width;
+
+        private int[] Bins;
+        public int[] bins
+        {
+            get { return Bins; }
+        }
+
+        private int Main_bin; // middle of maximal bin
+        public int main_bin
+        {
+            get { return Main_bin; }
+        }
 
         private int recalculation_period;
         private int period_counter = 0;
 
-        public histogram_cls(int buffer_length, int bins_number, double bin_width, int period)
+        public histogram_cls(int buffer_length, int bins_number, int period)
         {
+            MIN_MAX_CUT_LENGTH = 7; // drop 7 min and 7 max values
+
             BUFFER_LENGTH = buffer_length;
             buffer = new int[BUFFER_LENGTH];
+            buffer_sorted = new int[BUFFER_LENGTH];
             BINS_NUMBER = bins_number;
-            bins = new int[BINS_NUMBER];
+            Bins = new int[BINS_NUMBER + 2];  // defined number of bins + all less then + all greater then
 
             recalculation_period = period;
 
@@ -41,7 +60,15 @@ namespace kinematics_20160720
 
             // increment period counter
             period_counter++;
+            if(period_counter >= recalculation_period)
+            {
+                //reset counter
+                recalculation_period = 0;
 
+                // recalculate histogramm
+                histogram_parameters_calculation();
+
+            }
 
         }
 
@@ -71,7 +98,29 @@ namespace kinematics_20160720
         private double mean_calculation(int[] sorted_array, int min_max_cut_length)
         {
             double return_value = 0;
+            int length = sorted_array.Length;
 
+            if(length > (min_max_cut_length*2))
+            {
+                for (int i = min_max_cut_length; i < (length - min_max_cut_length); i++ )
+                    return_value += sorted_array[i];
+                return_value /= (double)(length - min_max_cut_length*2);
+            }
+
+            return return_value;
+        }
+
+        private double mean_calculation(double[] sorted_array, int min_max_cut_length)
+        {
+            double return_value = 0;
+            int length = sorted_array.Length;
+
+            if (length > (min_max_cut_length * 2))
+            {
+                for (int i = min_max_cut_length; i < (length - min_max_cut_length); i++)
+                    return_value += sorted_array[i];
+                return_value /= (double)(length - min_max_cut_length * 2);
+            }
 
             return return_value;
         }
@@ -79,18 +128,87 @@ namespace kinematics_20160720
         private double sigma_calculation(int[] sorted_array, int min_max_cut_length)
         {
             double return_value = 0;
+            int length = sorted_array.Length;
+            double[] deviation = new double[length];
+            double mean = mean_calculation(sorted_array, min_max_cut_length);
 
+            for (int i = 0; i < length; i++)
+                deviation[i] = (double)sorted_array[i] - mean;
+            for (int i = 0; i < length; i++)
+                deviation[i] = deviation[i] * deviation[i];
 
-            return return_value;
+            return_value = mean_calculation(deviation, min_max_cut_length);
+            return_value = Math.Sqrt(return_value);
+
+                return return_value;
+        }
+
+        private void bins_calculation(int[] sorted_array, ref int[] bin_array, int bins_number, double low_edge, double bin_width)
+        {
+            for(int i=0; i<(bins_number+2); i++)
+                bin_array[i] = 0;
+
+            int index = 0;
+            for(int i=0; i<(bins_number+1); i++)
+            {
+                while((index<sorted_array.Length) && (sorted_array[index] < (low_edge + i*bin_width)))
+                {
+                    bin_array[i]++;
+                    index++;
+                }
+            }
+            // fill greater then right edge bin
+            bin_array[bins_number + 1] = sorted_array.Length - index;
         }
 
         public void histogram_parameters_calculation()
         {
+            // sort buffer
+            bubble_sort(buffer, ref buffer_sorted);
+            // calculate mean
+            mean = mean_calculation(buffer_sorted, MIN_MAX_CUT_LENGTH);
+            sigma = sigma_calculation(buffer_sorted, MIN_MAX_CUT_LENGTH);
+
+            low_edge = mean - 3 * sigma;
+            high_edge = mean + 3 * sigma;
+
+            bin_width = (high_edge - low_edge) / BINS_NUMBER;
+
+            // calculate bins
+            bins_calculation(buffer_sorted, ref Bins, BINS_NUMBER, low_edge, bin_width);
+            Main_bin = calculate_main_bin();
 
         }
 
+        int calculate_main_bin()
+        {
+            int max = 0;
+            int max_index = 0;
+            int return_value = 0;
 
-        //******************* TESTS *************************************
+            for(int i=0; i<Bins.Length; i++)
+            {
+                if(max < Bins[i])
+                {
+                    max = Bins[i];
+                    max_index = i;
+                }
+            }
+
+            return_value = (int)(low_edge + max_index * bin_width + bin_width / 2.0);
+
+            return return_value;
+        }
+
+
+        //TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS
+        //TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS
+        //TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS
+        //TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS
+        //TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS
+        //TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS
+        //TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS
+        //TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS ***** TESTS
         public bool bubble_sort_test()
         {
             bool result = false;
@@ -190,7 +308,30 @@ namespace kinematics_20160720
             return result;
         }
 
+        //******************* TESTS *************************************
 
+        public bool bins_calculation_test()
+        {
+            bool result = false;
+            
+            int[] sorted_array = {1,2,3,4,5};
+            int[] right_answer;
+            int[] bin_array = new int[5];
+            
+            bins_calculation(sorted_array, ref bin_array, 3, 1.5, 1.0);
+            right_answer = new int[5] { 1, 1, 1, 1, 1 };
+            result = tester_cls.array_equality(right_answer, bin_array, 5);
+
+            bins_calculation(sorted_array, ref bin_array, 3, 2.5, 3.0);
+            right_answer = new int[5] { 2, 3, 0, 0, 0 };
+            result = result && tester_cls.array_equality(right_answer, bin_array, 5);
+
+            bins_calculation(sorted_array, ref bin_array, 3, -1.5, 1.0);
+            right_answer = new int[5] { 0, 0, 0, 1, 4 };
+            result = result && tester_cls.array_equality(right_answer, bin_array, 5);
+
+            return result;
+        }
 
     }//end class histogram_cls
 }
