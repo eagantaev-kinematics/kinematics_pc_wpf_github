@@ -30,6 +30,11 @@ namespace kinematics_20160720
         {
             get { return Main_bin; }
         }
+        private int Main_bin_value;
+        public int main_bin_value
+        {
+            get { return Main_bin_value; }
+        }
 
         private int recalculation_period;
         private int period_counter = 0;
@@ -195,6 +200,7 @@ namespace kinematics_20160720
                 }
             }
 
+            Main_bin_value = max;
             return_value = (int)(low_edge + max_index * bin_width + bin_width / 2.0);
 
             return return_value;

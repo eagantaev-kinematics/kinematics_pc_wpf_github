@@ -230,6 +230,10 @@
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                     </Grid>
+
+                    <!-- *********************************************** -->
+                    <!-- ****** tablitsa kalibrovochnyh gistogramm****** -->
+                    <!-- *********************************************** -->
                     <Grid Grid.Row="0" Grid.Column="1" ShowGridLines="True">
                         <!-- 5 rows -->
                         <Grid.RowDefinitions>
@@ -259,7 +263,14 @@
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <!-- Place elements in grid -->
-                            <Label Grid.Row="2" Grid.Column="1" x:Name="hist_1_1_label" Content="" />
+                            <Border Grid.Row="0" Grid.Column="0"
+                            BorderThickness="2"
+                            BorderBrush="Black"
+                            Background="LightGray">
+                                <Canvas x:Name="hist_1_1_canvas">
+                                </Canvas>
+                            </Border>
+                            <Label Grid.Row="1" Grid.Column="0" x:Name="hist_1_1_label" Content="" HorizontalAlignment="Center" />
 
                         </Grid>
                         <Grid Grid.Row="1" Grid.Column="2" ShowGridLines="True">
@@ -273,7 +284,14 @@
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <!-- Place elements in grid -->
-                            <Label Grid.Row="2" Grid.Column="1" x:Name="hist_1_2_label" Content="" />
+                            <Border Grid.Row="0" Grid.Column="0"
+                            BorderThickness="2"
+                            BorderBrush="Black"
+                            Background="LightGray">
+                                <Canvas x:Name="hist_1_2_canvas">
+                                </Canvas>
+                            </Border>
+                            <Label Grid.Row="1" Grid.Column="0" x:Name="hist_1_2_label" Content="" HorizontalAlignment="Center" />
 
                         </Grid>
                         <Grid Grid.Row="1" Grid.Column="3" ShowGridLines="True">
@@ -287,7 +305,14 @@
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <!-- Place elements in grid -->
-                            <Label Grid.Row="2" Grid.Column="1" x:Name="hist_1_3_label" Content="" />
+                            <Border Grid.Row="0" Grid.Column="0"
+                            BorderThickness="2"
+                            BorderBrush="Black"
+                            Background="LightGray">
+                                <Canvas x:Name="hist_1_3_canvas">
+                                </Canvas>
+                            </Border>
+                            <Label Grid.Row="1" Grid.Column="0" x:Name="hist_1_3_label" Content="" HorizontalAlignment="Center" />
 
                         </Grid>
                         <Grid Grid.Row="2" Grid.Column="1" ShowGridLines="True">
@@ -301,12 +326,189 @@
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <!-- Place elements in grid -->
-                            <Label Grid.Row="2" Grid.Column="1" x:Name="hist_2_1_label" Content="" />
+                            <Border Grid.Row="0" Grid.Column="0"
+                            BorderThickness="2"
+                            BorderBrush="Black"
+                            Background="LightGray">
+                                <Canvas x:Name="hist_2_1_canvas">
+                                </Canvas>
+                            </Border>
+                            <Label Grid.Row="1" Grid.Column="0" x:Name="hist_2_1_label" Content="" HorizontalAlignment="Center" />
 
                         </Grid>
-                        
+                        <Grid Grid.Row="2" Grid.Column="2" ShowGridLines="True">
+                            <!-- 2 rows -->
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="5*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <!-- 1 column -->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <!-- Place elements in grid -->
+                            <Border Grid.Row="0" Grid.Column="0"
+                            BorderThickness="2"
+                            BorderBrush="Black"
+                            Background="LightGray">
+                                <Canvas x:Name="hist_2_2_canvas">
+                                </Canvas>
+                            </Border>
+                            <Label Grid.Row="1" Grid.Column="0" x:Name="hist_2_2_label" Content="" HorizontalAlignment="Center" />
 
+                        </Grid>
+                        <Grid Grid.Row="2" Grid.Column="3" ShowGridLines="True">
+                            <!-- 2 rows -->
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="5*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <!-- 1 column -->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <!-- Place elements in grid -->
+                            <Border Grid.Row="0" Grid.Column="0"
+                            BorderThickness="2"
+                            BorderBrush="Black"
+                            Background="LightGray">
+                                <Canvas x:Name="hist_2_3_canvas">
+                                </Canvas>
+                            </Border>
+                            <Label Grid.Row="1" Grid.Column="0" x:Name="hist_2_3_label" Content="" HorizontalAlignment="Center" />
+
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="1" ShowGridLines="True">
+                            <!-- 2 rows -->
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="5*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <!-- 1 column -->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <!-- Place elements in grid -->
+                            <Border Grid.Row="0" Grid.Column="0"
+                            BorderThickness="2"
+                            BorderBrush="Black"
+                            Background="LightGray">
+                                <Canvas x:Name="hist_3_1_canvas">
+                                </Canvas>
+                            </Border>
+                            <Label Grid.Row="1" Grid.Column="0" x:Name="hist_3_1_label" Content="" HorizontalAlignment="Center" />
+
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="2" ShowGridLines="True">
+                            <!-- 2 rows -->
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="5*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <!-- 1 column -->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <!-- Place elements in grid -->
+                            <Border Grid.Row="0" Grid.Column="0"
+                            BorderThickness="2"
+                            BorderBrush="Black"
+                            Background="LightGray">
+                                <Canvas x:Name="hist_3_2_canvas">
+                                </Canvas>
+                            </Border>
+                            <Label Grid.Row="1" Grid.Column="0" x:Name="hist_3_2_label" Content="" HorizontalAlignment="Center" />
+
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="3" ShowGridLines="True">
+                            <!-- 2 rows -->
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="5*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <!-- 1 column -->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <!-- Place elements in grid -->
+                            <Border Grid.Row="0" Grid.Column="0"
+                            BorderThickness="2"
+                            BorderBrush="Black"
+                            Background="LightGray">
+                                <Canvas x:Name="hist_3_3_canvas">
+                                </Canvas>
+                            </Border>
+                            <Label Grid.Row="1" Grid.Column="0" x:Name="hist_3_3_label" Content="" HorizontalAlignment="Center" />
+
+                        </Grid>
+                        <Grid Grid.Row="4" Grid.Column="1" ShowGridLines="True">
+                            <!-- 2 rows -->
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="5*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <!-- 1 column -->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <!-- Place elements in grid -->
+                            <Border Grid.Row="0" Grid.Column="0"
+                            BorderThickness="2"
+                            BorderBrush="Black"
+                            Background="LightGray">
+                                <Canvas x:Name="hist_4_1_canvas">
+                                </Canvas>
+                            </Border>
+                            <Label Grid.Row="1" Grid.Column="0" x:Name="hist_4_1_label" Content="" HorizontalAlignment="Center" />
+
+                        </Grid>
+                        <Grid Grid.Row="4" Grid.Column="2" ShowGridLines="True">
+                            <!-- 2 rows -->
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="5*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <!-- 1 column -->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <!-- Place elements in grid -->
+                            <Border Grid.Row="0" Grid.Column="0"
+                            BorderThickness="2"
+                            BorderBrush="Black"
+                            Background="LightGray">
+                                <Canvas x:Name="hist_4_2_canvas">
+                                </Canvas>
+                            </Border>
+                            <Label Grid.Row="1" Grid.Column="0" x:Name="hist_4_2_label" Content="" HorizontalAlignment="Center" />
+
+                        </Grid>
+                        <Grid Grid.Row="4" Grid.Column="3" ShowGridLines="True">
+                            <!-- 2 rows -->
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="5*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <!-- 1 column -->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <!-- Place elements in grid -->
+                            <Border Grid.Row="0" Grid.Column="0"
+                            BorderThickness="2"
+                            BorderBrush="Black"
+                            Background="LightGray">
+                                <Canvas x:Name="hist_4_3_canvas">
+                                </Canvas>
+                            </Border>
+                            <Label Grid.Row="1" Grid.Column="0" x:Name="hist_4_3_label" Content="" HorizontalAlignment="Center" />
+
+                        </Grid>
+ 
                     </Grid>
+                    <!-- *********************************************** -->
+                    <!-- ****** tablitsa kalibrovochnyh gistogramm****** -->
+                    <!-- *********************************************** -->
 
                 </Grid>
             </TabItem>
