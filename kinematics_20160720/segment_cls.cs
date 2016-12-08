@@ -19,11 +19,28 @@ namespace kinematics_20160720
         private Double[] yl;
         private Double[] zl;
 
-        private sensor_cls Sensor;
-        public sensor_cls sensor
+        private sensor_cls Accelerometer, Gyroscope, Magnetometer;
+        public sensor_cls accelerometer
         {
-            set { Sensor = value; }
-            get { return Sensor; }
+            set { Accelerometer = value; }
+            get { return Accelerometer; }
+        }
+        public sensor_cls gyroscope
+        {
+            set { Gyroscope = value; }
+            get { return Gyroscope; }
+        }
+        public sensor_cls magnetometer
+        {
+            set { magnetometer = value; }
+            get { return magnetometer; }
+        }
+
+        private sensor_cls[] Sensors_array = new sensor_cls[3];
+        public sensor_cls[] sensors_array
+        {
+            set { Sensors_array = value; }
+            get { return Sensors_array; }
         }
 
         public Segment_cls(int Segment_id, raw_kinematics_data_cls Raw_data)
@@ -38,7 +55,13 @@ namespace kinematics_20160720
             yl = new Double[3];
             zl = new Double[3];
 
-            Sensor = new sensor_cls();
+            Accelerometer = new sensor_cls();
+            Gyroscope = new sensor_cls();
+            Magnetometer = new sensor_cls();
+
+            Sensors_array[0] = Accelerometer;
+            Sensors_array[1] = Gyroscope;
+            Sensors_array[2] = Magnetometer;
         }
 
         public void calculate_segment_position()
@@ -77,15 +100,15 @@ namespace kinematics_20160720
                     magnet[j - 6] = (Double)aux;
                 }
 
-                Sensor.accelerometer.x = (int)accel[0];
-                Sensor.accelerometer.y = (int)accel[1];
-                Sensor.accelerometer.z = (int)accel[2];
-                Sensor.gyroscope.x = (int)gyro[0];
-                Sensor.gyroscope.y = (int)accel[1];
-                Sensor.gyroscope.z = (int)accel[2];
-                Sensor.magnetometer.x = (int)magnet[0];
-                Sensor.magnetometer.y = (int)magnet[1];
-                Sensor.magnetometer.z = (int)magnet[2];
+                Accelerometer.x = (int)accel[0];
+                Accelerometer.y = (int)accel[1];
+                Accelerometer.z = (int)accel[2];
+                Gyroscope.x = (int)gyro[0];
+                Gyroscope.y = (int)accel[1];
+                Gyroscope.z = (int)accel[2];
+                Magnetometer.x = (int)magnet[0];
+                Magnetometer.y = (int)magnet[1];
+                Magnetometer.z = (int)magnet[2];
 
                 // sformirovat' matricu povorota global'naya-v-lokal'noi ****************************************
                 // 1) normiruem vektory uskoreniya i magnitnogo polya

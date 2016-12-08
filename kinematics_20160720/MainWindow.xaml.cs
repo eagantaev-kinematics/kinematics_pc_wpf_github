@@ -14,7 +14,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using System.Threading;
-using System.Text;
 using System.IO;
 //using System.IO.Ports;
 using System.Net.Sockets;
@@ -29,6 +28,8 @@ namespace kinematics_20160720
     /// </summary>
     public partial class MainWindow : Window
     {
+        metronom_cls metronom = new metronom_cls();
+
         // *****
         raw_kinematics_data_cls raw_data;
         model_cls model;
@@ -85,10 +86,16 @@ namespace kinematics_20160720
 
 
             histogram = new histogram_cls(160, 13, 40);  // object just to run tests
-                      
+
+            metronomeThread = new Thread(new ThreadStart(this.metronome_thread_method));
+            metronomeThread.IsBackground = true;
+            stop_metronome_button.IsEnabled = false;
+            metronomeThread.Start();
         }
 
         private Thread dataReceivingThread;
+        private Thread metronomeThread;
+
         private Boolean doJob = true;
 
 
@@ -168,346 +175,92 @@ namespace kinematics_20160720
             //********************************************************************
             //*/
 
-            histogram_cls hist;
-            Canvas canv;
-            Label lbl;
-            //* 1 row
-            hist = model.Segments[1].sensor.accelerometer.histogram_x;
-            hist.add_value(model.Segments[1].sensor.accelerometer.x);
-            if(packet_counter % 40 == 0)
-            {
+            double ratio = 0;
+            int sensor_type = 0; // 0 - accel, 1 - gyro, 2 - magnet;
 
-                hist_1_1_label.Content = "";
-                hist_1_1_canvas.Children.Clear();
-                double ratio = 0;
-                if (hist.main_bin_value != 0)
-                    ratio = hist_1_1_canvas.ActualHeight * 0.75 / hist.main_bin_value;
-                for (int i = 0; i < hist.bins.Length; i++)
-                {
-                    //hist_1_1_label.Content += model.Segments[1].sensor.accelerometer.histogram_x.bins[i].ToString() + " ";
-                    //hist_1_1_label.Content += hist.bins[i].ToString() + " ";
-                    Line bin_stroke;
-                    bin_stroke = new Line();
-                    bin_stroke.StrokeThickness = 13;
-                    bin_stroke.Stroke = System.Windows.Media.Brushes.LightSteelBlue;  
-                    bin_stroke.X1 = 40 + i * 15;
-                    bin_stroke.X2 = 40 + i * 15;
-                    bin_stroke.Y1 = hist_1_1_canvas.ActualHeight;
-                    bin_stroke.Y2 = hist_1_1_canvas.ActualHeight - (hist.bins[i] * ratio);
-                    hist_1_1_canvas.Children.Add(bin_stroke);
-                }
-                hist_1_1_label.Content += hist.main_bin.ToString();
-            }
-            hist = model.Segments[1].sensor.accelerometer.histogram_y;
-            hist.add_value(model.Segments[1].sensor.accelerometer.y);
-            if (packet_counter % 40 == 0)
-            {
+            histogram_cls[,] hist = new histogram_cls[5, 4];
+            sensor_cls[] sensor = new sensor_cls[5];
 
-                hist_1_2_label.Content = "";
-                hist_1_2_canvas.Children.Clear();
-                double ratio = 0;
-                if (hist.main_bin_value != 0)
-                    ratio = hist_1_2_canvas.ActualHeight * 0.75 / hist.main_bin_value;
-                for (int i = 0; i < hist.bins.Length; i++)
-                {
-                    //hist_1_1_label.Content += model.Segments[1].sensor.accelerometer.histogram_x.bins[i].ToString() + " ";
-                    //hist_1_2_label.Content += hist.bins[i].ToString() + " ";
-                    Line bin_stroke;
-                    bin_stroke = new Line();
-                    bin_stroke.StrokeThickness = 13;
-                    bin_stroke.Stroke = System.Windows.Media.Brushes.LightSteelBlue;
-                    bin_stroke.X1 = 40 + i * 15;
-                    bin_stroke.X2 = 40 + i * 15;
-                    bin_stroke.Y1 = hist_1_2_canvas.ActualHeight;
-                    bin_stroke.Y2 = hist_1_2_canvas.ActualHeight - (hist.bins[i] * ratio);
-                    hist_1_2_canvas.Children.Add(bin_stroke);
-                }
-                hist_1_2_label.Content += hist.main_bin.ToString();
-            }
-            hist = model.Segments[1].sensor.accelerometer.histogram_z;
-            hist.add_value(model.Segments[1].sensor.accelerometer.z);
-            if (packet_counter % 40 == 0)
+            for (int i = 1; i < 5; i++)
             {
+                sensor[i] = model.Segments[i].sensors_array[sensor_type];
+            }
 
-                hist_1_3_label.Content = "";
-                hist_1_3_canvas.Children.Clear();
-                double ratio = 0;
-                if (hist.main_bin_value != 0)
-                    ratio = hist_1_3_canvas.ActualHeight * 0.75 / hist.main_bin_value;
-                for (int i = 0; i < hist.bins.Length; i++)
-                {
-                    //hist_1_1_label.Content += model.Segments[1].sensor.accelerometer.histogram_x.bins[i].ToString() + " ";
-                    //hist_1_3_label.Content += hist.bins[i].ToString() + " ";
-                    Line bin_stroke;
-                    bin_stroke = new Line();
-                    bin_stroke.StrokeThickness = 13;
-                    bin_stroke.Stroke = System.Windows.Media.Brushes.LightSteelBlue;
-                    bin_stroke.X1 = 40 + i * 15;
-                    bin_stroke.X2 = 40 + i * 15;
-                    bin_stroke.Y1 = hist_1_3_canvas.ActualHeight;
-                    bin_stroke.Y2 = hist_1_3_canvas.ActualHeight - (hist.bins[i] * ratio);
-                    hist_1_3_canvas.Children.Add(bin_stroke);
-                }
-                hist_1_3_label.Content += hist.main_bin.ToString();
-            }
-            //*/
-            //* 2 row
-            hist = model.Segments[2].sensor.accelerometer.histogram_x;
-            hist.add_value(model.Segments[2].sensor.accelerometer.x);
-            if (packet_counter % 40 == 0)
-            {
+            
 
-                hist_2_1_label.Content = "";
-                hist_2_1_canvas.Children.Clear();
-                double height = hist_2_1_canvas.ActualHeight;
-                double ratio = 0;
-                if (hist.main_bin_value != 0)
-                    ratio = height * 0.75 / hist.main_bin_value;
-                for (int i = 0; i < hist.bins.Length; i++)
-                {
-                    //hist_1_1_label.Content += model.Segments[1].sensor.accelerometer.histogram_x.bins[i].ToString() + " ";
-                    //hist_1_1_label.Content += hist.bins[i].ToString() + " ";
-                    Line bin_stroke;
-                    bin_stroke = new Line();
-                    bin_stroke.StrokeThickness = 13;
-                    bin_stroke.Stroke = System.Windows.Media.Brushes.LightSteelBlue;
-                    bin_stroke.X1 = 40 + i * 15;
-                    bin_stroke.X2 = 40 + i * 15;
-                    bin_stroke.Y1 = height;
-                    bin_stroke.Y2 = height - (hist.bins[i] * ratio);
-                    hist_2_1_canvas.Children.Add(bin_stroke);
-                }
-                hist_2_1_label.Content += hist.main_bin.ToString();
-            }
-            hist = model.Segments[2].sensor.accelerometer.histogram_y;
-            hist.add_value(model.Segments[2].sensor.accelerometer.y);
-            if (packet_counter % 40 == 0)
+            for (int i = 1; i < 5; i++ )
             {
+                for(int j=1; j<4; j++)
+                    hist[i, j] = sensor[i].histogram_array[j-1];
+            }
 
-                hist_2_2_label.Content = "";
-                hist_2_2_canvas.Children.Clear();
-                double height = hist_2_2_canvas.ActualHeight;
-                double ratio = 0;
-                if (hist.main_bin_value != 0)
-                    ratio = height * 0.75 / hist.main_bin_value;
-                for (int i = 0; i < hist.bins.Length; i++)
-                {
-                    //hist_1_1_label.Content += model.Segments[1].sensor.accelerometer.histogram_x.bins[i].ToString() + " ";
-                    //hist_1_1_label.Content += hist.bins[i].ToString() + " ";
-                    Line bin_stroke;
-                    bin_stroke = new Line();
-                    bin_stroke.StrokeThickness = 13;
-                    bin_stroke.Stroke = System.Windows.Media.Brushes.LightSteelBlue;
-                    bin_stroke.X1 = 40 + i * 15;
-                    bin_stroke.X2 = 40 + i * 15;
-                    bin_stroke.Y1 = height;
-                    bin_stroke.Y2 = height - (hist.bins[i] * ratio);
-                    hist_2_2_canvas.Children.Add(bin_stroke);
-                }
-                hist_2_2_label.Content += hist.main_bin.ToString();
-            }
-            hist = model.Segments[2].sensor.accelerometer.histogram_z;
-            hist.add_value(model.Segments[2].sensor.accelerometer.z);
-            if (packet_counter % 40 == 0)
+            // add value
+            for (int i = 1; i < 5; i++)
             {
+                for (int j = 1; j < 4; j++)
+                    hist[i, j].add_value(sensor[i].xyz[j-1]);
+            }
 
-                hist_2_3_label.Content = "";
-                hist_2_3_canvas.Children.Clear();
-                double height = hist_2_3_canvas.ActualHeight;
-                double ratio = 0;
-                if (hist.main_bin_value != 0)
-                    ratio = height * 0.75 / hist.main_bin_value;
-                for (int i = 0; i < hist.bins.Length; i++)
-                {
-                    //hist_1_1_label.Content += model.Segments[1].sensor.accelerometer.histogram_x.bins[i].ToString() + " ";
-                    //hist_1_1_label.Content += hist.bins[i].ToString() + " ";
-                    Line bin_stroke;
-                    bin_stroke = new Line();
-                    bin_stroke.StrokeThickness = 13;
-                    bin_stroke.Stroke = System.Windows.Media.Brushes.LightSteelBlue;
-                    bin_stroke.X1 = 40 + i * 15;
-                    bin_stroke.X2 = 40 + i * 15;
-                    bin_stroke.Y1 = height;
-                    bin_stroke.Y2 = height - (hist.bins[i] * ratio);
-                    hist_2_3_canvas.Children.Add(bin_stroke);
-                }
-                hist_2_3_label.Content += hist.main_bin.ToString();
-            }
-            //*/
-            //* 3 row
-            hist = model.Segments[3].sensor.accelerometer.histogram_x;
-            hist.add_value(model.Segments[3].sensor.accelerometer.x);
+            Label[,] labels = new Label[5, 4];
+            labels[1, 1] = hist_1_1_label; labels[1, 2] = hist_1_2_label; labels[1, 3] = hist_1_3_label;
+            labels[2, 1] = hist_2_1_label; labels[2, 2] = hist_2_2_label; labels[2, 3] = hist_2_3_label;
+            labels[3, 1] = hist_3_1_label; labels[3, 2] = hist_3_2_label; labels[3, 3] = hist_3_3_label;
+            labels[4, 1] = hist_4_1_label; labels[4, 2] = hist_4_2_label; labels[4, 3] = hist_4_3_label;
+
+            Canvas[,] canvases = new Canvas[5, 4];
+            canvases[1, 1] = hist_1_1_canvas; canvases[1, 2] = hist_1_2_canvas; canvases[1, 3] = hist_1_3_canvas;
+            canvases[2, 1] = hist_2_1_canvas; canvases[2, 2] = hist_2_2_canvas; canvases[2, 3] = hist_2_3_canvas;
+            canvases[3, 1] = hist_3_1_canvas; canvases[3, 2] = hist_3_2_canvas; canvases[3, 3] = hist_3_3_canvas;
+            canvases[4, 1] = hist_4_1_canvas; canvases[4, 2] = hist_4_2_canvas; canvases[4, 3] = hist_4_3_canvas;
+
             if (packet_counter % 40 == 0)
             {
-                lbl = hist_3_1_label;
-                lbl.Content = "";
-                canv = hist_3_1_canvas;
-                canv.Children.Clear();
-                double height = canv.ActualHeight;
-                double ratio = 0;
-                if (hist.main_bin_value != 0)
-                    ratio = height * 0.75 / hist.main_bin_value;
-                for (int i = 0; i < hist.bins.Length; i++)
+                for (int i = 1; i < 5; i++)
                 {
-                    //hist_1_1_label.Content += model.Segments[1].sensor.accelerometer.histogram_x.bins[i].ToString() + " ";
-                    //hist_1_1_label.Content += hist.bins[i].ToString() + " ";
-                    Line bin_stroke;
-                    bin_stroke = new Line();
-                    bin_stroke.StrokeThickness = 13;
-                    bin_stroke.Stroke = System.Windows.Media.Brushes.LightSteelBlue;
-                    bin_stroke.X1 = 40 + i * 15;
-                    bin_stroke.X2 = 40 + i * 15;
-                    bin_stroke.Y1 = height;
-                    bin_stroke.Y2 = height - (hist.bins[i] * ratio);
-                    canv.Children.Add(bin_stroke);
+                    for (int j = 1; j < 4; j++)
+                    {
+                        labels[i, j].Content = "";
+                        canvases[i, j].Children.Clear();
+                        ratio = 0;
+                        if (hist[i, j].main_bin_value != 0)
+                            ratio = canvases[i, j].ActualHeight * 0.75 / hist[i, j].main_bin_value;
+                        for (int k = 0; k < hist[i, j].bins.Length; k++)
+                        {
+                            Line bin_stroke;
+                            bin_stroke = new Line();
+                            bin_stroke.StrokeThickness = 13;
+                            bin_stroke.Stroke = System.Windows.Media.Brushes.LightSteelBlue;
+                            bin_stroke.X1 = 40 + k * 15;
+                            bin_stroke.X2 = 40 + k * 15;
+                            bin_stroke.Y1 = canvases[i, j].ActualHeight;
+                            bin_stroke.Y2 = canvases[i, j].ActualHeight - (hist[i, j].bins[k] * ratio);
+                            canvases[i, j].Children.Add(bin_stroke);
+                        }
+                        labels[i, j].Content += hist[i, j].main_bin.ToString();
+                    }
                 }
-                lbl.Content += hist.main_bin.ToString();
             }
-            hist = model.Segments[3].sensor.accelerometer.histogram_y;
-            hist.add_value(model.Segments[3].sensor.accelerometer.y);
-            if (packet_counter % 40 == 0)
-            {
-                lbl = hist_3_2_label;
-                lbl.Content = "";
-                canv = hist_3_2_canvas;
-                canv.Children.Clear();
-                double height = canv.ActualHeight;
-                double ratio = 0;
-                if (hist.main_bin_value != 0)
-                    ratio = height * 0.75 / hist.main_bin_value;
-                for (int i = 0; i < hist.bins.Length; i++)
-                {
-                    //hist_1_1_label.Content += model.Segments[1].sensor.accelerometer.histogram_x.bins[i].ToString() + " ";
-                    //hist_1_1_label.Content += hist.bins[i].ToString() + " ";
-                    Line bin_stroke;
-                    bin_stroke = new Line();
-                    bin_stroke.StrokeThickness = 13;
-                    bin_stroke.Stroke = System.Windows.Media.Brushes.LightSteelBlue;
-                    bin_stroke.X1 = 40 + i * 15;
-                    bin_stroke.X2 = 40 + i * 15;
-                    bin_stroke.Y1 = height;
-                    bin_stroke.Y2 = height - (hist.bins[i] * ratio);
-                    canv.Children.Add(bin_stroke);
-                }
-                lbl.Content += hist.main_bin.ToString();
-            }
-            hist = model.Segments[3].sensor.accelerometer.histogram_z;
-            hist.add_value(model.Segments[3].sensor.accelerometer.z);
-            if (packet_counter % 40 == 0)
-            {
-                lbl = hist_3_3_label;
-                lbl.Content = "";
-                canv = hist_3_3_canvas;
-                canv.Children.Clear();
-                double height = canv.ActualHeight;
-                double ratio = 0;
-                if (hist.main_bin_value != 0)
-                    ratio = height * 0.75 / hist.main_bin_value;
-                for (int i = 0; i < hist.bins.Length; i++)
-                {
-                    //hist_1_1_label.Content += model.Segments[1].sensor.accelerometer.histogram_x.bins[i].ToString() + " ";
-                    //hist_1_1_label.Content += hist.bins[i].ToString() + " ";
-                    Line bin_stroke;
-                    bin_stroke = new Line();
-                    bin_stroke.StrokeThickness = 13;
-                    bin_stroke.Stroke = System.Windows.Media.Brushes.LightSteelBlue;
-                    bin_stroke.X1 = 40 + i * 15;
-                    bin_stroke.X2 = 40 + i * 15;
-                    bin_stroke.Y1 = height;
-                    bin_stroke.Y2 = height - (hist.bins[i] * ratio);
-                    canv.Children.Add(bin_stroke);
-                }
-                lbl.Content += hist.main_bin.ToString();
-            }
-            //*/
-            //* 4 row
-            hist = model.Segments[4].sensor.accelerometer.histogram_x;
-            hist.add_value(model.Segments[4].sensor.accelerometer.x);
-            if (packet_counter % 40 == 0)
-            {
-                lbl = hist_4_1_label;
-                lbl.Content = "";
-                canv = hist_4_1_canvas;
-                canv.Children.Clear();
-                double height = canv.ActualHeight;
-                double ratio = 0;
-                if (hist.main_bin_value != 0)
-                    ratio = height * 0.75 / hist.main_bin_value;
-                for (int i = 0; i < hist.bins.Length; i++)
-                {
-                    //hist_1_1_label.Content += model.Segments[1].sensor.accelerometer.histogram_x.bins[i].ToString() + " ";
-                    //hist_1_1_label.Content += hist.bins[i].ToString() + " ";
-                    Line bin_stroke;
-                    bin_stroke = new Line();
-                    bin_stroke.StrokeThickness = 13;
-                    bin_stroke.Stroke = System.Windows.Media.Brushes.LightSteelBlue;
-                    bin_stroke.X1 = 40 + i * 15;
-                    bin_stroke.X2 = 40 + i * 15;
-                    bin_stroke.Y1 = height;
-                    bin_stroke.Y2 = height - (hist.bins[i] * ratio);
-                    canv.Children.Add(bin_stroke);
-                }
-                lbl.Content += hist.main_bin.ToString();
-            }
-            hist = model.Segments[4].sensor.accelerometer.histogram_y;
-            hist.add_value(model.Segments[4].sensor.accelerometer.y);
-            if (packet_counter % 40 == 0)
-            {
-                lbl = hist_4_2_label;
-                lbl.Content = "";
-                canv = hist_4_2_canvas;
-                canv.Children.Clear();
-                double height = canv.ActualHeight;
-                double ratio = 0;
-                if (hist.main_bin_value != 0)
-                    ratio = height * 0.75 / hist.main_bin_value;
-                for (int i = 0; i < hist.bins.Length; i++)
-                {
-                    //hist_1_1_label.Content += model.Segments[1].sensor.accelerometer.histogram_x.bins[i].ToString() + " ";
-                    //hist_1_1_label.Content += hist.bins[i].ToString() + " ";
-                    Line bin_stroke;
-                    bin_stroke = new Line();
-                    bin_stroke.StrokeThickness = 13;
-                    bin_stroke.Stroke = System.Windows.Media.Brushes.LightSteelBlue;
-                    bin_stroke.X1 = 40 + i * 15;
-                    bin_stroke.X2 = 40 + i * 15;
-                    bin_stroke.Y1 = height;
-                    bin_stroke.Y2 = height - (hist.bins[i] * ratio);
-                    canv.Children.Add(bin_stroke);
-                }
-                lbl.Content += hist.main_bin.ToString();
-            }
-            hist = model.Segments[4].sensor.accelerometer.histogram_z;
-            hist.add_value(model.Segments[4].sensor.accelerometer.z);
-            if (packet_counter % 40 == 0)
-            {
-                lbl = hist_4_3_label;
-                lbl.Content = "";
-                canv = hist_4_3_canvas;
-                canv.Children.Clear();
-                double height = canv.ActualHeight;
-                double ratio = 0;
-                if (hist.main_bin_value != 0)
-                    ratio = height * 0.75 / hist.main_bin_value;
-                for (int i = 0; i < hist.bins.Length; i++)
-                {
-                    //hist_1_1_label.Content += model.Segments[1].sensor.accelerometer.histogram_x.bins[i].ToString() + " ";
-                    //hist_1_1_label.Content += hist.bins[i].ToString() + " ";
-                    Line bin_stroke;
-                    bin_stroke = new Line();
-                    bin_stroke.StrokeThickness = 13;
-                    bin_stroke.Stroke = System.Windows.Media.Brushes.LightSteelBlue;
-                    bin_stroke.X1 = 40 + i * 15;
-                    bin_stroke.X2 = 40 + i * 15;
-                    bin_stroke.Y1 = height;
-                    bin_stroke.Y2 = height - (hist.bins[i] * ratio);
-                    canv.Children.Add(bin_stroke);
-                }
-                lbl.Content += hist.main_bin.ToString();
-            }
-            //*/
 
 
+        }// end update user interface
+
+        public void metronome_thread_method()
+        {
+            while (true)
+            {
+                if (metronom.metronome_on)
+                {
+                    Thread.Sleep(metronom.period_ms - metronom.lamp_period_ms);
+                    metronom.lamp_on = true;
+                    Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                                        new NoArgDelegate(metronome_blink));
+                    Thread.Sleep(metronom.lamp_period_ms);
+                    metronom.lamp_on = false;
+                    Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                                        new NoArgDelegate(metronome_blink)); 
+                }
+
+            }
         }
 
         private void start_button_Click(object sender, RoutedEventArgs e)
@@ -547,6 +300,42 @@ namespace kinematics_20160720
             test_results_panel.Content += histogram.bins_calculation_test().ToString() + " bins_calculation_test \r\n --> ";
         }
 
+        private void metronome_blink()
+        {
+            if(metronom.lamp_on)
+                metronome_lamp_label.Background = System.Windows.Media.Brushes.Red;
+            else
+                metronome_lamp_label.Background = System.Windows.Media.Brushes.Black;
+        }
+
+        private void start_metronome_button_Click(object sender, RoutedEventArgs e)
+        {
+            int period = 0;
+            try
+            {
+                period = int.Parse(metronome_temp_textbox.Text);
+                if (period > 0)
+                {
+                    period = 60000 / period;
+                    metronom.period_ms = period;
+                }
+            }
+            catch(Exception ex)
+            { }
+
+            start_metronome_button.IsEnabled = false;
+            stop_metronome_button.IsEnabled = true;
+            metronom.metronome_on = true;
+            //metronomeThread.Start();
+        }
+
+        private void stop_metronome_button_Click(object sender, RoutedEventArgs e)
+        {
+            start_metronome_button.IsEnabled = true;
+            stop_metronome_button.IsEnabled = false;
+            metronom.metronome_on = false;
+            //metronomeThread.Abort();
+        }
 
     }
 }// end namespace kinematics_20160720

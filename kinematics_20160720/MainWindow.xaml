@@ -71,6 +71,7 @@
                     <Label Content="Управление нестандартными каналами" HorizontalAlignment="Left" Margin="111,232,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
+            <!-- *************************************************************************************************************************** -->
 
             <TabItem Header="Регистрация">
                 <Grid Background="#FFE5E5E5">
@@ -92,6 +93,7 @@
 
                 </Grid>
             </TabItem>
+            <!-- *************************************************************************************************************************** -->
 
             <TabItem Header="Обработка">
                 <Grid Background="#FFE5E5E5">
@@ -127,9 +129,8 @@
                     <Label Content="Канал --" HorizontalAlignment="Left" Margin="31,33,0,0" VerticalAlignment="Top" FontSize="20"/>
 
                 </Grid>
-
-
             </TabItem>
+            <!-- *************************************************************************************************************************** -->
 
             <TabItem Header="Анализ">
                 <Grid Background="#FFE5E5E5">
@@ -150,9 +151,8 @@
                     </Border>
 
                 </Grid>
-
-
             </TabItem>
+            <!-- *************************************************************************************************************************** -->
 
             <TabItem Header="Данные датчиков">
                 <Grid Background="#FFE5E5E5" Margin="0,0,-0.4,-4.2">
@@ -199,10 +199,117 @@
                     <Label x:Name="segment2_axis" Content="&lt;&gt;" HorizontalAlignment="Left" Margin="1012,675,0,0" VerticalAlignment="Top" Width="256" Background="LightGray"/>
                     <Label x:Name="segment_1_2_angle" Content="&lt;&gt;" HorizontalAlignment="Left" Margin="1012,707,0,0" VerticalAlignment="Top" Width="256" Background="LightGray"/>
 
-
-
                 </Grid>
             </TabItem>
+            <!-- Данные датчиков -->
+            <!-- *************************************************************************************************************************** -->
+
+            <TabItem Header="Регистрация *">
+                <Grid Background="#FFE5E5E5" ShowGridLines="True" Margin="0,0,4.6,-3.2">
+                    <!-- main grid -->
+                    <!-- 1 row -->
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <!-- 2 columns -->
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="4*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Place elements in grid -->
+                    <Grid Grid.Row="0" Grid.Column="0" ShowGridLines="True"><!-- control grid -->
+                        <!-- 3 rows -->
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="5*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <!-- 1 column -->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Place elements in grid -->
+                        <Grid Grid.Row="0" Grid.Column="0" ShowGridLines="True">
+                            <!-- metronome grid -->
+                            <!-- 2 rows -->
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <!-- 2 columns -->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <!-- Place elements in grid -->
+                            <Label Grid.Row="0" Grid.Column="0" Content="Метроном" HorizontalAlignment="Center" />
+                            <Label Grid.Row="0" Grid.Column="0" Content="Темп (уд/мин)" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                            <TextBox x:Name="metronome_temp_textbox" Grid.Row="0" Grid.Column="0" Text="60" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,4,0.4" Width="47" />
+                            <Slider x:Name="metronome_temp_slider" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center"  VerticalAlignment="Center"  Width="117" Minimum="-10" BorderBrush="Black" BorderThickness="1" />
+
+                            <Grid Grid.Row="0" Grid.Column="1" ShowGridLines="True">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <!-- Place elements in grid -->
+                                <Button x:Name="start_metronome_button" Grid.Row="0" Grid.Column="0" Content="Старт" HorizontalAlignment="Center" VerticalAlignment="Center" Click="start_metronome_button_Click"/>
+                                <Button x:Name="stop_metronome_button" Grid.Row="0" Grid.Column="1" Content="Стоп" HorizontalAlignment="Center" VerticalAlignment="Center" Click="stop_metronome_button_Click"/>
+                            </Grid>
+                            <Label x:Name="metronome_lamp_label" Grid.Row="1" Grid.Column="1" Content="" HorizontalAlignment="Center" VerticalAlignment="Center" Width="31"  Height="31" Background="{x:Null}" BorderBrush="Black" BorderThickness="3"/>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="0" ShowGridLines="True">
+                            <!-- data grid -->
+                            <!-- 2 rows -->
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <!-- 2 columns -->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <!-- Place elements in grid -->
+                            <Label Grid.Row="1" Grid.Column="0" Content="Данные" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                            <Grid Grid.Row="1" Grid.Column="1" ShowGridLines="True">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <!-- Place elements in grid -->
+                                <Button x:Name="start_registration_button" Grid.Row="0" Grid.Column="0" Content="Регистрация" HorizontalAlignment="Center" VerticalAlignment="Center" Click="start_metronome_button_Click"/>
+                                <Button x:Name="stop_registration_button" Grid.Row="0" Grid.Column="1" Content="Закончить" HorizontalAlignment="Center" VerticalAlignment="Center" Click="stop_metronome_button_Click"/>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="1" ShowGridLines="True"><!-- graph grid -->
+                        <!-- 2 rows -->
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*"></RowDefinition>
+                            <RowDefinition Height="5*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <!-- 1 column -->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Place elements in grid -->
+                        <Border Grid.Row="0" Grid.Column="0"
+                            BorderThickness="2"
+                            BorderBrush="Black"
+                            Background="LightGray">
+                            <Canvas x:Name="angle_0_canvas">
+                            </Canvas>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <!-- Регистрация * -->
+            <!-- *************************************************************************************************************************** -->
 
             <TabItem Header="Калибровка">
                 <Grid Background="#FFE5E5E5" ShowGridLines="True" Margin="0,0,4.6,-3.2">
@@ -504,7 +611,7 @@
                             <Label Grid.Row="1" Grid.Column="0" x:Name="hist_4_3_label" Content="" HorizontalAlignment="Center" />
 
                         </Grid>
- 
+
                     </Grid>
                     <!-- *********************************************** -->
                     <!-- ****** tablitsa kalibrovochnyh gistogramm****** -->
@@ -512,6 +619,8 @@
 
                 </Grid>
             </TabItem>
+            <!-- Калибровка * -->
+            <!-- *************************************************************************************************************************** -->
 
             <TabItem Header="Тесты">
                 <Grid Background="#FFE5E5E5" ShowGridLines="True" Margin="0,0,4.6,-3.2">
@@ -530,6 +639,7 @@
 
                 </Grid>
             </TabItem>
+            <!-- *************************************************************************************************************************** -->
 
             <TabItem Header="Служебные">
                 <Grid Background="#FFE5E5E5" ShowGridLines="True" Margin="0,0,4.6,-3.2">
@@ -548,6 +658,7 @@
 
                 </Grid>
             </TabItem>
+            <!-- *************************************************************************************************************************** -->
 
         </TabControl>
 
