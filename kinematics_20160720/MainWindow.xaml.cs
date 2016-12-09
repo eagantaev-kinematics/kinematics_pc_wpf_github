@@ -28,6 +28,10 @@ namespace kinematics_20160720
     /// </summary>
     public partial class MainWindow : Window
     {
+        System.Media.SoundPlayer player = new System.Media.SoundPlayer("Speech_Misrecognition.wav");
+        private Thread dataReceivingThread;
+        private Thread metronomeThread;
+        private Thread[] calculate_segment_threads = new Thread[20];
         metronom_cls metronom = new metronom_cls();
 
         // *****
@@ -46,7 +50,7 @@ namespace kinematics_20160720
 
         IPEndPoint local_kinematics_endpoint = new IPEndPoint(0, 0);
 
-
+        angle_graph_cls angle_chart;
 
         string debug_string = "no data\n";
 
@@ -87,14 +91,16 @@ namespace kinematics_20160720
 
             histogram = new histogram_cls(160, 13, 40);  // object just to run tests
 
-            metronomeThread = new Thread(new ThreadStart(this.metronome_thread_method));
-            metronomeThread.IsBackground = true;
+            //metronomeThread = new Thread(new ThreadStart(this.metronome_thread_method));
+            //metronomeThread.IsBackground = true;
             stop_metronome_button.IsEnabled = false;
-            metronomeThread.Start();
+            //metronomeThread.Start();
+
+            angle_chart = new angle_graph_cls(angle_0_graph_canvas);
+
         }
 
-        private Thread dataReceivingThread;
-        private Thread metronomeThread;
+        
 
         private Boolean doJob = true;
 
@@ -119,6 +125,24 @@ namespace kinematics_20160720
                         raw_data.Kinematics_Data = kinematics_listener.Receive(ref remote_endpoint);
                         packet_counter++;
                         debug_string = "packet counter - " + packet_counter.ToString() + "\n";
+                        
+                        for (int i = 1; i <= 19; i++)
+                        {
+                            //calculate_segment_threads[i].Abort();
+                            //calculate_segment_threads[i] = new Thread(new ThreadStart(model.Segments[i].calculate_segment_position));
+                            //calculate_segment_threads[i].IsBackground = true;
+                            //calculate_segment_threads[i].Start();
+
+                            model.Segments[i].calculate_segment_position();
+                        }
+
+                        (model.Channels.ToArray())[0].Angle.calculate();
+                        (model.Channels.ToArray())[1].Angle.calculate();
+                        (model.Channels.ToArray())[3].Angle.calculate();
+
+                        //***************************************************************************
+                        Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                            new NoArgDelegate(UpdateUserInterface));
                     }
                     catch (Exception e)
                     {
@@ -127,9 +151,6 @@ namespace kinematics_20160720
 
                 }
 
-                //***************************************************************************
-                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
-                                    new NoArgDelegate(UpdateUserInterface));
             }
 
         }// end dataReceivingMethod
@@ -141,6 +162,7 @@ namespace kinematics_20160720
             info_panel_label.Content = debug_string;
             info_panel_label.UpdateLayout();
 
+            /*
             if (raw_data.Kinematics_Data.Length == raw_data.Raw_Data_Length)
             {
                 data_panel_label.Content = "";
@@ -160,21 +182,23 @@ namespace kinematics_20160720
             
             for (int i = 1; i <= 19; i++)
                 model.Segments[i].calculate_segment_position();
-            //*
+
             (model.Channels.ToArray())[0].Angle.calculate();
             (model.Channels.ToArray())[1].Angle.calculate();
             (model.Channels.ToArray())[3].Angle.calculate();
+            //*/
             Double angle1 = (model.Channels.ToArray())[0].Angle.Angle;
             Double angle2 = (model.Channels.ToArray())[1].Angle.Angle;
             Double angle3 = (model.Channels.ToArray())[3].Angle.Angle;
 
+            angle_chart.add_stroke(angle1);
 
             segment1_axis.Content = String.Format("{0,10:F3}", angle1);
             segment2_axis.Content = String.Format("{0,10:F3}", angle2);
             segment_1_2_angle.Content = String.Format("{0,10:F3}", angle3);
             //********************************************************************
-            //*/
 
+            /*
             double ratio = 0;
             int sensor_type = 0; // 0 - accel, 1 - gyro, 2 - magnet;
 
@@ -185,7 +209,6 @@ namespace kinematics_20160720
             {
                 sensor[i] = model.Segments[i].sensors_array[sensor_type];
             }
-
             
 
             for (int i = 1; i < 5; i++ )
@@ -235,33 +258,36 @@ namespace kinematics_20160720
                             bin_stroke.Y1 = canvases[i, j].ActualHeight;
                             bin_stroke.Y2 = canvases[i, j].ActualHeight - (hist[i, j].bins[k] * ratio);
                             canvases[i, j].Children.Add(bin_stroke);
+                            canvases[i, j].UpdateLayout();
                         }
                         labels[i, j].Content += hist[i, j].main_bin.ToString();
+                        labels[i, j].UpdateLayout();
                     }
                 }
             }
-
+            //*/
 
         }// end update user interface
 
+        //*
         public void metronome_thread_method()
         {
-            while (true)
+            while (metronom.metronome_on)
             {
-                if (metronom.metronome_on)
-                {
-                    Thread.Sleep(metronom.period_ms - metronom.lamp_period_ms);
-                    metronom.lamp_on = true;
-                    Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
-                                        new NoArgDelegate(metronome_blink));
-                    Thread.Sleep(metronom.lamp_period_ms);
-                    metronom.lamp_on = false;
-                    Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
-                                        new NoArgDelegate(metronome_blink)); 
-                }
-
+                //if (metronom.metronome_on)
+                //{
+                Thread.Sleep(metronom.period_ms - metronom.lamp_period_ms);
+                metronom.lamp_on = true;
+                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                                    new NoArgDelegate(metronome_blink));
+                Thread.Sleep(metronom.lamp_period_ms);
+                metronom.lamp_on = false;
+                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                                    new NoArgDelegate(metronome_blink));
+                //}
             }
         }
+        //*/
 
         private void start_button_Click(object sender, RoutedEventArgs e)
         {
@@ -278,9 +304,8 @@ namespace kinematics_20160720
 
         private void stop_button_Click(object sender, RoutedEventArgs e)
         {
-            //this.Close();
-            //Environment.Exit(0);
             doJob = false;
+            dataReceivingThread.Abort();
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -302,8 +327,14 @@ namespace kinematics_20160720
 
         private void metronome_blink()
         {
-            if(metronom.lamp_on)
+            if (metronom.lamp_on)
+            {
+                angle_chart.add_metronome_marker_stroke();
                 metronome_lamp_label.Background = System.Windows.Media.Brushes.Red;
+                //System.Media.SystemSounds.Asterisk.Play();
+                //Console.Beep(1000, 30);
+                player.Play();
+            }
             else
                 metronome_lamp_label.Background = System.Windows.Media.Brushes.Black;
         }
@@ -327,6 +358,9 @@ namespace kinematics_20160720
             stop_metronome_button.IsEnabled = true;
             metronom.metronome_on = true;
             //metronomeThread.Start();
+            metronomeThread = new Thread(new ThreadStart(this.metronome_thread_method));
+            metronomeThread.IsBackground = true;
+            metronomeThread.Start();
         }
 
         private void stop_metronome_button_Click(object sender, RoutedEventArgs e)
@@ -334,7 +368,8 @@ namespace kinematics_20160720
             start_metronome_button.IsEnabled = true;
             stop_metronome_button.IsEnabled = false;
             metronom.metronome_on = false;
-            //metronomeThread.Abort();
+            metronomeThread.Abort();
+            metronome_lamp_label.Background = System.Windows.Media.Brushes.Black;
         }
 
     }

@@ -36,5 +36,7 @@ namespace kinematics_20160720
             set { Lamp_on = value; }
             get { return Lamp_on; }
         }
+
+
     }
 }

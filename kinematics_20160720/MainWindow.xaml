@@ -302,7 +302,7 @@
                             BorderThickness="2"
                             BorderBrush="Black"
                             Background="LightGray">
-                            <Canvas x:Name="angle_0_canvas">
+                            <Canvas x:Name="angle_0_graph_canvas" Height="212" Width="1200" >
                             </Canvas>
                         </Border>
                     </Grid>

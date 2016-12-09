@@ -17,7 +17,7 @@ namespace kinematics_20160720
 
         }
 
-        public void save(string data_string)
+        public void data_append(string data_string)
         {
 
         }
