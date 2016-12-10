@@ -65,6 +65,7 @@
     <Compile Include="metronom_cls.cs" />
     <Compile Include="model_cls.cs" />
     <Compile Include="raw_kinematics_data_cls.cs" />
+    <Compile Include="registrator_cls.cs" />
     <Compile Include="segment_cls.cs" />
     <Compile Include="sensor_cls.cs" />
     <Compile Include="tester_cls.cs" />

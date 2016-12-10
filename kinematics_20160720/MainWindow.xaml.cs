@@ -54,6 +54,10 @@ namespace kinematics_20160720
 
         string debug_string = "no data\n";
 
+        data_storage_cls storage = new data_storage_cls();
+        registrator_cls registrator;
+        
+
         public MainWindow()
         {
             InitializeComponent();
@@ -98,6 +102,8 @@ namespace kinematics_20160720
 
             angle_chart = new angle_graph_cls(angle_0_graph_canvas);
 
+            registrator = new registrator_cls(storage);
+
         }
 
         
@@ -139,6 +145,12 @@ namespace kinematics_20160720
                         (model.Channels.ToArray())[0].Angle.calculate();
                         (model.Channels.ToArray())[1].Angle.calculate();
                         (model.Channels.ToArray())[3].Angle.calculate();
+
+                        // save data
+                        if(registrator.registering)
+                        {
+                            storage.data_push((model.Channels.ToArray())[0].Angle.Angle);
+                        }
 
                         //***************************************************************************
                         Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
@@ -331,8 +343,13 @@ namespace kinematics_20160720
             {
                 angle_chart.add_metronome_marker_stroke();
                 metronome_lamp_label.Background = System.Windows.Media.Brushes.Red;
-                //System.Media.SystemSounds.Asterisk.Play();
-                //Console.Beep(1000, 30);
+                if (registrator.registering)
+                {
+                    registrator.cycles_counter++;
+                    cycle_count_label.Content = "Циклы: " + registrator.cycles_counter.ToString();
+                    cycle_count_label.UpdateLayout(); 
+                }
+
                 player.Play();
             }
             else
@@ -370,6 +387,16 @@ namespace kinematics_20160720
             metronom.metronome_on = false;
             metronomeThread.Abort();
             metronome_lamp_label.Background = System.Windows.Media.Brushes.Black;
+        }
+
+        private void start_registration_button_Click(object sender, RoutedEventArgs e)
+        {
+            registrator.start_registering();
+        }
+
+        private void stop_registration_button_Click(object sender, RoutedEventArgs e)
+        {
+            registrator.stop_registering();
         }
 
     }

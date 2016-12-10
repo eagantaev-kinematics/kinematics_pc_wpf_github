@@ -273,6 +273,7 @@
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <!-- Place elements in grid -->
+                            <Label x:Name="cycle_count_label" Grid.Row="0" Grid.Column="1" Content="Циклы:" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="16,14,10,14" Width="125" />
                             <Label Grid.Row="1" Grid.Column="0" Content="Данные" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
                             <Grid Grid.Row="1" Grid.Column="1" ShowGridLines="True">
@@ -281,8 +282,8 @@
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <!-- Place elements in grid -->
-                                <Button x:Name="start_registration_button" Grid.Row="0" Grid.Column="0" Content="Регистрация" HorizontalAlignment="Center" VerticalAlignment="Center" Click="start_metronome_button_Click"/>
-                                <Button x:Name="stop_registration_button" Grid.Row="0" Grid.Column="1" Content="Закончить" HorizontalAlignment="Center" VerticalAlignment="Center" Click="stop_metronome_button_Click"/>
+                                <Button x:Name="start_registration_button" Grid.Row="0" Grid.Column="0" Content="Регистрация" HorizontalAlignment="Center" VerticalAlignment="Center" Click="start_registration_button_Click"/>
+                                <Button x:Name="stop_registration_button" Grid.Row="0" Grid.Column="1" Content="Закончить" HorizontalAlignment="Center" VerticalAlignment="Center" Click="stop_registration_button_Click"/>
                             </Grid>
                         </Grid>
                     </Grid>

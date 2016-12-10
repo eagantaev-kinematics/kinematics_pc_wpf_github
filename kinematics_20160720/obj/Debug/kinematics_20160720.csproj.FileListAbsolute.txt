@@ -24,3 +24,16 @@ C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\
 C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug\kinematics_20160720.g.resources
 C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug\kinematics_20160720.Properties.Resources.resources
 C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug\kinematics_20160720.csproj.GenerateResource.Cache
+C:\workspace\vs_workspace\kinematics_pc_wpf_github\kinematics_20160720\bin\Debug\kinematics_20160720.exe.config
+C:\workspace\vs_workspace\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug\kinematics_20160720.exe
+C:\workspace\vs_workspace\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug\kinematics_20160720.pdb
+C:\workspace\vs_workspace\kinematics_pc_wpf_github\kinematics_20160720\bin\Debug\kinematics_20160720.exe
+C:\workspace\vs_workspace\kinematics_pc_wpf_github\kinematics_20160720\bin\Debug\kinematics_20160720.pdb
+C:\workspace\vs_workspace\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug\kinematics_20160720.csprojResolveAssemblyReference.cache
+C:\workspace\vs_workspace\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug\MainWindow.baml
+C:\workspace\vs_workspace\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug\MainWindow.g.cs
+C:\workspace\vs_workspace\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug\App.g.cs
+C:\workspace\vs_workspace\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug\kinematics_20160720_MarkupCompile.cache
+C:\workspace\vs_workspace\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug\kinematics_20160720.g.resources
+C:\workspace\vs_workspace\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug\kinematics_20160720.Properties.Resources.resources
+C:\workspace\vs_workspace\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug\kinematics_20160720.csproj.GenerateResource.Cache
