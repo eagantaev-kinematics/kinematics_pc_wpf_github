@@ -9,8 +9,13 @@ namespace kinematics_20160720
     class data_storage_cls
     {
         private const int DATA_STORAGE_LENGTH = 20000;
-        private int current_in_index = 0;
+        private int Current_in_index = 0;
+        public int current_in_index
+        {
+            get { return Current_in_index; }
+        }
         private double[] Storage = new double[DATA_STORAGE_LENGTH];
+        
         public data_storage_cls()
         {
 
@@ -23,17 +28,21 @@ namespace kinematics_20160720
         public void data_push(double angle)
         {
             Storage[current_in_index] = angle;
-            current_in_index++;
+            Current_in_index++;
         }
         public void cycle_delimiter_push()
         {
             Storage[current_in_index] = Double.NaN;
-            current_in_index++;
+            Current_in_index++;
         }
 
         public void storage_reset()
         {
-            current_in_index = 0;
+            Current_in_index = 0;
+        }
+        public double get_data(int index)
+        {  
+            return Storage[index];
         }
     }
 }

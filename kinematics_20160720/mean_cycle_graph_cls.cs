@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 
+
 namespace kinematics_20160720
 {
-    class angle_graph_cls
+    class mean_cycle_graph_cls
     {
         private int MIN_RANGE = 0;
         private int MAX_RANGE = 180;
@@ -24,7 +25,7 @@ namespace kinematics_20160720
         private int current_X = 0;
         private double old_Y = 0;
 
-        public angle_graph_cls(Canvas graph_canvas)
+        public mean_cycle_graph_cls(Canvas graph_canvas)
         {
             canvas = graph_canvas;
             height = canvas.Height;

@@ -50,7 +50,8 @@ namespace kinematics_20160720
 
         IPEndPoint local_kinematics_endpoint = new IPEndPoint(0, 0);
 
-        angle_graph_cls angle_chart;
+        angle_graph_cls angle_chart0, angle_chart1, angle_chart2;
+        mean_cycle_graph_cls mean_cycle_chart;
 
         string debug_string = "no data\n";
 
@@ -100,9 +101,12 @@ namespace kinematics_20160720
             stop_metronome_button.IsEnabled = false;
             //metronomeThread.Start();
 
-            angle_chart = new angle_graph_cls(angle_0_graph_canvas);
+            angle_chart0 = new angle_graph_cls(angle_0_graph_canvas);
+            angle_chart1 = new angle_graph_cls(angle_1_graph_canvas);
+            angle_chart2 = new angle_graph_cls(angle_2_graph_canvas);
+            //mean_cycle_chart = new mean_cycle_graph_cls(mean_cycle_0_graph_canvas);
 
-            registrator = new registrator_cls(storage);
+            registrator = new registrator_cls(storage, metronom);
 
         }
 
@@ -203,7 +207,10 @@ namespace kinematics_20160720
             Double angle2 = (model.Channels.ToArray())[1].Angle.Angle;
             Double angle3 = (model.Channels.ToArray())[3].Angle.Angle;
 
-            angle_chart.add_stroke(angle1);
+            angle_chart0.add_stroke(angle1);
+            angle_chart1.add_stroke(angle2);
+            angle_chart2.add_stroke(angle3);
+            //mean_cycle_chart.add_stroke(angle2);
 
             segment1_axis.Content = String.Format("{0,10:F3}", angle1);
             segment2_axis.Content = String.Format("{0,10:F3}", angle2);
@@ -341,13 +348,16 @@ namespace kinematics_20160720
         {
             if (metronom.lamp_on)
             {
-                angle_chart.add_metronome_marker_stroke();
+                angle_chart0.add_metronome_marker_stroke();
+                angle_chart1.add_metronome_marker_stroke();
+                angle_chart2.add_metronome_marker_stroke();
                 metronome_lamp_label.Background = System.Windows.Media.Brushes.Red;
                 if (registrator.registering)
                 {
                     registrator.cycles_counter++;
                     cycle_count_label.Content = "Циклы: " + registrator.cycles_counter.ToString();
-                    cycle_count_label.UpdateLayout(); 
+                    cycle_count_label.UpdateLayout();
+                    storage.cycle_delimiter_push();
                 }
 
                 player.Play();
