@@ -104,7 +104,7 @@ namespace kinematics_20160720
             angle_chart0 = new angle_graph_cls(angle_0_graph_canvas);
             angle_chart1 = new angle_graph_cls(angle_1_graph_canvas);
             angle_chart2 = new angle_graph_cls(angle_2_graph_canvas);
-            //mean_cycle_chart = new mean_cycle_graph_cls(mean_cycle_0_graph_canvas);
+            mean_cycle_chart = new mean_cycle_graph_cls(mean_cycle_graph_canvas);
 
             registrator = new registrator_cls(storage, metronom);
 
@@ -407,6 +407,13 @@ namespace kinematics_20160720
         private void stop_registration_button_Click(object sender, RoutedEventArgs e)
         {
             registrator.stop_registering();
+            // draw a mean cycle chart
+            for(int i=0; i<registrator.base_length_value; i++)
+            {
+                double value = registrator.get_mean_cycle_data(i);
+                if (!Double.IsNaN(value))
+                    mean_cycle_chart.add_stroke(value);
+            }
         }
 
     }

@@ -12,6 +12,20 @@ namespace kinematics_20160720
         private bool Registering = false;
         metronom_cls metronome;
 
+        private double[] mean_cycle_buffer;
+        public double get_mean_cycle_data(int index)
+        {
+            if(index < mean_cycle_buffer.Length)
+                return mean_cycle_buffer[index];
+            else
+                return Double.NaN;
+        }
+
+        private int Base_length_value = 0;
+        public int base_length_value
+        {
+            get { return Base_length_value; }
+        }
         private class single_cycle_cls
         {
             int Start_index;
@@ -61,7 +75,7 @@ namespace kinematics_20160720
         private void calculate_mean_cycle()
         {
             // calculate length of mean cycle
-            int base_length_value = metronome.period_ms / 25; // 40 Hz = 25 mSec period
+            Base_length_value = metronome.period_ms / 25; // 40 Hz = 25 mSec period
 
             int i = 0;
             int cycles_counter = 0;
@@ -88,6 +102,31 @@ namespace kinematics_20160720
                 }
             }
 
+            // assemble array of mean cycle
+            mean_cycle_buffer = new double[Base_length_value];
+            int good_cycles_counter = 0;
+            foreach(single_cycle_cls item in list_of_cycles)
+            {
+                if (Math.Abs(item.length - Base_length_value) <= 1)
+                {
+                    // add this cycle to mean
+                    for (int j = 0; j < Math.Min(item.length, Base_length_value); j++)
+                    {
+                        mean_cycle_buffer[j] += Storage.get_data(item.start_index + j);
+                    }
+                    if (item.length < Base_length_value)
+                        mean_cycle_buffer[Base_length_value - 1] = mean_cycle_buffer[Base_length_value - 2];
+                    good_cycles_counter++;
+                }
+            }
+            // calculate mean
+            if (good_cycles_counter > 0)
+            {
+                for (int j = 0; j < Base_length_value; j++)
+                    mean_cycle_buffer[j] /= good_cycles_counter;
+            }
+
         }// end private void calculate_mean_cycle()
+
     }
 }

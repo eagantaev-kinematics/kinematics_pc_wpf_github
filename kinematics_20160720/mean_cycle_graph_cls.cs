@@ -23,7 +23,7 @@ namespace kinematics_20160720
         //private double horizontal_ratio;
 
         private int current_X = 0;
-        private double old_Y = 0;
+        private double old_Y = -1;
 
         public mean_cycle_graph_cls(Canvas graph_canvas)
         {
@@ -41,9 +41,12 @@ namespace kinematics_20160720
                 new_stroke.StrokeThickness = 2;
                 new_stroke.Stroke = System.Windows.Media.Brushes.Green;
                 new_stroke.X1 = current_X;
-                new_stroke.X2 = (current_X+=2);
-                new_stroke.Y1 = old_Y;
+                new_stroke.X2 = (current_X+=5);
                 new_stroke.Y2 = (height - MARGIN) - vertical_ratio * new_value;
+                if (old_Y == -1)
+                    new_stroke.Y1 = new_stroke.Y2;
+                else
+                    new_stroke.Y1 = old_Y;
                 //new_stroke.Y2 = (height - MARGIN) - (Math.Sin(0.01*current_X)*75 + 80);
                 old_Y = new_stroke.Y2;
                 canvas.Children.Add(new_stroke);
@@ -57,20 +60,12 @@ namespace kinematics_20160720
             }
         }
 
-        public void add_metronome_marker_stroke()
+        public void reset_graph()
         {
-                Line marker_stroke = new Line();
-                marker_stroke.StrokeThickness = 3;
-                marker_stroke.Stroke = System.Windows.Media.Brushes.Red;
-                marker_stroke.X1 = current_X;
-                marker_stroke.X2 = current_X;
-                marker_stroke.Y1 = MARGIN;
-                marker_stroke.Y2 = (height - MARGIN);
-                canvas.Children.Add(marker_stroke);
-                canvas.UpdateLayout();
-
+            current_X = 0;
+            old_Y = -1;
+            canvas.Children.Clear();
         }
-
 
 
     }
