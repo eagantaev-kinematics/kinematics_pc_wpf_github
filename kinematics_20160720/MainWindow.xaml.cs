@@ -51,12 +51,14 @@ namespace kinematics_20160720
         IPEndPoint local_kinematics_endpoint = new IPEndPoint(0, 0);
 
         angle_graph_cls angle_chart0, angle_chart1, angle_chart2;
-        mean_cycle_graph_cls mean_cycle_chart;
+        mean_cycle_graph_cls mean_cycle_chart0, mean_cycle_chart1, mean_cycle_chart2;
 
         string debug_string = "no data\n";
 
-        data_storage_cls storage = new data_storage_cls();
-        registrator_cls registrator;
+        data_storage_cls storage0 = new data_storage_cls();
+        data_storage_cls storage1 = new data_storage_cls();
+        data_storage_cls storage2 = new data_storage_cls();
+        registrator_cls registrator0, registrator1, registrator2;
         
 
         public MainWindow()
@@ -104,9 +106,13 @@ namespace kinematics_20160720
             angle_chart0 = new angle_graph_cls(angle_0_graph_canvas);
             angle_chart1 = new angle_graph_cls(angle_1_graph_canvas);
             angle_chart2 = new angle_graph_cls(angle_2_graph_canvas);
-            mean_cycle_chart = new mean_cycle_graph_cls(mean_cycle_graph_canvas);
+            mean_cycle_chart0 = new mean_cycle_graph_cls(channel_0_mean_graph_canvas);
+            mean_cycle_chart1 = new mean_cycle_graph_cls(channel_1_mean_graph_canvas);
+            mean_cycle_chart2 = new mean_cycle_graph_cls(channel_2_mean_graph_canvas);
 
-            registrator = new registrator_cls(storage, metronom);
+            registrator0 = new registrator_cls(storage0, metronom);
+            registrator1 = new registrator_cls(storage1, metronom);
+            registrator2 = new registrator_cls(storage2, metronom);
 
         }
 
@@ -151,9 +157,17 @@ namespace kinematics_20160720
                         (model.Channels.ToArray())[3].Angle.calculate();
 
                         // save data
-                        if(registrator.registering)
+                        if(registrator0.registering)
                         {
-                            storage.data_push((model.Channels.ToArray())[0].Angle.Angle);
+                            storage0.data_push((model.Channels.ToArray())[0].Angle.Angle);
+                        }
+                        if (registrator1.registering)
+                        {
+                            storage1.data_push((model.Channels.ToArray())[1].Angle.Angle);
+                        }
+                        if (registrator2.registering)
+                        {
+                            storage2.data_push((model.Channels.ToArray())[3].Angle.Angle);
                         }
 
                         //***************************************************************************
@@ -352,12 +366,26 @@ namespace kinematics_20160720
                 angle_chart1.add_metronome_marker_stroke();
                 angle_chart2.add_metronome_marker_stroke();
                 metronome_lamp_label.Background = System.Windows.Media.Brushes.Red;
-                if (registrator.registering)
+                if (registrator0.registering)
                 {
-                    registrator.cycles_counter++;
-                    cycle_count_label.Content = "Циклы: " + registrator.cycles_counter.ToString();
+                    registrator0.cycles_counter++;
+                    cycle_count_label.Content = "Циклы: " + registrator0.cycles_counter.ToString();
                     cycle_count_label.UpdateLayout();
-                    storage.cycle_delimiter_push();
+                    storage0.cycle_delimiter_push();
+                }
+                if (registrator1.registering)
+                {
+                    registrator1.cycles_counter++;
+                    cycle_count_label.Content = "Циклы: " + registrator1.cycles_counter.ToString();
+                    cycle_count_label.UpdateLayout();
+                    storage1.cycle_delimiter_push();
+                }
+                if (registrator2.registering)
+                {
+                    registrator2.cycles_counter++;
+                    cycle_count_label.Content = "Циклы: " + registrator2.cycles_counter.ToString();
+                    cycle_count_label.UpdateLayout();
+                    storage2.cycle_delimiter_push();
                 }
 
                 player.Play();
@@ -401,18 +429,38 @@ namespace kinematics_20160720
 
         private void start_registration_button_Click(object sender, RoutedEventArgs e)
         {
-            registrator.start_registering();
+            registrator0.start_registering();
+            registrator1.start_registering();
+            registrator2.start_registering();
         }
 
         private void stop_registration_button_Click(object sender, RoutedEventArgs e)
         {
-            registrator.stop_registering();
+            registrator0.stop_registering();
             // draw a mean cycle chart
-            for(int i=0; i<registrator.base_length_value; i++)
+            for(int i=0; i<registrator0.base_length_value; i++)
             {
-                double value = registrator.get_mean_cycle_data(i);
+                double value = registrator0.get_mean_cycle_data(i);
                 if (!Double.IsNaN(value))
-                    mean_cycle_chart.add_stroke(value);
+                    mean_cycle_chart0.add_stroke(value);
+            }
+
+            registrator1.stop_registering();
+            // draw a mean cycle chart
+            for (int i = 0; i < registrator1.base_length_value; i++)
+            {
+                double value = registrator1.get_mean_cycle_data(i);
+                if (!Double.IsNaN(value))
+                    mean_cycle_chart1.add_stroke(value);
+            }
+
+            registrator2.stop_registering();
+            // draw a mean cycle chart
+            for (int i = 0; i < registrator2.base_length_value; i++)
+            {
+                double value = registrator2.get_mean_cycle_data(i);
+                if (!Double.IsNaN(value))
+                    mean_cycle_chart2.add_stroke(value);
             }
         }
 

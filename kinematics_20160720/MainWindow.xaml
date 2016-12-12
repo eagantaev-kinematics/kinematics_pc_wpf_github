@@ -322,13 +322,40 @@
                             <Canvas x:Name="angle_2_graph_canvas" Height="150" Width="1200" Background="Black">
                             </Canvas>
                         </Border>
-                        <Border Grid.Row="3" Grid.Column="0"
+                        <Grid Grid.Row="3" Grid.Column="0" ShowGridLines="True"><!-- mean cycle graphs grid -->
+                            <!-- 1 row -->
+                            <Grid.RowDefinitions>
+                                <RowDefinition ></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <!-- 3 columns -->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <!-- Place elements in grid -->
+                            <Border Grid.Row="0" Grid.Column="0"
                             BorderThickness="2"
                             BorderBrush="Black"
                             Background="LightGray">
-                            <Canvas x:Name="mean_cycle_graph_canvas" Height="250" Width="1200" Background="Black">
-                            </Canvas>
-                        </Border>
+                                <Canvas x:Name="channel_0_mean_graph_canvas" Height="250" Width="360" Background="Black">
+                                </Canvas>
+                            </Border>
+                            <Border Grid.Row="0" Grid.Column="1"
+                            BorderThickness="2"
+                            BorderBrush="Black"
+                            Background="LightGray">
+                                <Canvas x:Name="channel_1_mean_graph_canvas" Height="250" Width="360" Background="Black">
+                                </Canvas>
+                            </Border>
+                            <Border Grid.Row="0" Grid.Column="2"
+                            BorderThickness="2"
+                            BorderBrush="Black"
+                            Background="LightGray">
+                                <Canvas x:Name="channel_2_mean_graph_canvas" Height="250" Width="360" Background="Black">
+                                </Canvas>
+                            </Border>
+                        </Grid>
                     </Grid>
                 </Grid>
             </TabItem>
