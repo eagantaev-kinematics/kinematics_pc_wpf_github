@@ -20,7 +20,7 @@ namespace kinematics_20160720
         private double height;
         private double width;
         private double vertical_ratio;
-        //private double horizontal_ratio;
+        private int horizontal_step;
 
         private int current_X = 0;
         private double old_Y = -1;
@@ -41,22 +41,18 @@ namespace kinematics_20160720
                 new_stroke.StrokeThickness = 2;
                 new_stroke.Stroke = System.Windows.Media.Brushes.Green;
                 new_stroke.X1 = current_X;
-                new_stroke.X2 = (current_X+=5);
+                new_stroke.X2 = (current_X += horizontal_step);
+                if (new_stroke.X2 > width)
+                    new_stroke.X2 = width;
                 new_stroke.Y2 = (height - MARGIN) - vertical_ratio * new_value;
                 if (old_Y == -1)
                     new_stroke.Y1 = new_stroke.Y2;
                 else
                     new_stroke.Y1 = old_Y;
-                //new_stroke.Y2 = (height - MARGIN) - (Math.Sin(0.01*current_X)*75 + 80);
                 old_Y = new_stroke.Y2;
                 canvas.Children.Add(new_stroke);
                 canvas.UpdateLayout();
 
-                if(current_X >= width)
-                {
-                    current_X = 0;
-                    canvas.Children.Clear();
-                }
             }
         }
 
@@ -65,6 +61,11 @@ namespace kinematics_20160720
             current_X = 0;
             old_Y = -1;
             canvas.Children.Clear();
+        }
+
+        public void calculate_horizontal_step(int data_array_length)
+        {
+            horizontal_step = (int)(width / (double)data_array_length);
         }
 
 

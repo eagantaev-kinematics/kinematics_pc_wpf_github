@@ -436,7 +436,9 @@ namespace kinematics_20160720
 
         private void stop_registration_button_Click(object sender, RoutedEventArgs e)
         {
+            mean_cycle_chart0.reset_graph();
             registrator0.stop_registering();
+            mean_cycle_chart0.calculate_horizontal_step(registrator0.base_length_value);
             // draw a mean cycle chart
             for(int i=0; i<registrator0.base_length_value; i++)
             {
@@ -445,7 +447,9 @@ namespace kinematics_20160720
                     mean_cycle_chart0.add_stroke(value);
             }
 
+            mean_cycle_chart1.reset_graph();
             registrator1.stop_registering();
+            mean_cycle_chart1.calculate_horizontal_step(registrator1.base_length_value);
             // draw a mean cycle chart
             for (int i = 0; i < registrator1.base_length_value; i++)
             {
@@ -454,7 +458,9 @@ namespace kinematics_20160720
                     mean_cycle_chart1.add_stroke(value);
             }
 
+            mean_cycle_chart2.reset_graph();
             registrator2.stop_registering();
+            mean_cycle_chart2.calculate_horizontal_step(registrator2.base_length_value);
             // draw a mean cycle chart
             for (int i = 0; i < registrator2.base_length_value; i++)
             {
