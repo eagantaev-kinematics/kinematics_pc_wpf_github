@@ -192,7 +192,8 @@ namespace kinematics_20160720
             info_panel_label.Content = debug_string;
             info_panel_label.UpdateLayout();
 
-            /*
+            //*
+            // zapolnenie tablicy dannyh datchikov
             if (raw_data.Kinematics_Data.Length == raw_data.Raw_Data_Length)
             {
                 data_panel_label.Content = "";
@@ -210,12 +211,6 @@ namespace kinematics_20160720
             }
             data_panel_label.UpdateLayout();
             
-            for (int i = 1; i <= 19; i++)
-                model.Segments[i].calculate_segment_position();
-
-            (model.Channels.ToArray())[0].Angle.calculate();
-            (model.Channels.ToArray())[1].Angle.calculate();
-            (model.Channels.ToArray())[3].Angle.calculate();
             //*/
             Double angle1 = (model.Channels.ToArray())[0].Angle.Angle;
             Double angle2 = (model.Channels.ToArray())[1].Angle.Angle;
@@ -224,14 +219,13 @@ namespace kinematics_20160720
             angle_chart0.add_stroke(angle1);
             angle_chart1.add_stroke(angle2);
             angle_chart2.add_stroke(angle3);
-            //mean_cycle_chart.add_stroke(angle2);
 
             segment1_axis.Content = String.Format("{0,10:F3}", angle1);
             segment2_axis.Content = String.Format("{0,10:F3}", angle2);
             segment_1_2_angle.Content = String.Format("{0,10:F3}", angle3);
             //********************************************************************
 
-            /*
+            //*
             double ratio = 0;
             int sensor_type = 0; // 0 - accel, 1 - gyro, 2 - magnet;
 
