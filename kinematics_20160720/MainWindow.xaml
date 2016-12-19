@@ -6,69 +6,94 @@
         <TabControl HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="1515" Height="781">
 
             <TabItem Header="Модель">
-                <Grid Background="#FFE5E5E5">
-                    <Border BorderThickness="2" BorderBrush="Black" Width="480" Margin="1020,10,9.6,273">
+                <Grid Background="#FFE5E5E5" ShowGridLines="True" Margin="0,0,4.6,-3.2">
+                    <!-- main grid -->
+                    <!-- 1 row -->
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <!-- 2 columns -->
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Place elements in grid -->
+
+                    <Border Grid.Row="0" Grid.Column="1" BorderThickness="2" BorderBrush="Black" Width="480">
                         <Image x:Name="model_joints_image" Source="C:\workspace\vsProjects\kinematics\kinematics_20160720\kinematics_20160720\model_schema.jpg" Opacity="1.0" ToolTip="Схема расположения датчиков"/>
                         <!--<Image x:Name="model_joints_image" Source="pack://application:,,,/Resources/model_schema.jpg" />-->
                     </Border>
-                    <ComboBox x:Name="standard_channels_combo" HorizontalAlignment="Left" Margin="111,85,0,0" VerticalAlignment="Top" Width="284" ToolTip="Стандартные каналы" Text="Стандартные каналы">
-                        <ComboBoxItem Content="1. Шея 1х3"/>
-                        <ComboBoxItem Content="1.1. Шея сгибание разгибание (сагиттальная)"/>
-                        <ComboBoxItem Content="1.2. Шея наклоны (фронтальная)"/>
-                        <ComboBoxItem Content="1.3. Шея ротация (горизонтальная)"/>
-                        <ComboBoxItem Content="2. Пояснично-грудной 3х5"/>
-                        <ComboBoxItem Content="2.1. Пояснично-грудной сгибание разгибание (сагиттальная)"/>
-                        <ComboBoxItem Content="2.2. Пояснично-грудной наклоны (фронтальная)"/>
-                        <ComboBoxItem Content="2.3. Пояснично-грудной ротация (горизонтальная)"/>
-                        <ComboBoxItem Content="3. Левое плечо 3х7"/>
-                        <ComboBoxItem Content="3.1. Левое плечо сгибание разгибание (сагиттальная)"/>
-                        <ComboBoxItem Content="3.2. Левое плечо отведение приведение (фронтальная)"/>
-                        <ComboBoxItem Content="3.3. Левое плечо ротация (горизонтальная)"/>
-                        <ComboBoxItem Content="4. Правое плечо 3х14"/>
-                        <ComboBoxItem Content="4.1. Правое плечо сгибание разгибание (сагиттальная)"/>
-                        <ComboBoxItem Content="4.2. Правое плечо отведение приведение (фронтальная)"/>
-                        <ComboBoxItem Content="3.3. Правое плечо ротация (горизонтальная)"/>
-                        <ComboBoxItem Content="5. Левый локоть 7х8"/>
-                        <ComboBoxItem Content="6. Правый локоть 14х15"/>
-                        <ComboBoxItem Content="7. Левая кисть 8х9"/>
-                        <ComboBoxItem Content="7.1. Левая кисть сгибание разгибание (сагиттальная)"/>
-                        <ComboBoxItem Content="7.2. Левая кисть отведение приведение (фронтальная)"/>
-                        <ComboBoxItem Content="8. Правая кисть 15х16"/>
-                        <ComboBoxItem Content="8.1. Правая кисть сгибание разгибание (сагиттальная)"/>
-                        <ComboBoxItem Content="8.2. Правая кисть отведение приведение (фронтальная)"/>
-                        <ComboBoxItem Content="9. Левый тазобедренный 5х10"/>
-                        <ComboBoxItem Content="9.1. Левый тазобедренный сгибание разгибание (сагиттальная)"/>
-                        <ComboBoxItem Content="9.2. Левый тазобедренный наклоны (фронтальная)"/>
-                        <ComboBoxItem Content="9.3. Левый тазобедренный ротация (горизонтальная)"/>
-                        <ComboBoxItem Content="10. Правый тазобедренный 5х17"/>
-                        <ComboBoxItem Content="10.1. Правый тазобедренный сгибание разгибание (сагиттальная)"/>
-                        <ComboBoxItem Content="10.2. Правый тазобедренный наклоны (фронтальная)"/>
-                        <ComboBoxItem Content="10.3. Правый тазобедренный ротация (горизонтальная)"/>
-                        <ComboBoxItem Content="11. Левое колено 10х11"/>
-                        <ComboBoxItem Content="12. Правое колено 17х18"/>
-                        <ComboBoxItem Content="13. Левый голеностоп 11х12"/>
-                        <ComboBoxItem Content="13.1. Левый голеностоп сгибание разгибание (сагиттальная)"/>
-                        <ComboBoxItem Content="13.2. Левый голеностоп отведение приведение (фронтальная)"/>
-                        <ComboBoxItem Content="14. Правый голеностоп 18х19"/>
-                        <ComboBoxItem Content="14.1. Правый голеностоп сгибание разгибание (сагиттальная)"/>
-                        <ComboBoxItem Content="14.2. Правый голеностоп отведение приведение (фронтальная)"/>
-                    </ComboBox>
-                    <Label Content="Стандартные каналы" HorizontalAlignment="Left" Margin="111,54,0,0" VerticalAlignment="Top"/>
-                    <Label Content="Нестандартные каналы" HorizontalAlignment="Left" Margin="111,139,0,0" VerticalAlignment="Top"/>
-                    <Label Content="Номер канала" HorizontalAlignment="Left" Margin="111,264,0,0" VerticalAlignment="Top"/>
-                    <Label Content="Название канала" HorizontalAlignment="Left" Margin="210,263,0,0" VerticalAlignment="Top" Width="426" HorizontalContentAlignment="Center"/>
-                    <Label Content="Датчик 1" HorizontalAlignment="Left" Margin="641,263,0,0" VerticalAlignment="Top"/>
-                    <Label Content="Датчик 2" HorizontalAlignment="Left" Margin="705,263,0,0" VerticalAlignment="Top"/>
-                    <Label Content="Добавить/Удалить" HorizontalAlignment="Left" Margin="769,263,0,0" VerticalAlignment="Top" Width="111"/>
-                    <TextBox HorizontalAlignment="Left" Height="23" Margin="138,294,0,0" TextWrapping="Wrap" Text="15" VerticalAlignment="Top" Width="34" HorizontalContentAlignment="Center"/>
-                    <TextBox HorizontalAlignment="Left" Height="23" Margin="210,294,0,0" TextWrapping="Wrap" Text="Нестандартный канал" VerticalAlignment="Top" Width="426"/>
-                    <TextBox HorizontalAlignment="Left" Height="23" Margin="654,294,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="34" HorizontalContentAlignment="Center"/>
-                    <TextBox HorizontalAlignment="Left" Height="23" Margin="718,294,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="34" HorizontalContentAlignment="Center"/>
-                    <Button Content="+" HorizontalAlignment="Left" Margin="808,291,0,0" VerticalAlignment="Top" Width="27" Foreground="Lime" FontSize="16" FontWeight="Bold" VerticalContentAlignment="Top"/>
-                    <ComboBox x:Name="nonstandard_channels_combo" HorizontalAlignment="Left" Margin="111,170,0,0" VerticalAlignment="Top" Width="284" ToolTip="Нестандартные каналы" Text="Стандартные каналы">
 
-                    </ComboBox>
-                    <Label Content="Управление нестандартными каналами" HorizontalAlignment="Left" Margin="111,232,0,0" VerticalAlignment="Top"/>
+                    <Grid Grid.Row="0" Grid.Column="0" ShowGridLines="True">
+                        <!-- 1 row -->
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <!-- 1 columns -->
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Place elements in grid -->
+                        <ComboBox Grid.Row="0" Grid.Column="0"  x:Name="standard_channels_combo" HorizontalAlignment="Left" Margin="111,267,0,0" VerticalAlignment="Top" Width="284" ToolTip="Стандартные каналы" Text="Стандартные каналы">
+                            <ComboBoxItem Content="1. Шея 1х3"/>
+                            <ComboBoxItem Content="1.1. Шея сгибание разгибание (сагиттальная)"/>
+                            <ComboBoxItem Content="1.2. Шея наклоны (фронтальная)"/>
+                            <ComboBoxItem Content="1.3. Шея ротация (горизонтальная)"/>
+                            <ComboBoxItem Content="2. Пояснично-грудной 3х5"/>
+                            <ComboBoxItem Content="2.1. Пояснично-грудной сгибание разгибание (сагиттальная)"/>
+                            <ComboBoxItem Content="2.2. Пояснично-грудной наклоны (фронтальная)"/>
+                            <ComboBoxItem Content="2.3. Пояснично-грудной ротация (горизонтальная)"/>
+                            <ComboBoxItem Content="3. Левое плечо 3х7"/>
+                            <ComboBoxItem Content="3.1. Левое плечо сгибание разгибание (сагиттальная)"/>
+                            <ComboBoxItem Content="3.2. Левое плечо отведение приведение (фронтальная)"/>
+                            <ComboBoxItem Content="3.3. Левое плечо ротация (горизонтальная)"/>
+                            <ComboBoxItem Content="4. Правое плечо 3х14"/>
+                            <ComboBoxItem Content="4.1. Правое плечо сгибание разгибание (сагиттальная)"/>
+                            <ComboBoxItem Content="4.2. Правое плечо отведение приведение (фронтальная)"/>
+                            <ComboBoxItem Content="3.3. Правое плечо ротация (горизонтальная)"/>
+                            <ComboBoxItem Content="5. Левый локоть 7х8"/>
+                            <ComboBoxItem Content="6. Правый локоть 14х15"/>
+                            <ComboBoxItem Content="7. Левая кисть 8х9"/>
+                            <ComboBoxItem Content="7.1. Левая кисть сгибание разгибание (сагиттальная)"/>
+                            <ComboBoxItem Content="7.2. Левая кисть отведение приведение (фронтальная)"/>
+                            <ComboBoxItem Content="8. Правая кисть 15х16"/>
+                            <ComboBoxItem Content="8.1. Правая кисть сгибание разгибание (сагиттальная)"/>
+                            <ComboBoxItem Content="8.2. Правая кисть отведение приведение (фронтальная)"/>
+                            <ComboBoxItem Content="9. Левый тазобедренный 5х10"/>
+                            <ComboBoxItem Content="9.1. Левый тазобедренный сгибание разгибание (сагиттальная)"/>
+                            <ComboBoxItem Content="9.2. Левый тазобедренный наклоны (фронтальная)"/>
+                            <ComboBoxItem Content="9.3. Левый тазобедренный ротация (горизонтальная)"/>
+                            <ComboBoxItem Content="10. Правый тазобедренный 5х17"/>
+                            <ComboBoxItem Content="10.1. Правый тазобедренный сгибание разгибание (сагиттальная)"/>
+                            <ComboBoxItem Content="10.2. Правый тазобедренный наклоны (фронтальная)"/>
+                            <ComboBoxItem Content="10.3. Правый тазобедренный ротация (горизонтальная)"/>
+                            <ComboBoxItem Content="11. Левое колено 10х11"/>
+                            <ComboBoxItem Content="12. Правое колено 17х18"/>
+                            <ComboBoxItem Content="13. Левый голеностоп 11х12"/>
+                            <ComboBoxItem Content="13.1. Левый голеностоп сгибание разгибание (сагиттальная)"/>
+                            <ComboBoxItem Content="13.2. Левый голеностоп отведение приведение (фронтальная)"/>
+                            <ComboBoxItem Content="14. Правый голеностоп 18х19"/>
+                            <ComboBoxItem Content="14.1. Правый голеностоп сгибание разгибание (сагиттальная)"/>
+                            <ComboBoxItem Content="14.2. Правый голеностоп отведение приведение (фронтальная)"/>
+                        </ComboBox>
+                        <Label Grid.Row="0" Grid.Column="0" Content="Стандартные каналы" HorizontalAlignment="Left" Margin="111,236,0,0" VerticalAlignment="Top"/>
+                        <Label Grid.Row="0" Grid.Column="0" Content="Нестандартные каналы" HorizontalAlignment="Left" Margin="111,321,0,0" VerticalAlignment="Top"/>
+                        <Label Grid.Row="0" Grid.Column="0" Content="Номер канала" HorizontalAlignment="Left" Margin="111,70,0,0" VerticalAlignment="Top"/>
+                        <Label Grid.Row="0" Grid.Column="0" Content="Название канала" HorizontalAlignment="Left" Margin="210,69,0,0" VerticalAlignment="Top" Width="426" HorizontalContentAlignment="Center"/>
+                        <Label Grid.Row="0" Grid.Column="0" Content="Датчик 1" HorizontalAlignment="Left" Margin="641,69,0,0" VerticalAlignment="Top"/>
+                        <Label Grid.Row="0" Grid.Column="0" Content="Датчик 2" HorizontalAlignment="Left" Margin="705,69,0,0" VerticalAlignment="Top"/>
+                        <Label Grid.Row="0" Grid.Column="0" Content="Добавить/Удалить" HorizontalAlignment="Left" Margin="769,69,0,0" VerticalAlignment="Top" Width="111"/>
+                        <TextBox Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Height="23" Margin="138,100,0,0" TextWrapping="Wrap" Text="15" VerticalAlignment="Top" Width="34" HorizontalContentAlignment="Center"/>
+                        <TextBox Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Height="23" Margin="210,100,0,0" TextWrapping="Wrap" Text="Нестандартный канал" VerticalAlignment="Top" Width="426"/>
+                        <TextBox Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Height="23" Margin="654,100,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="34" HorizontalContentAlignment="Center"/>
+                        <TextBox Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Height="23" Margin="718,100,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="34" HorizontalContentAlignment="Center"/>
+                        <Button Grid.Row="0" Grid.Column="0" Content="+" HorizontalAlignment="Left" Margin="808,97,0,0" VerticalAlignment="Top" Width="27" Foreground="Lime" FontSize="16" FontWeight="Bold" VerticalContentAlignment="Top"/>
+                        <ComboBox Grid.Row="0" Grid.Column="0" x:Name="nonstandard_channels_combo" HorizontalAlignment="Left" Margin="111,352,0,0" VerticalAlignment="Top" Width="284" ToolTip="Нестандартные каналы" Text="Стандартные каналы">
+                        </ComboBox>
+                        <Label Grid.Row="0" Grid.Column="0" Content="Управление нестандартными каналами" HorizontalAlignment="Left" Margin="111,38,0,0" VerticalAlignment="Top"/>
+                    </Grid>
                 </Grid>
             </TabItem>
             <!-- *************************************************************************************************************************** -->
@@ -218,7 +243,8 @@
                     </Grid.ColumnDefinitions>
 
                     <!-- Place elements in grid -->
-                    <Grid Grid.Row="0" Grid.Column="0" ShowGridLines="True"><!-- control grid -->
+                    <Grid Grid.Row="0" Grid.Column="0" ShowGridLines="True">
+                        <!-- control grid -->
                         <!-- 3 rows -->
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"></RowDefinition>
@@ -287,7 +313,8 @@
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid Grid.Row="0" Grid.Column="1" ShowGridLines="True"><!-- graph grid -->
+                    <Grid Grid.Row="0" Grid.Column="1" ShowGridLines="True">
+                        <!-- graph grid -->
                         <!-- 2 rows -->
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1.5*"></RowDefinition>
@@ -322,7 +349,8 @@
                             <Canvas x:Name="angle_2_graph_canvas" Height="150" Width="1200" Background="Black">
                             </Canvas>
                         </Border>
-                        <Grid Grid.Row="3" Grid.Column="0" ShowGridLines="True"><!-- mean cycle graphs grid -->
+                        <Grid Grid.Row="3" Grid.Column="0" ShowGridLines="True">
+                            <!-- mean cycle graphs grid -->
                             <!-- 1 row -->
                             <Grid.RowDefinitions>
                                 <RowDefinition ></RowDefinition>
