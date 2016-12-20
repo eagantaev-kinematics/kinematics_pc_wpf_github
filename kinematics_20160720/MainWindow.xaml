@@ -730,14 +730,15 @@
                         <!-- 1 column -->
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Label x:Name="debug_info_panel" Content="" HorizontalAlignment="Left" Height="687" Margin="20,25,0,0" VerticalAlignment="Top" Width="1429"/>
 
                     <!-- Place elements in grid -->
-
+                    <Label x:Name="debug_info_panel" Content="" HorizontalAlignment="Left" Height="687" Margin="20,25,0,0" VerticalAlignment="Top" Width="1429"/>
 
                 </Grid>
             </TabItem>
             <!-- *************************************************************************************************************************** -->
+            
+
 
         </TabControl>
 
