@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,8 @@ using System.IO;
 using System.Net.Sockets;
 using System.Net;
 
+using System.Runtime.InteropServices; 
+
 
 
 namespace kinematics_20160720
@@ -28,6 +31,8 @@ namespace kinematics_20160720
     /// </summary>
     public partial class MainWindow : Window
     {
+        
+
         System.Media.SoundPlayer player = new System.Media.SoundPlayer("Speech_Misrecognition.wav");
         private Thread dataReceivingThread;
         private Thread metronomeThread;
@@ -59,7 +64,16 @@ namespace kinematics_20160720
         data_storage_cls storage1 = new data_storage_cls();
         data_storage_cls storage2 = new data_storage_cls();
         registrator_cls registrator0, registrator1, registrator2;
-        
+
+        System.Windows.Forms.Control userControl_unity3d = new System.Windows.Forms.Control();
+        //адрес приложения 
+        string unity_game_path = "C:\\workspace\\unity_workspace\\skeleton\\skeleton_00_01\\skeleton_00_01\\skeleton_00_01.exe";
+        //string unity_game_path = "C:\\workspace\\unity_workspace\\cmd.exe";
+        ProcessStartInfo MyPSI;
+        Process unity_game_process;
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);  
+
 
         public MainWindow()
         {
@@ -114,6 +128,19 @@ namespace kinematics_20160720
             registrator1 = new registrator_cls(storage1, metronom);
             registrator2 = new registrator_cls(storage2, metronom);
 
+            //windowsFormsHost.Child = userControl_unity3d;
+            //MyPSI = new ProcessStartInfo(unity_game_path);
+            //unity_game_process = new Process();
+            //unity_game_process.StartInfo = MyPSI;
+            //unity_game_process.Start();
+            //System.IntPtr handle1 = unity_game_process.MainWindowHandle;
+            //System.IntPtr handle2 = userControl_unity3d.Handle;
+            //SetParent(handle1, handle2);
+
+
+            //(windowsFormsHost.Child as System.Windows.Forms.WebBrowser).Navigate("file:///C:/workspace/unity_workspace/skeleton/skeleton_00_01/skeleton_00_01/web_play/web_play.html");
+            
+            
         }
 
         
@@ -462,7 +489,13 @@ namespace kinematics_20160720
                 if (!Double.IsNaN(value))
                     mean_cycle_chart2.add_stroke(value);
             }
+        }//end private void stop_registration_button_Click(object sender, RoutedEventArgs e)
+
+        private void wbWinForms_DocumentTitleChanged(object sender, EventArgs e)
+        {
+                this.Title = (sender as System.Windows.Forms.WebBrowser).DocumentTitle;
         }
 
-    }
+    }//end public partial class MainWindow : Window
+    //************************************************************************************************
 }// end namespace kinematics_20160720
