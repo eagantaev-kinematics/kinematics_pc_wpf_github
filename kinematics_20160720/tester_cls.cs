@@ -29,6 +29,33 @@ namespace kinematics_20160720
                 return result;
         }
 
+        public static bool array_equality(double[] array1, double[] array2, int length)
+        {
+            bool result = true;
+            double EPSILON = 0.00000001;
+
+            double abs_min = 0.0;
+            // look up for abs min of array
+            for (int i = 0; i < length; i++)
+            {
+                if (abs_min > Math.Abs(array1[i]))
+                    abs_min = Math.Abs(array1[i]);
+                if (abs_min > Math.Abs(array2[i]))
+                    abs_min = Math.Abs(array2[i]);
+            }
+
+            if (abs_min != 0.0)
+                EPSILON = abs_min * 0.00001;
+
+            for (int i = 0; i < length; i++)
+            {
+                if (Math.Abs(array1[i] - array2[i]) > EPSILON)
+                    result = false;
+            }
+
+            return result;
+        }
+
         public static bool equality(int right_answer, int result)
         {
             if (right_answer == result)

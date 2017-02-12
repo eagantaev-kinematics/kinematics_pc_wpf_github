@@ -31,15 +31,38 @@ namespace kinematics_20160720
             height = canvas.Height;
             width = canvas.Width;
 
-            vertical_ratio = height / (MAX_RANGE - MIN_RANGE - 2*MARGIN);
+            vertical_ratio = (height - 2 * MARGIN) / (MAX_RANGE - MIN_RANGE);
         }
-        public void add_stroke(double new_value)
+        public void add_stroke(double new_value, int brush_type)
         {
             if((new_value >= MIN_RANGE) && (new_value <= MAX_RANGE))
             {
                 Line new_stroke = new Line();
-                new_stroke.StrokeThickness = 2;
-                new_stroke.Stroke = System.Windows.Media.Brushes.Green;
+                if (brush_type == 0)
+                {
+                    new_stroke.StrokeThickness = 2;
+                    new_stroke.Stroke = System.Windows.Media.Brushes.Green; 
+                }
+                else if (brush_type == 1)
+                {
+                    new_stroke.StrokeThickness = 3;
+                    new_stroke.Stroke = System.Windows.Media.Brushes.Red;
+                }
+                else if (brush_type == 2)
+                {
+                    new_stroke.StrokeThickness = 3;
+                    new_stroke.Stroke = System.Windows.Media.Brushes.Blue;
+                }
+                else if (brush_type == 3)
+                {
+                    new_stroke.StrokeThickness = 3;
+                    new_stroke.Stroke = System.Windows.Media.Brushes.Yellow;
+                }
+                else if (brush_type == 4)
+                {
+                    new_stroke.StrokeThickness = 2;
+                    new_stroke.Stroke = System.Windows.Media.Brushes.White;
+                }
                 new_stroke.X1 = current_X;
                 new_stroke.X2 = (current_X += horizontal_step);
                 if (new_stroke.X2 > width)
@@ -61,6 +84,11 @@ namespace kinematics_20160720
             current_X = 0;
             old_Y = -1;
             canvas.Children.Clear();
+        }
+        public void rewind_graph()
+        {
+            current_X = 0;
+            old_Y = -1;
         }
 
         public void calculate_horizontal_step(int data_array_length)

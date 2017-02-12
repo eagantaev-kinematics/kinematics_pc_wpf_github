@@ -37,3 +37,13 @@ C:\workspace\vs_workspace\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug
 C:\workspace\vs_workspace\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug\kinematics_20160720.g.resources
 C:\workspace\vs_workspace\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug\kinematics_20160720.Properties.Resources.resources
 C:\workspace\vs_workspace\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug\kinematics_20160720.csproj.GenerateResource.Cache
+C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug\chart0_window.baml
+C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug\chart0_window.g.cs
+C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\bin\Debug\OxyPlot.dll
+C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\bin\Debug\OxyPlot.Wpf.dll
+C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\bin\Debug\OxyPlot.pdb
+C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\bin\Debug\OxyPlot.xml
+C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\bin\Debug\OxyPlot.Wpf.pdb
+C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\bin\Debug\OxyPlot.Wpf.xml
+C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug\kinematics_20160720_MarkupCompile.lref

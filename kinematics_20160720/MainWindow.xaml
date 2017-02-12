@@ -333,27 +333,66 @@
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
 
-                        <!-- Place elements in grid -->
-                        <Border Grid.Row="0" Grid.Column="0"
+                        <!-- okno grafika pervogo ugla -->
+                        <Border Grid.Row="0" Grid.Column="0"     
                             BorderThickness="2"
                             BorderBrush="Black"
                             Background="LightGray">
-                            <Canvas x:Name="angle_0_graph_canvas" Height="150" Width="1200" Background="Black">
-                            </Canvas>
+
+                            <Grid ShowGridLines="True">
+                                <!-- dve stroki dva stolbca -->
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="10*"></RowDefinition>
+                                    <RowDefinition Height="1*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="40*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Canvas Grid.Row="0" Grid.Column="1" Height="143" Width="1170" x:Name="angle_0_graph_canvas" Background="Black" Margin="0.4,0,0,0" VerticalAlignment="Top">
+                                    <Label x:Name="chart0_legend_label" Content="Канал 1" Height="25" Canvas.Left="555" Width="52" Foreground="White"/>
+                                </Canvas>
+                            </Grid>
                         </Border>
-                        <Border Grid.Row="1" Grid.Column="0"
+                        <!-- okno grafika vtorogo ugla -->
+                        <Border Grid.Row="1" Grid.Column="0"     
                             BorderThickness="2"
                             BorderBrush="Black"
                             Background="LightGray">
-                            <Canvas x:Name="angle_1_graph_canvas" Height="150" Width="1200" Background="Black">
-                            </Canvas>
+                            <Grid ShowGridLines="True">
+                                <!-- dve stroki dva stolbca -->
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="10*"></RowDefinition>
+                                    <RowDefinition Height="1*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="40*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Canvas Grid.Row="0" Grid.Column="1" Height="143" Width="1170" x:Name="angle_1_graph_canvas" Background="Black">
+                                    <Label x:Name="chart1_legend_label" Content="Канал 2" Height="25" Canvas.Left="555" Width="52" Foreground="White"/>
+                                </Canvas>
+                            </Grid>
                         </Border>
-                        <Border Grid.Row="2" Grid.Column="0"
+                        <!-- okno grafika tretiego ugla -->
+                        <Border Grid.Row="2" Grid.Column="0"     
                             BorderThickness="2"
                             BorderBrush="Black"
                             Background="LightGray">
-                            <Canvas x:Name="angle_2_graph_canvas" Height="150" Width="1200" Background="Black">
-                            </Canvas>
+                            <Grid ShowGridLines="True">
+                                <!-- dve stroki dva stolbca -->
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="10*"></RowDefinition>
+                                    <RowDefinition Height="1*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="40*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Canvas Grid.Row="0" Grid.Column="1" Height="143" Width="1170" x:Name="angle_2_graph_canvas" Background="Black">
+                                    <Label x:Name="chart2_legend_label" Content="Канал 3" Height="25" Canvas.Left="555" Width="52" Foreground="White" Canvas.Top="2"/>
+                                </Canvas>
+                            </Grid>
                         </Border>
                         <Grid Grid.Row="3" Grid.Column="0" ShowGridLines="True">
                             <!-- mean cycle graphs grid -->
@@ -372,7 +411,7 @@
                             BorderThickness="2"
                             BorderBrush="Black"
                             Background="LightGray">
-                                <Canvas x:Name="channel_0_mean_graph_canvas" Height="250" Width="360" Background="Black">
+                                <Canvas x:Name="channel_0_mean_graph_canvas" Height="250" Width="360" Background="Black" MouseLeftButtonUp="on_channel0_mean_chart_mouse_left_up">
                                 </Canvas>
                             </Border>
                             <Border Grid.Row="0" Grid.Column="1"

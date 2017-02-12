@@ -72,8 +72,9 @@ namespace kinematics_20160720
         ProcessStartInfo MyPSI;
         Process unity_game_process;
         [DllImport("user32.dll", SetLastError = true)]
-        private static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);  
+        private static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
 
+        chart0_window chart0Window;
 
         public MainWindow()
         {
@@ -117,9 +118,9 @@ namespace kinematics_20160720
             stop_metronome_button.IsEnabled = false;
             //metronomeThread.Start();
 
-            angle_chart0 = new angle_graph_cls(angle_0_graph_canvas);
-            angle_chart1 = new angle_graph_cls(angle_1_graph_canvas);
-            angle_chart2 = new angle_graph_cls(angle_2_graph_canvas);
+            angle_chart0 = new angle_graph_cls(angle_0_graph_canvas, chart0_legend_label);
+            angle_chart1 = new angle_graph_cls(angle_1_graph_canvas, chart1_legend_label);
+            angle_chart2 = new angle_graph_cls(angle_2_graph_canvas, chart2_legend_label);
             mean_cycle_chart0 = new mean_cycle_graph_cls(channel_0_mean_graph_canvas);
             mean_cycle_chart1 = new mean_cycle_graph_cls(channel_1_mean_graph_canvas);
             mean_cycle_chart2 = new mean_cycle_graph_cls(channel_2_mean_graph_canvas);
@@ -139,7 +140,7 @@ namespace kinematics_20160720
 
 
             //(windowsFormsHost.Child as System.Windows.Forms.WebBrowser).Navigate("file:///C:/workspace/unity_workspace/skeleton/skeleton_00_01/skeleton_00_01/web_play/web_play.html");
-            
+
             
         }
 
@@ -373,10 +374,11 @@ namespace kinematics_20160720
         {
             test_results_panel.Content += "\r\n --> ";
 
-            test_results_panel.Content += histogram.bubble_sort_test().ToString() + " bubble_sort_test \r\n --> ";
+            test_results_panel.Content += histogram.bubble_sort_test().ToString() + " histogram.bubble_sort_test \r\n --> ";
             test_results_panel.Content += histogram.mean_calculation_test().ToString() + " mean_calculation_test \r\n --> ";
             test_results_panel.Content += histogram.sigma_calculation_test().ToString() + " sigma_calculation_test \r\n --> ";
             test_results_panel.Content += histogram.bins_calculation_test().ToString() + " bins_calculation_test \r\n --> ";
+            test_results_panel.Content += registrator0.bubble_sorting_test().ToString() + " registrator0.bubble_sorting_test \r\n --> ";
         }
 
         private void metronome_blink()
@@ -460,40 +462,229 @@ namespace kinematics_20160720
             mean_cycle_chart0.reset_graph();
             registrator0.stop_registering();
             mean_cycle_chart0.calculate_horizontal_step(registrator0.base_length_value);
-            // draw a mean cycle chart
-            for(int i=0; i<registrator0.base_length_value; i++)
+            
+            // draw charts of elementary cycles
+            foreach (registrator_cls.single_cycle_cls item in registrator0.list_of_cycles)
             {
+                mean_cycle_chart0.rewind_graph();
+                if (Math.Abs(item.length - registrator0.Base_length_value) <= 1)
+                {
+                    for (int i = 0; i < registrator0.base_length_value; i++)
+                    {
+                        // draw stroke of cycle
+                        double value;
+                        if ((item.length < registrator0.Base_length_value) && (i >= item.length))
+                            value = registrator0.Storage.get_data(item.start_index + item.length - 1);
+                        else
+                            value = registrator0.Storage.get_data(item.start_index + i);
+                        mean_cycle_chart0.add_stroke(value, 0);
+                    }  
+                }
+            }
+            // draw charts of smoothed elementary cycles
+            foreach (registrator_cls.single_cycle_cls item in registrator0.list_of_cycles)
+            {
+                mean_cycle_chart0.rewind_graph();
+                if (Math.Abs(item.length - registrator0.Base_length_value) <= 1)
+                {
+                    for (int i = 0; i < registrator0.base_length_value; i++)
+                    {
+                        // draw stroke of cycle
+                        double value;
+                        if ((item.length < registrator0.Base_length_value) && (i >= item.length))
+                            value = registrator0.Storage.get_data(item.start_index + item.length - 1);
+                        else
+                            value = registrator0.Storage.get_smoothed_data(item.start_index + i);
+                        mean_cycle_chart0.add_stroke(value, 4);
+                    }
+                }
+            }
+            // draw a mean cycle chart
+            mean_cycle_chart0.rewind_graph();
+            for (int i = 0; i < registrator0.base_length_value; i++)
+            {
+                // draw stroke of mean cycle graph
                 double value = registrator0.get_mean_cycle_data(i);
                 if (!Double.IsNaN(value))
-                    mean_cycle_chart0.add_stroke(value);
+                    mean_cycle_chart0.add_stroke(value, 2);
             }
+            // draw a filtered mean cycle chart
+            mean_cycle_chart0.rewind_graph();
+            for (int i = 0; i < registrator0.base_length_value; i++)
+            {
+                // draw stroke of mean cycle graph
+                double value = registrator0.get_filtered_mean_cycle_data(i);
+                if (!Double.IsNaN(value))
+                    mean_cycle_chart0.add_stroke(value, 3);
+            }
+
+            // draw a smoothed mean cycle chart
+            mean_cycle_chart0.rewind_graph();
+            for (int i = 0; i < registrator0.base_length_value; i++)
+            {
+                // draw stroke of mean cycle graph
+                double value = registrator0.get_smoothed_cycle_data(i);
+                if (!Double.IsNaN(value))
+                    mean_cycle_chart0.add_stroke(value, 1);
+            }
+
 
             mean_cycle_chart1.reset_graph();
             registrator1.stop_registering();
             mean_cycle_chart1.calculate_horizontal_step(registrator1.base_length_value);
+            
+            // draw charts of elementary cycles
+            foreach (registrator_cls.single_cycle_cls item in registrator1.list_of_cycles)
+            {
+                mean_cycle_chart1.rewind_graph();
+                if (Math.Abs(item.length - registrator1.Base_length_value) <= 1)
+                {
+                    for (int i = 0; i < registrator1.base_length_value; i++)
+                    {
+                        // draw stroke of cycle
+                        double value;
+                        if ((item.length < registrator1.Base_length_value) && (i >= item.length))
+                            value = registrator1.Storage.get_data(item.start_index + item.length - 1);
+                        else
+                            value = registrator1.Storage.get_data(item.start_index + i);
+                        mean_cycle_chart1.add_stroke(value, 0);
+                    }
+                }
+            }
+            // draw charts of smoothed elementary cycles
+            foreach (registrator_cls.single_cycle_cls item in registrator1.list_of_cycles)
+            {
+                mean_cycle_chart1.rewind_graph();
+                if (Math.Abs(item.length - registrator1.Base_length_value) <= 1)
+                {
+                    for (int i = 0; i < registrator1.base_length_value; i++)
+                    {
+                        // draw stroke of cycle
+                        double value;
+                        if ((item.length < registrator1.Base_length_value) && (i >= item.length))
+                            value = registrator1.Storage.get_data(item.start_index + item.length - 1);
+                        else
+                            value = registrator1.Storage.get_smoothed_data(item.start_index + i);
+                        mean_cycle_chart1.add_stroke(value, 4);
+                    }
+                }
+            }
             // draw a mean cycle chart
+            mean_cycle_chart1.rewind_graph();
             for (int i = 0; i < registrator1.base_length_value; i++)
             {
+                // draw stroke of mean cycle graph
                 double value = registrator1.get_mean_cycle_data(i);
                 if (!Double.IsNaN(value))
-                    mean_cycle_chart1.add_stroke(value);
+                    mean_cycle_chart1.add_stroke(value, 2);
+            }
+            // draw a filtered mean cycle chart
+            mean_cycle_chart1.rewind_graph();
+            for (int i = 0; i < registrator1.base_length_value; i++)
+            {
+                // draw stroke of mean cycle graph
+                double value = registrator1.get_filtered_mean_cycle_data(i);
+                if (!Double.IsNaN(value))
+                    mean_cycle_chart1.add_stroke(value, 3);
+            }
+            // draw a smoothed mean cycle chart
+            mean_cycle_chart1.rewind_graph();
+            for (int i = 0; i < registrator1.base_length_value; i++)
+            {
+                // draw stroke of mean cycle graph
+                double value = registrator1.get_smoothed_cycle_data(i);
+                if (!Double.IsNaN(value))
+                    mean_cycle_chart1.add_stroke(value, 1);
             }
 
             mean_cycle_chart2.reset_graph();
             registrator2.stop_registering();
             mean_cycle_chart2.calculate_horizontal_step(registrator2.base_length_value);
+            
+            // draw charts of elementary cycles
+            foreach (registrator_cls.single_cycle_cls item in registrator2.list_of_cycles)
+            {
+                mean_cycle_chart2.rewind_graph();
+                if (Math.Abs(item.length - registrator2.Base_length_value) <= 1)
+                {
+                    for (int i = 0; i < registrator2.base_length_value; i++)
+                    {
+                        // draw stroke of cycle
+                        double value;
+                        if ((item.length < registrator2.Base_length_value) && (i >= item.length))
+                            value = registrator2.Storage.get_data(item.start_index + item.length - 1);
+                        else
+                            value = registrator2.Storage.get_data(item.start_index + i);
+                        mean_cycle_chart2.add_stroke(value, 0);
+                    }
+                }
+            }
+            // draw charts of smoothed elementary cycles
+            foreach (registrator_cls.single_cycle_cls item in registrator2.list_of_cycles)
+            {
+                mean_cycle_chart2.rewind_graph();
+                if (Math.Abs(item.length - registrator2.Base_length_value) <= 1)
+                {
+                    for (int i = 0; i < registrator2.base_length_value; i++)
+                    {
+                        // draw stroke of cycle
+                        double value;
+                        if ((item.length < registrator2.Base_length_value) && (i >= item.length))
+                            value = registrator2.Storage.get_data(item.start_index + item.length - 1);
+                        else
+                            value = registrator2.Storage.get_smoothed_data(item.start_index + i);
+                        mean_cycle_chart2.add_stroke(value, 4);
+                    }
+                }
+            }
             // draw a mean cycle chart
+            mean_cycle_chart2.rewind_graph();
             for (int i = 0; i < registrator2.base_length_value; i++)
             {
+                // draw stroke of mean cycle graph
                 double value = registrator2.get_mean_cycle_data(i);
                 if (!Double.IsNaN(value))
-                    mean_cycle_chart2.add_stroke(value);
+                    mean_cycle_chart2.add_stroke(value, 2);
             }
+            // draw a filtered mean cycle chart
+            mean_cycle_chart2.rewind_graph();
+            for (int i = 0; i < registrator2.base_length_value; i++)
+            {
+                // draw stroke of mean cycle graph
+                double value = registrator2.get_filtered_mean_cycle_data(i);
+                if (!Double.IsNaN(value))
+                    mean_cycle_chart2.add_stroke(value, 3);
+            }
+            // draw a smoothed mean cycle chart
+            mean_cycle_chart2.rewind_graph();
+            for (int i = 0; i < registrator2.base_length_value; i++)
+            {
+                // draw stroke of mean cycle graph
+                double value = registrator2.get_smoothed_cycle_data(i);
+                if (!Double.IsNaN(value))
+                    mean_cycle_chart2.add_stroke(value, 1);
+                else
+                {
+                    int x = 4;
+                }
+                    
+            }
+
+            
+
+
         }//end private void stop_registration_button_Click(object sender, RoutedEventArgs e)
 
         private void wbWinForms_DocumentTitleChanged(object sender, EventArgs e)
         {
                 this.Title = (sender as System.Windows.Forms.WebBrowser).DocumentTitle;
+        }
+
+        private void on_channel0_mean_chart_mouse_left_up(object sender, MouseButtonEventArgs e)
+        {
+            chart0Window = new chart0_window();
+            //chart0Window.Owner = this;
+            chart0Window.Show();
         }
 
     }//end public partial class MainWindow : Window

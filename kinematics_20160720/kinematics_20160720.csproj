@@ -34,6 +34,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="OxyPlot">
+      <HintPath>..\packages\OxyPlot.Core.1.0.0\lib\net45\OxyPlot.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot.Wpf">
+      <HintPath>..\packages\OxyPlot.Wpf.1.0.0\lib\net45\OxyPlot.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -59,11 +65,16 @@
     <Compile Include="accelerometer_cls.cs" />
     <Compile Include="angle_cls.cs" />
     <Compile Include="angle_graph_cls.cs" />
+    <Compile Include="channel0_mean_plot_model.cs" />
     <Compile Include="channel_cls.cs" />
+    <Compile Include="chart0_window.xaml.cs">
+      <DependentUpon>chart0_window.xaml</DependentUpon>
+    </Compile>
     <Compile Include="data_storage_cls.cs" />
     <Compile Include="gyroscope_cls.cs" />
     <Compile Include="histogram_cls.cs" />
     <Compile Include="magnetometer_cls.cs" />
+    <Compile Include="MainViewModel.cs" />
     <Compile Include="mean_cycle_graph_cls.cs" />
     <Compile Include="metronom_cls.cs" />
     <Compile Include="model_cls.cs" />
@@ -71,7 +82,12 @@
     <Compile Include="registrator_cls.cs" />
     <Compile Include="segment_cls.cs" />
     <Compile Include="sensor_cls.cs" />
+    <Compile Include="Smoother_cls.cs" />
     <Compile Include="tester_cls.cs" />
+    <Page Include="chart0_window.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -103,6 +119,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

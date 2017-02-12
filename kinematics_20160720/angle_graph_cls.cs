@@ -23,19 +23,26 @@ namespace kinematics_20160720
 
         private int current_X = 0;
         private double old_Y = 0;
+        private Label legend_label;
 
-        public angle_graph_cls(Canvas graph_canvas)
+        public angle_graph_cls(Canvas graph_canvas, Label Legend_label)
         {
             canvas = graph_canvas;
-            height = canvas.Height;
-            width = canvas.Width;
+            canvas.UpdateLayout();
+            height = canvas.ActualHeight;
+            width = canvas.ActualWidth;
 
-            vertical_ratio = height / (MAX_RANGE - MIN_RANGE - 2*MARGIN);
+            vertical_ratio = (height - 2 * MARGIN) / (MAX_RANGE - MIN_RANGE);
+            legend_label = Legend_label;
         }
         public void add_stroke(double new_value)
         {
             if((new_value >= MIN_RANGE) && (new_value <= MAX_RANGE))
             {
+                height = canvas.ActualHeight;
+                width = canvas.ActualWidth;
+                vertical_ratio = (height - 2 * MARGIN) / (MAX_RANGE - MIN_RANGE);
+
                 Line new_stroke = new Line();
                 new_stroke.StrokeThickness = 2;
                 new_stroke.Stroke = System.Windows.Media.Brushes.Green;
@@ -52,6 +59,7 @@ namespace kinematics_20160720
                 {
                     current_X = 0;
                     canvas.Children.Clear();
+                    canvas.Children.Add(legend_label);
                 }
             }
         }
