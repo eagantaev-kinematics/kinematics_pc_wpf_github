@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace kinematics_20160720
 {
-    class metronom_cls
+    public class metronom_cls
     {
         private int Period_ms = 1000;
         public int period_ms

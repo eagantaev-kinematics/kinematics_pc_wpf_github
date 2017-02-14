@@ -65,10 +65,16 @@
     <Compile Include="accelerometer_cls.cs" />
     <Compile Include="angle_cls.cs" />
     <Compile Include="angle_graph_cls.cs" />
-    <Compile Include="channel0_mean_plot_model.cs" />
+    <Compile Include="channel_mean_plot_model.cs" />
     <Compile Include="channel_cls.cs" />
     <Compile Include="chart0_window.xaml.cs">
       <DependentUpon>chart0_window.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="chart1_window.xaml.cs">
+      <DependentUpon>chart1_window.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="chart2_window.xaml.cs">
+      <DependentUpon>chart2_window.xaml</DependentUpon>
     </Compile>
     <Compile Include="data_storage_cls.cs" />
     <Compile Include="gyroscope_cls.cs" />
@@ -85,6 +91,14 @@
     <Compile Include="Smoother_cls.cs" />
     <Compile Include="tester_cls.cs" />
     <Page Include="chart0_window.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="chart1_window.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="chart2_window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

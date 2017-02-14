@@ -15,21 +15,20 @@ using System.Windows.Shapes;
 using OxyPlot;
 using OxyPlot.Series;
 
-
 namespace kinematics_20160720
 {
     /// <summary>
-    /// Interaction logic for chart0_window.xaml
+    /// Interaction logic for chart1_window.xaml
     /// </summary>
-    public partial class chart0_window : Window
+    public partial class chart1_window : Window
     {
         channel_mean_plot_model view_model;
-        public chart0_window()
+        public chart1_window()
         {
             InitializeComponent();
             view_model = new channel_mean_plot_model();
 
-            channel0_mean_plot_view.Model = new PlotModel();
+            channel1_mean_plot_view.Model = new PlotModel();
         }
 
         
@@ -41,5 +40,4 @@ namespace kinematics_20160720
            
         }
     }
- 
 }

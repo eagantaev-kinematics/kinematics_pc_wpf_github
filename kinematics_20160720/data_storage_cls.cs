@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace kinematics_20160720
 {
-    class data_storage_cls
+    public class data_storage_cls
     {
         private const int DATA_STORAGE_LENGTH = 20000;
         private int Current_in_index = 0;

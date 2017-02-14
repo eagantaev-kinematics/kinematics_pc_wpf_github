@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using OxyPlot;
+using OxyPlot.Series;
+
 namespace kinematics_20160720
 {
-    class registrator_cls
+    public class registrator_cls
     {
         public data_storage_cls Storage;
         private bool Registering = false;
@@ -14,7 +17,7 @@ namespace kinematics_20160720
 
         private double[] mean_cycle_buffer;             // srednee arifmeticheskoe
         private double[] mean_filtered_cycle_buffer;    // predvaritel'naya filtraciya, potom srednee arifmeticheskoe
-        private double[] smoothed_cycle_buffer;    // predvaritel'naya filtraciya, potom srednee arifmeticheskoe, potom sglazhivanie
+        public double[] smoothed_cycle_buffer;    // predvaritel'naya filtraciya, potom srednee arifmeticheskoe, potom sglazhivanie
         public double get_mean_cycle_data(int index)
         {
             if(index < mean_cycle_buffer.Length)
@@ -201,6 +204,7 @@ namespace kinematics_20160720
             // smooth filtered mean array ***********************
             smoothed_cycle_buffer = new double[mean_filtered_cycle_buffer.Length];
             Smoother_cls.smooth_double_array(mean_filtered_cycle_buffer, ref smoothed_cycle_buffer);
+
 
         }// end private void calculate_mean_cycle()
 

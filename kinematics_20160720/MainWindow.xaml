@@ -418,14 +418,14 @@
                             BorderThickness="2"
                             BorderBrush="Black"
                             Background="LightGray">
-                                <Canvas x:Name="channel_1_mean_graph_canvas" Height="250" Width="360" Background="Black">
+                                <Canvas x:Name="channel_1_mean_graph_canvas" Height="250" Width="360" Background="Black" MouseLeftButtonUp="on_channel1_mean_chart_mouse_left_up">
                                 </Canvas>
                             </Border>
                             <Border Grid.Row="0" Grid.Column="2"
                             BorderThickness="2"
                             BorderBrush="Black"
                             Background="LightGray">
-                                <Canvas x:Name="channel_2_mean_graph_canvas" Height="250" Width="360" Background="Black">
+                                <Canvas x:Name="channel_2_mean_graph_canvas" Height="250" Width="360" Background="Black" MouseLeftButtonUp="on_channel2_mean_chart_mouse_left_up">
                                 </Canvas>
                             </Border>
                         </Grid>

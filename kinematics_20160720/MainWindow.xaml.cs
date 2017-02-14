@@ -20,7 +20,10 @@ using System.IO;
 using System.Net.Sockets;
 using System.Net;
 
-using System.Runtime.InteropServices; 
+using System.Runtime.InteropServices;
+
+using OxyPlot;
+using OxyPlot.Series;
 
 
 
@@ -63,7 +66,7 @@ namespace kinematics_20160720
         data_storage_cls storage0 = new data_storage_cls();
         data_storage_cls storage1 = new data_storage_cls();
         data_storage_cls storage2 = new data_storage_cls();
-        registrator_cls registrator0, registrator1, registrator2;
+        public registrator_cls registrator0, registrator1, registrator2;
 
         System.Windows.Forms.Control userControl_unity3d = new System.Windows.Forms.Control();
         //адрес приложения 
@@ -75,6 +78,8 @@ namespace kinematics_20160720
         private static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
 
         chart0_window chart0Window;
+        chart1_window chart1Window;
+        chart2_window chart2Window;
 
         public MainWindow()
         {
@@ -684,7 +689,72 @@ namespace kinematics_20160720
         {
             chart0Window = new chart0_window();
             //chart0Window.Owner = this;
+
+            OxyPlot.Series.LineSeries series0 = new LineSeries();
+            series0.Color = OxyColor.FromRgb(255, 0, 0);
+
+            if(registrator0.smoothed_cycle_buffer != null)
+            {
+                int length = registrator0.smoothed_cycle_buffer.Length;
+                for (int i = 0; i < length; i++ )
+                {
+                    if(!Double.IsNaN(registrator0.smoothed_cycle_buffer[i]))
+                    {
+                        series0.Points.Add(new DataPoint(i * 0.025, registrator0.smoothed_cycle_buffer[i]));
+                    }
+                }
+            }
+
+            chart0Window.channel0_mean_plot_view.Model.Series.Add(series0);
             chart0Window.Show();
+        }
+
+        private void on_channel1_mean_chart_mouse_left_up(object sender, MouseButtonEventArgs e)
+        {
+            chart1Window = new chart1_window();
+            //chart0Window.Owner = this;
+
+            OxyPlot.Series.LineSeries series0 = new LineSeries();
+            series0.Color = OxyColor.FromRgb(255, 0, 0);
+
+            if (registrator1.smoothed_cycle_buffer != null)
+            {
+                int length = registrator1.smoothed_cycle_buffer.Length;
+                for (int i = 0; i < length; i++)
+                {
+                    if (!Double.IsNaN(registrator1.smoothed_cycle_buffer[i]))
+                    {
+                        series0.Points.Add(new DataPoint(i * 0.025, registrator1.smoothed_cycle_buffer[i]));
+                    }
+                }
+            }
+
+            chart1Window.channel1_mean_plot_view.Model.Series.Add(series0);
+            chart1Window.Show();
+        }
+
+        private void on_channel2_mean_chart_mouse_left_up(object sender, MouseButtonEventArgs e)
+        {
+            chart2Window = new chart2_window();
+            //chart0Window.Owner = this;
+
+            OxyPlot.Series.LineSeries series0 = new LineSeries();
+            series0.Color = OxyColor.FromRgb(255, 0, 0);
+
+            if (registrator2.smoothed_cycle_buffer != null)
+            {
+                int length = registrator2.smoothed_cycle_buffer.Length;
+                for (int i = 0; i < length; i++)
+                {
+                    if (!Double.IsNaN(registrator2.smoothed_cycle_buffer[i]))
+                    {
+                        series0.Points.Add(new DataPoint(i * 0.025, registrator2.smoothed_cycle_buffer[i]));
+                    }
+                }
+            }
+
+            chart2Window.channel2_mean_plot_view.Model.Series.Add(series0);
+            chart2Window.Show();
         }
 
     }//end public partial class MainWindow : Window

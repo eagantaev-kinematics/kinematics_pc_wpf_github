@@ -9,11 +9,11 @@ using OxyPlot.Series;
 
 namespace kinematics_20160720
 {
-    class channel0_mean_plot_model
+    class channel_mean_plot_model
     {
 
         public PlotModel plotModel { get; private set; }
-        public channel0_mean_plot_model()
+        public channel_mean_plot_model()
         {
             //this.MyModel = new PlotModel { Title = "channel 1" };
             this.plotModel = new PlotModel();
@@ -24,7 +24,6 @@ namespace kinematics_20160720
 
             series0.Points.Add(new DataPoint(0, 0));
             series0.Points.Add(new DataPoint(1, 1));
-
             this.plotModel.Series.Add(series0);
 
 

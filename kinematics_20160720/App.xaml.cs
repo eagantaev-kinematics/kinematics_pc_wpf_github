@@ -14,4 +14,6 @@ namespace kinematics_20160720
     public partial class App : Application
     {
     }
+
+
 }
