@@ -81,6 +81,9 @@ namespace kinematics_20160720
         chart1_window chart1Window;
         chart2_window chart2Window;
 
+        PlotModel aux0_plot_model;
+        OxyPlot.Series.LineSeries aux0_series;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -126,7 +129,7 @@ namespace kinematics_20160720
             angle_chart0 = new angle_graph_cls(angle_0_graph_canvas, chart0_legend_label);
             angle_chart1 = new angle_graph_cls(angle_1_graph_canvas, chart1_legend_label);
             angle_chart2 = new angle_graph_cls(angle_2_graph_canvas, chart2_legend_label);
-            mean_cycle_chart0 = new mean_cycle_graph_cls(channel_0_mean_graph_canvas);
+            //mean_cycle_chart0 = new mean_cycle_graph_cls(channel_0_mean_graph_canvas);
             mean_cycle_chart1 = new mean_cycle_graph_cls(channel_1_mean_graph_canvas);
             mean_cycle_chart2 = new mean_cycle_graph_cls(channel_2_mean_graph_canvas);
 
@@ -464,14 +467,20 @@ namespace kinematics_20160720
 
         private void stop_registration_button_Click(object sender, RoutedEventArgs e)
         {
-            mean_cycle_chart0.reset_graph();
+            //mean_cycle_chart0.reset_graph();
             registrator0.stop_registering();
-            mean_cycle_chart0.calculate_horizontal_step(registrator0.base_length_value);
+            //mean_cycle_chart0.calculate_horizontal_step(registrator0.base_length_value);
+            aux0_plot_model = new PlotModel();
+
             
             // draw charts of elementary cycles
+            int counter = 0;
+            LineSeries[] graphs = new LineSeries[registrator0.list_of_cycles.Count];
             foreach (registrator_cls.single_cycle_cls item in registrator0.list_of_cycles)
             {
-                mean_cycle_chart0.rewind_graph();
+                //mean_cycle_chart0.rewind_graph();
+                graphs[counter] = new LineSeries();
+                graphs[counter].Color = OxyColor.FromRgb(0, 255, 0);
                 if (Math.Abs(item.length - registrator0.Base_length_value) <= 1)
                 {
                     for (int i = 0; i < registrator0.base_length_value; i++)
@@ -482,14 +491,24 @@ namespace kinematics_20160720
                             value = registrator0.Storage.get_data(item.start_index + item.length - 1);
                         else
                             value = registrator0.Storage.get_data(item.start_index + i);
-                        mean_cycle_chart0.add_stroke(value, 0);
+                        //mean_cycle_chart0.add_stroke(value, 0);
+                        graphs[counter].Points.Add(new DataPoint(i * 0.025, value));
                     }  
                 }
+                aux0_plot_model.Series.Add(graphs[counter]);
+                counter++;
+                
             }
+            channel0_raw_plot_view.Model = aux0_plot_model;
+            channel0_raw_plot_view.UpdateLayout();
             // draw charts of smoothed elementary cycles
+            counter = 0;
+            LineSeries[] smoothed_graphs = new LineSeries[registrator0.list_of_cycles.Count];
             foreach (registrator_cls.single_cycle_cls item in registrator0.list_of_cycles)
             {
-                mean_cycle_chart0.rewind_graph();
+                //mean_cycle_chart0.rewind_graph();
+                smoothed_graphs[counter] = new LineSeries();
+                smoothed_graphs[counter].Color = OxyColor.FromRgb(0, 0, 0);
                 if (Math.Abs(item.length - registrator0.Base_length_value) <= 1)
                 {
                     for (int i = 0; i < registrator0.base_length_value; i++)
@@ -500,37 +519,42 @@ namespace kinematics_20160720
                             value = registrator0.Storage.get_data(item.start_index + item.length - 1);
                         else
                             value = registrator0.Storage.get_smoothed_data(item.start_index + i);
-                        mean_cycle_chart0.add_stroke(value, 4);
+                        //mean_cycle_chart0.add_stroke(value, 4);
+                        smoothed_graphs[counter].Points.Add(new DataPoint(i * 0.025, value));
                     }
                 }
+                aux0_plot_model.Series.Add(smoothed_graphs[counter]);
+                counter++;
             }
+            channel0_raw_plot_view.Model = aux0_plot_model;
+            channel0_raw_plot_view.UpdateLayout();
             // draw a mean cycle chart
-            mean_cycle_chart0.rewind_graph();
+            //mean_cycle_chart0.rewind_graph();
             for (int i = 0; i < registrator0.base_length_value; i++)
             {
                 // draw stroke of mean cycle graph
                 double value = registrator0.get_mean_cycle_data(i);
-                if (!Double.IsNaN(value))
-                    mean_cycle_chart0.add_stroke(value, 2);
+                if (!Double.IsNaN(value))                   ;
+                    //mean_cycle_chart0.add_stroke(value, 2);
             }
             // draw a filtered mean cycle chart
-            mean_cycle_chart0.rewind_graph();
+            //mean_cycle_chart0.rewind_graph();
             for (int i = 0; i < registrator0.base_length_value; i++)
             {
                 // draw stroke of mean cycle graph
                 double value = registrator0.get_filtered_mean_cycle_data(i);
-                if (!Double.IsNaN(value))
-                    mean_cycle_chart0.add_stroke(value, 3);
+                if (!Double.IsNaN(value))                   ;
+                    //mean_cycle_chart0.add_stroke(value, 3);
             }
 
             // draw a smoothed mean cycle chart
-            mean_cycle_chart0.rewind_graph();
+            //mean_cycle_chart0.rewind_graph();
             for (int i = 0; i < registrator0.base_length_value; i++)
             {
                 // draw stroke of mean cycle graph
                 double value = registrator0.get_smoothed_cycle_data(i);
-                if (!Double.IsNaN(value))
-                    mean_cycle_chart0.add_stroke(value, 1);
+                if (!Double.IsNaN(value))                   ;
+                    //mean_cycle_chart0.add_stroke(value, 1);
             }
 
 

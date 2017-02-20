@@ -1,6 +1,7 @@
 ﻿<Window x:Name="main_window" x:Class="kinematics_20160720.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:oxy="http://oxyplot.org/wpf"
         xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         Title="Программа контроля кинематики" Height="830" Width="1539.105" Closed="Window_Closed" Loaded="main_window_Loaded">
     <Grid x:Name="tab">
@@ -411,8 +412,11 @@
                             BorderThickness="2"
                             BorderBrush="Black"
                             Background="LightGray">
+                                <!-->
                                 <Canvas x:Name="channel_0_mean_graph_canvas" Height="250" Width="360" Background="Black" MouseLeftButtonUp="on_channel0_mean_chart_mouse_left_up">
                                 </Canvas>
+                                <-->
+                                <oxy:PlotView x:Name="channel0_raw_plot_view" Height="250" Width="360"/>
                             </Border>
                             <Border Grid.Row="0" Grid.Column="1"
                             BorderThickness="2"
