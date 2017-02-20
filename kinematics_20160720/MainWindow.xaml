@@ -105,86 +105,6 @@
             </TabItem>
             <!-- *************************************************************************************************************************** -->
 
-            <TabItem Header="Регистрация">
-                <Grid Background="#FFE5E5E5">
-
-                    <Border BorderThickness="2" BorderBrush="Black" Canvas.Left="10" Canvas.Top="18" Margin="10,9,100.6,111">
-                        <Grid>
-
-                            <Label x:Name="num_of_cycles_registration_label" Content="Количество циклов 0" HorizontalAlignment="Left" Margin="247,6,0,0" VerticalAlignment="Top" Height="39" Width="232" Canvas.Left="328" Canvas.Top="28" FontSize="18"/>
-                            <Label x:Name="num_of_channel_registartion_label" Content="Канал --" HorizontalAlignment="Left" Margin="66,6,0,0" VerticalAlignment="Top" Height="39" Width="90" Canvas.Left="45" Canvas.Top="28" FontSize="18"/>
-
-                            <Canvas HorizontalAlignment="Left" Height="557" VerticalAlignment="Top" Width="1316" Background="Black" Margin="66,62,0,0"/>
-                            <Slider x:Name="vertical_graph_registration_zoom_slider" HorizontalAlignment="Left" Margin="39,78,0,0" VerticalAlignment="Top" Orientation="Vertical" Height="126" Width="22" Minimum="-10"/>
-                            <Slider x:Name="horizontal_graph_registration_zoom_slider" HorizontalAlignment="Left" Margin="66,709,0,0" VerticalAlignment="Top" Height="22" Width="126" Minimum="-10"/>
-
-                            <Button x:Name="save_registration_button" Content="Сохранить" Margin="218,226,1180.6,88.2"/>
-
-                        </Grid>
-                    </Border>
-
-                </Grid>
-            </TabItem>
-            <!-- *************************************************************************************************************************** -->
-
-            <TabItem Header="Обработка">
-                <Grid Background="#FFE5E5E5">
-
-                    <Border
-                        BorderThickness="2"
-                        BorderBrush="Black"
-                        Background="LightGray"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Top"
-                        Width="1490"
-                        Height="377" Margin="10,10,0,0">
-
-                        <Canvas HorizontalAlignment="Left" Height="352" Margin="0.4,0.4,0,0" VerticalAlignment="Top" Width="1372">
-                            <Border BorderThickness="2" BorderBrush="Black" Height="339" Canvas.Left="10" Canvas.Top="18" Width="1463">
-                                <Grid>
-                                    <Label Content="Средний цикл" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="22" Height="39" Width="158" Margin="190,0,0,0"/>
-                                    <Canvas x:Name="angle_graph" HorizontalAlignment="Left" Height="159" VerticalAlignment="Top" Width="450" Background="Black" Margin="10,119,0,0"/>
-                                    <Label Content="угол" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="34" Margin="19,88,0,0"/>
-                                    <Canvas x:Name="angle_velocity_graph" HorizontalAlignment="Left" Height="159" VerticalAlignment="Top" Width="450" Background="Black" Margin="481,120,0,0"/>
-                                    <Label Content="угловая скорость" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="105" Margin="487,88,0,0"/>
-                                    <Canvas x:Name="acceleration_graph" HorizontalAlignment="Left" Height="159" VerticalAlignment="Top" Width="450" Background="Black" Margin="952,120,0,0"/>
-                                    <Label Content="ускорение" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="69" Margin="956,88,0,0" RenderTransformOrigin="0.689,0.224"/>
-
-                                    <Button x:Name="angle_export_button" Content="Экспорт" Margin="10,283,1374.2,27.2"/>
-                                    <Button x:Name="angle_velocity_export_button" Content="Экспорт" Margin="483,283,901.2,28.2"/>
-                                    <Button x:Name="acceleration_export_button" Content="Экспорт" Margin="954,282,430.2,28.2"/>
-                                </Grid>
-                            </Border>
-
-                        </Canvas>
-                    </Border>
-                    <Label Content="Канал --" HorizontalAlignment="Left" Margin="31,33,0,0" VerticalAlignment="Top" FontSize="20"/>
-
-                </Grid>
-            </TabItem>
-            <!-- *************************************************************************************************************************** -->
-
-            <TabItem Header="Анализ">
-                <Grid Background="#FFE5E5E5">
-
-                    <Border
-                        BorderThickness="2"
-                        BorderBrush="Black"
-                        Background="LightGray"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Top"
-                        Width="1490"
-                        Height="377" Margin="10,10,0,0">
-
-                        <Canvas HorizontalAlignment="Left" Height="352" Margin="0.4,0.4,0,0" VerticalAlignment="Top" Width="1372">
-
-
-                        </Canvas>
-                    </Border>
-
-                </Grid>
-            </TabItem>
-            <!-- *************************************************************************************************************************** -->
 
             <TabItem Header="Данные датчиков">
                 <Grid Background="#FFE5E5E5" Margin="0,0,-0.4,-4.2">
@@ -236,7 +156,7 @@
             <!-- Данные датчиков -->
             <!-- *************************************************************************************************************************** -->
 
-            <TabItem Header="Регистрация *">
+            <TabItem Header="Регистрация">
                 <Grid Background="#FFE5E5E5" ShowGridLines="True" Margin="0,0,4.6,-3.2">
                     <!-- main grid -->
                     <!-- 1 row -->

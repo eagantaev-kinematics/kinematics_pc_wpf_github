@@ -704,6 +704,45 @@ namespace kinematics_20160720
 
         }//end private void stop_registration_button_Click(object sender, RoutedEventArgs e)
 
+        //**********************************************************************************************************************************
+
+        private void draw_charts_of_elementary_cycles(registrator_cls registrator, OxyPlot.Wpf.PlotView plotview, PlotModel aux_plotmodel)
+        {
+            int counter = 0;
+            LineSeries[] graphs = new LineSeries[registrator.list_of_cycles.Count];
+            foreach (registrator_cls.single_cycle_cls item in registrator.list_of_cycles)
+            {
+                //mean_cycle_chart0.rewind_graph();
+                graphs[counter] = new LineSeries();
+                graphs[counter].Color = OxyColor.FromRgb(0, 255, 0);
+                if (Math.Abs(item.length - registrator.Base_length_value) <= 1)
+                {
+                    for (int i = 0; i < registrator.base_length_value; i++)
+                    {
+                        // draw stroke of cycle
+                        double value;
+                        if ((item.length < registrator.Base_length_value) && (i >= item.length))
+                            value = registrator.Storage.get_data(item.start_index + item.length - 1);
+                        else
+                            value = registrator.Storage.get_data(item.start_index + i);
+                        //mean_cycle_chart0.add_stroke(value, 0);
+                        graphs[counter].Points.Add(new DataPoint(i * 0.025, value));
+                    }
+                }
+                aux_plotmodel.Series.Add(graphs[counter]);
+                counter++;
+
+            }
+            plotview.Model = aux_plotmodel;
+            plotview.UpdateLayout();
+            // draw charts of smoothed elementary cycles
+            counter = 0;
+        }
+
+
+
+        //**********************************************************************************************************************************
+
         private void wbWinForms_DocumentTitleChanged(object sender, EventArgs e)
         {
                 this.Title = (sender as System.Windows.Forms.WebBrowser).DocumentTitle;
