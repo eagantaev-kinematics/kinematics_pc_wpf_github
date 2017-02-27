@@ -336,21 +336,27 @@
                                 <Canvas x:Name="channel_0_mean_graph_canvas" Height="250" Width="360" Background="Black" MouseLeftButtonUp="on_channel0_mean_chart_mouse_left_up">
                                 </Canvas>
                                 <-->
-                                <oxy:PlotView x:Name="channel0_raw_plot_view" Height="250" Width="360"/>
+                                <oxy:PlotView x:Name="channel0_raw_plot_view" Height="250" Width="360" MouseDoubleClick="mean_graph0_double_click"/>
                             </Border>
                             <Border Grid.Row="0" Grid.Column="1"
                             BorderThickness="2"
                             BorderBrush="Black"
                             Background="LightGray">
+                                <!-->
                                 <Canvas x:Name="channel_1_mean_graph_canvas" Height="250" Width="360" Background="Black" MouseLeftButtonUp="on_channel1_mean_chart_mouse_left_up">
                                 </Canvas>
+                                <!-->
+                                <oxy:PlotView x:Name="channel1_raw_plot_view" Height="250" Width="360" MouseDoubleClick="mean_graph1_double_click"/>
                             </Border>
                             <Border Grid.Row="0" Grid.Column="2"
                             BorderThickness="2"
                             BorderBrush="Black"
                             Background="LightGray">
+                                <!-->
                                 <Canvas x:Name="channel_2_mean_graph_canvas" Height="250" Width="360" Background="Black" MouseLeftButtonUp="on_channel2_mean_chart_mouse_left_up">
                                 </Canvas>
+                                <!-->
+                                <oxy:PlotView x:Name="channel2_raw_plot_view" Height="250" Width="360" MouseDoubleClick="mean_graph2_double_click"/>
                             </Border>
                         </Grid>
                     </Grid>
