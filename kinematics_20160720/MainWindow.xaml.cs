@@ -34,13 +34,31 @@ namespace kinematics_20160720
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+        metronome_cls metronome = new metronome_cls();
+
+        // Define what actions to take when the event is raised.
+        void on_metronome_tick(object sender, EventArgs e)
+        {
+            int tick = 0;
+            tick++;
+        }
+        void on_metronome_master_tick(object sender, EventArgs e)
+        {
+
+        }
+        void on_metronome_lamp_on(object sender, EventArgs e)
+        {
+
+        }
+        void on_metronome_lamp_off(object sender, EventArgs e)
+        {
+
+        }
 
         System.Media.SoundPlayer player = new System.Media.SoundPlayer("Speech_Misrecognition.wav");
         private Thread dataReceivingThread;
         private Thread metronomeThread;
         private Thread[] calculate_segment_threads = new Thread[20];
-        metronom_cls metronom = new metronom_cls();
 
         // *****
         raw_kinematics_data_cls raw_data;
@@ -134,9 +152,9 @@ namespace kinematics_20160720
             //mean_cycle_chart1 = new mean_cycle_graph_cls(channel_1_mean_graph_canvas);
             //mean_cycle_chart2 = new mean_cycle_graph_cls(channel_2_mean_graph_canvas);
 
-            registrator0 = new registrator_cls(storage0, metronom);
-            registrator1 = new registrator_cls(storage1, metronom);
-            registrator2 = new registrator_cls(storage2, metronom);
+            registrator0 = new registrator_cls(storage0, metronome);
+            registrator1 = new registrator_cls(storage1, metronome);
+            registrator2 = new registrator_cls(storage2, metronome);
 
             //windowsFormsHost.Child = userControl_unity3d;
             //MyPSI = new ProcessStartInfo(unity_game_path);
@@ -149,6 +167,12 @@ namespace kinematics_20160720
 
 
             //(windowsFormsHost.Child as System.Windows.Forms.WebBrowser).Navigate("file:///C:/workspace/unity_workspace/skeleton/skeleton_00_01/skeleton_00_01/web_play/web_play.html");
+
+            //subscribe on metronome events
+            metronome.Metronome_tick += on_metronome_tick;
+            metronome.Metronome_master_tick += on_metronome_master_tick;
+            metronome.Lamp_on += on_metronome_lamp_on;
+            metronome.Lamp_off += on_metronome_lamp_off;
 
             
         }// end constructor
@@ -334,23 +358,7 @@ namespace kinematics_20160720
         }// end update user interface
 
         //*
-        public void metronome_thread_method()
-        {
-            while (metronom.metronome_on)
-            {
-                //if (metronom.metronome_on)
-                //{
-                Thread.Sleep(metronom.period_ms - metronom.lamp_period_ms);
-                metronom.lamp_on = true;
-                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
-                                    new NoArgDelegate(metronome_blink));
-                Thread.Sleep(metronom.lamp_period_ms);
-                metronom.lamp_on = false;
-                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
-                                    new NoArgDelegate(metronome_blink));
-                //}
-            }
-        }
+        
         //*/
 
         private void start_button_Click(object sender, RoutedEventArgs e)
@@ -390,9 +398,10 @@ namespace kinematics_20160720
             test_results_panel.Content += registrator0.bubble_sorting_test().ToString() + " registrator0.bubble_sorting_test \r\n --> ";
         }
 
+        /*
         private void metronome_blink()
         {
-            if (metronom.lamp_on)
+            if (metronome.lamp_on)
             {
                 angle_chart0.add_metronome_marker_stroke();
                 angle_chart1.add_metronome_marker_stroke();
@@ -425,27 +434,30 @@ namespace kinematics_20160720
             else
                 metronome_lamp_label.Background = System.Windows.Media.Brushes.Black;
         }
+        */
 
         private void start_metronome_button_Click(object sender, RoutedEventArgs e)
         {
-            int period = 0;
+            int tick_length = 1000;
             try
             {
-                period = int.Parse(metronome_temp_textbox.Text);
-                if (period > 0)
-                {
-                    period = 60000 / period;
-                    metronom.period_ms = period;
-                }
+                tick_length = int.Parse(tick_length_textbox.Text);
             }
             catch(Exception ex)
+            { }
+            int ticks_in_cycle = 2;
+            try
+            {
+                ticks_in_cycle = int.Parse(ticks_in_cycle_textbox.Text);
+            }
+            catch (Exception ex)
             { }
 
             start_metronome_button.IsEnabled = false;
             stop_metronome_button.IsEnabled = true;
-            metronom.metronome_on = true;
+            metronome.metronome_on = true;
             //metronomeThread.Start();
-            metronomeThread = new Thread(new ThreadStart(this.metronome_thread_method));
+            metronomeThread = new Thread(new ThreadStart(metronome.metronome_thread_method));
             metronomeThread.IsBackground = true;
             metronomeThread.Start();
         }
@@ -454,7 +466,7 @@ namespace kinematics_20160720
         {
             start_metronome_button.IsEnabled = true;
             stop_metronome_button.IsEnabled = false;
-            metronom.metronome_on = false;
+            metronome.metronome_on = false;
             metronomeThread.Abort();
             metronome_lamp_label.Background = System.Windows.Media.Brushes.Black;
         }

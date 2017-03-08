@@ -82,7 +82,7 @@
     <Compile Include="magnetometer_cls.cs" />
     <Compile Include="MainViewModel.cs" />
     <Compile Include="mean_cycle_graph_cls.cs" />
-    <Compile Include="metronom_cls.cs" />
+    <Compile Include="metronome_cls.cs" />
     <Compile Include="model_cls.cs" />
     <Compile Include="raw_kinematics_data_cls.cs" />
     <Compile Include="registrator_cls.cs" />

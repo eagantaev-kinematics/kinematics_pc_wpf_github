@@ -394,11 +394,11 @@
 
                         <!-- Place elements in grid -->
                         <Grid Grid.Row="0" Grid.Column="0" ShowGridLines="True">
-                            <!-- metronome grid -->
+                            <!-- metronome control grid -->
                             <!-- 2 rows -->
                             <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="2*"></RowDefinition>
                             </Grid.RowDefinitions>
                             <!-- 2 columns -->
                             <Grid.ColumnDefinitions>
@@ -406,10 +406,7 @@
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <!-- Place elements in grid -->
-                            <Label Grid.Row="0" Grid.Column="0" Content="Метроном" HorizontalAlignment="Center" />
-                            <Label Grid.Row="0" Grid.Column="0" Content="Темп (уд/мин)" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
-                            <TextBox x:Name="metronome_temp_textbox1" Grid.Row="0" Grid.Column="0" Text="60" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,4,0.4" Width="47" />
-                            <Slider x:Name="metronome_temp_slider1" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center"  VerticalAlignment="Center"  Width="117" Minimum="-10" BorderBrush="Black" BorderThickness="1" />
+                            <Label Grid.Row="0" Grid.Column="0" Content="Метроном" HorizontalAlignment="Center" VerticalAlignment="Center" />
 
                             <Grid Grid.Row="0" Grid.Column="1" ShowGridLines="True">
                                 <Grid.ColumnDefinitions>
@@ -419,6 +416,23 @@
                                 <!-- Place elements in grid -->
                                 <Button x:Name="start_metronome_button1" Grid.Row="0" Grid.Column="0" Content="Старт" HorizontalAlignment="Center" VerticalAlignment="Center" Click="start_metronome_button_Click"/>
                                 <Button x:Name="stop_metronome_button1" Grid.Row="0" Grid.Column="1" Content="Стоп" HorizontalAlignment="Center" VerticalAlignment="Center" Click="stop_metronome_button_Click"/>
+                            </Grid>
+                            <Grid Grid.Row="1" Grid.Column="0" ShowGridLines="True">
+                                <!-- 2 rows -->
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <!-- 2 columns -->
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <!-- Place elements in grid -->
+                                <Label Grid.Row="0" Grid.Column="0" Content="Тик" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBox x:Name="tick_length_textbox" Grid.Row="0" Grid.Column="1" Text="1000" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <Label Grid.Row="1" Grid.Column="0" Content="Тиков" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBox x:Name="ticks_in_cycle_textbox" Grid.Row="1" Grid.Column="1" Text="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Grid>
                             <Label x:Name="metronome_lamp_label1" Grid.Row="1" Grid.Column="1" Content="" HorizontalAlignment="Center" VerticalAlignment="Center" Width="31"  Height="31" Background="{x:Null}" BorderBrush="Black" BorderThickness="3"/>
                         </Grid>
@@ -435,10 +449,10 @@
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <!-- Place elements in grid -->
-                            <Label x:Name="cycle_count_label1" Grid.Row="0" Grid.Column="1" Content="Циклы:" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="16,14,10,14" Width="125" />
-                            <Label Grid.Row="1" Grid.Column="0" Content="Данные" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Label x:Name="cycle_count_label1" Grid.Row="1" Grid.Column="1" Content="Циклы:" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="16,14,10,14" Width="125" />
+                            <Label Grid.Row="0" Grid.Column="0" Content="Данные" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-                            <Grid Grid.Row="1" Grid.Column="1" ShowGridLines="True">
+                            <Grid Grid.Row="0" Grid.Column="1" ShowGridLines="True">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition></ColumnDefinition>
                                     <ColumnDefinition></ColumnDefinition>

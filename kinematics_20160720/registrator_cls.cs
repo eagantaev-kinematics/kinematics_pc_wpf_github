@@ -13,7 +13,7 @@ namespace kinematics_20160720
     {
         public data_storage_cls Storage;
         private bool Registering = false;
-        metronom_cls metronome;
+        metronome_cls metronome;
 
         private double[] mean_cycle_buffer;             // srednee arifmeticheskoe
         private double[] mean_filtered_cycle_buffer;    // predvaritel'naya filtraciya, potom srednee arifmeticheskoe
@@ -62,7 +62,7 @@ namespace kinematics_20160720
         }
 
         public List<single_cycle_cls> list_of_cycles;
-        public registrator_cls(data_storage_cls storage, metronom_cls Metronome)
+        public registrator_cls(data_storage_cls storage, metronome_cls Metronome)
         {
             Storage = storage;
             metronome = Metronome;
