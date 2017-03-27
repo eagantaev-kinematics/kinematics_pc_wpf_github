@@ -9,8 +9,8 @@ namespace kinematics_20160720
     
     class model_cls
     {
-        private Segment_cls[] segments;
-        public Segment_cls[] Segments
+        private segment_cls[] segments;
+        public segment_cls[] Segments
         {
             get { return segments; }
         }
@@ -27,11 +27,11 @@ namespace kinematics_20160720
             channels = new List<channel_cls>();
             number_of_channels = 0;
 
-            segments = new Segment_cls[20];
+            segments = new segment_cls[20];
 
             for (int i = 1; i <= 19; i++)
             {
-                segments[i] = new Segment_cls(i, raw_data);
+                segments[i] = new segment_cls(i);
             }
             segments[0] = null;
         }

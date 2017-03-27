@@ -10,14 +10,24 @@ namespace kinematics_20160720
 {
     public class metronome_cls
     {
-        private int Tick_length;        // tick length in mSec
-        private int Ticks_in_cycle;
-        private int Period_ms;
 
+        private int Tick_length;        // tick length in mSec
         public int tick_length
         {
             set { Tick_length = value; }
             get { return Tick_length; }
+        }
+        private int Ticks_in_cycle;
+        public int ticks_in_cycle
+        {
+            set { Ticks_in_cycle = value; }
+            get { return Ticks_in_cycle; }
+        }
+        private int Period_ms;
+        public int period_ms
+        {
+            set { Period_ms = value; }
+            get { return Period_ms; }
         }
         private int Lamp_period_ms = 300;
         public int lamp_period_ms
@@ -26,11 +36,7 @@ namespace kinematics_20160720
             get { return Lamp_period_ms; }
         }
 
-        public int period_ms
-        {
-            set { Period_ms = value; }
-            get { return Period_ms; }
-        }
+        
 
         private bool Metronome_on = false;
         public bool metronome_on
@@ -45,7 +51,7 @@ namespace kinematics_20160720
         public event EventHandler Lamp_on;
         public event EventHandler Lamp_off;
 
-        // public construcktor
+        // public constructor
         public metronome_cls()
         {
             Tick_length = 1000;     // default values: tick - second; two ticks in cycle
@@ -62,9 +68,12 @@ namespace kinematics_20160720
 
             while (Metronome_on)
             {
-                // Event will be null if there are no subscribers
+                //Event will be null if there are no subscribers
                 if (Lamp_on != null)
                     Lamp_on(this, e);
+
+                //Lamp_on_delegate();
+
                 Thread.Sleep(Lamp_period_ms);
                 // Event will be null if there are no subscribers
                 if (Lamp_off != null)

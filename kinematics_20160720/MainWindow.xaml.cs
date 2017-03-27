@@ -32,33 +32,201 @@ namespace kinematics_20160720
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
+
+
+    public delegate void NoArgDelegate();
+    delegate void debug_log(string message);
+
+
     public partial class MainWindow : Window
     {
-        metronome_cls metronome = new metronome_cls();
+        // objects ***************************
+        metronome_cls metronome;
+        udp_receiver_cls udp_receiver;
+        raw_data_storage_cls raw_data_storage;
+        skeleton_cls skeleton;
 
+        //                                        ********************
+        //                                         PUBLIC CONSTRUCTOR
+        //                                        ********************
+        public MainWindow()
+        {
+            InitializeComponent();
+
+            // objects *****************************
+            debug_log debug_log_append = new debug_log(debug_pannel_add_string);
+            udp_receiver = new udp_receiver_cls(debug_log_append);
+            metronome = new metronome_cls();
+            joint_chart_pannel = new joint_chart_pannel_cls(ref main_joint_angle_timeline_plot_view);
+            raw_data_storage = new raw_data_storage_cls(udp_receiver);
+            skeleton = new skeleton_cls(raw_data_storage);
+
+
+            /*
+            raw_data = new raw_kinematics_data_cls();
+            model = new model_cls(raw_data);
+            // fill model
+            model.add_channel(new angle_cls(model.Segments[1], model.Segments[2]));
+            model.add_channel(new angle_cls(model.Segments[1], model.Segments[3]));
+            model.add_channel(new angle_cls(model.Segments[1], model.Segments[4]));
+            model.add_channel(new angle_cls(model.Segments[2], model.Segments[3]));
+            model.add_channel(new angle_cls(model.Segments[2], model.Segments[4]));
+            model.add_channel(new angle_cls(model.Segments[3], model.Segments[4]));
+            */
+
+            histogram = new histogram_cls(160, 13, 40);  // object just to run tests
+
+            //metronomeThread = new Thread(new ThreadStart(this.metronome_thread_method));
+            //metronomeThread.IsBackground = true;
+            stop_metronome_button.IsEnabled = false;
+            //metronomeThread.Start();
+
+            //angle_chart0 = new angle_graph_cls(angle_0_graph_canvas, chart0_legend_label);
+            //angle_chart1 = new angle_graph_cls(angle_1_graph_canvas, chart1_legend_label);
+            //angle_chart2 = new angle_graph_cls(angle_2_graph_canvas, chart2_legend_label);
+            //mean_cycle_chart0 = new mean_cycle_graph_cls(channel_0_mean_graph_canvas);
+            //mean_cycle_chart1 = new mean_cycle_graph_cls(channel_1_mean_graph_canvas);
+            //mean_cycle_chart2 = new mean_cycle_graph_cls(channel_2_mean_graph_canvas);
+
+            registrator0 = new registrator_cls(storage0, metronome);
+            //registrator1 = new registrator_cls(storage1, metronome);
+            //registrator2 = new registrator_cls(storage2, metronome);
+
+            //windowsFormsHost.Child = userControl_unity3d;
+            //MyPSI = new ProcessStartInfo(unity_game_path);
+            //unity_game_process = new Process();
+            //unity_game_process.StartInfo = MyPSI;
+            //unity_game_process.Start();
+            //System.IntPtr handle1 = unity_game_process.MainWindowHandle;
+            //System.IntPtr handle2 = userControl_unity3d.Handle;
+            //SetParent(handle1, handle2);
+
+
+            //(windowsFormsHost.Child as System.Windows.Forms.WebBrowser).Navigate("file:///C:/workspace/unity_workspace/skeleton/skeleton_00_01/skeleton_00_01/web_play/web_play.html");
+
+            //subscribe on metronome events
+            metronome.Metronome_tick += on_metronome_tick;
+            metronome.Metronome_master_tick += on_metronome_master_tick;
+            metronome.Lamp_on += on_metronome_lamp_on;
+            metronome.Lamp_off += on_metronome_lamp_off;
+
+            //subscribe on udp receiver event
+            udp_receiver.udp_data_received_event += on_udp_data_received;
+
+            // subscribe on joint chart pannel events
+            joint_chart_pannel.chart_update_tick += on_chart_update_tick;
+
+
+
+            // threads *****************************
+            chart_update_thread = new Thread(new ThreadStart(joint_chart_pannel.chart_update_thread_method));
+            chart_update_thread.Start();
+
+        }// end constructor
+        //***********************************************************************************************************************************
+
+
+        // events *****************************
         // Define what actions to take when the event is raised.
         void on_metronome_tick(object sender, EventArgs e)
         {
-            int tick = 0;
-            tick++;
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                            new NoArgDelegate(metronome_tick_processing));
+        }
+        void metronome_tick_processing()
+        {
+            chery1_wav.Play();
         }
         void on_metronome_master_tick(object sender, EventArgs e)
         {
-
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                            new NoArgDelegate(metronome_master_tick_processing));
         }
+        void metronome_master_tick_processing()
+        {
+            CrashTom_wav.Play();
+        }
+
+        //*
         void on_metronome_lamp_on(object sender, EventArgs e)
         {
-
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                            new NoArgDelegate(switch_metronome_lamp_on));
+            
         }
+        //*/
+
+        void switch_metronome_lamp_on()
+        {
+            metronome_lamp_label1.Background = System.Windows.Media.Brushes.Red;
+        }
+
+        
+        
         void on_metronome_lamp_off(object sender, EventArgs e)
         {
-
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                            new NoArgDelegate(switch_metronome_lamp_off));
+        }
+        void switch_metronome_lamp_off()
+        {
+            metronome_lamp_label1.Background = System.Windows.Media.Brushes.Black;
         }
 
         System.Media.SoundPlayer player = new System.Media.SoundPlayer("Speech_Misrecognition.wav");
+        System.Media.SoundPlayer chery1_wav = new System.Media.SoundPlayer("CHERY1.wav");
+        System.Media.SoundPlayer CrashTom_wav = new System.Media.SoundPlayer("CrashTom.wav");
+
+        void on_udp_data_received(object sender, EventArgs e)
+        {
+            // add frame to frame storage 
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                            new NoArgDelegate(raw_data_storage.add_new_frame)); 
+            // update user interface
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                            new NoArgDelegate(UpdateUserInterface));
+            // poulate segments data
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                            new NoArgDelegate(skeleton.update_data));
+        }
+
+
+
+        void on_chart_update_tick(object sender, EventArgs e)
+        {
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                           new NoArgDelegate(add_point_to_main_timeline_chart));
+        }
+
+        Double time = 0;
+        void add_point_to_main_timeline_chart()
+        {
+            LineSeries series = (LineSeries)(main_joint_angle_timeline_plot_view.Model.Series.ToArray()[0]);
+            series.Points.Add(new DataPoint(time, skeleton.joints.ToArray()[0].yy_axis_angle));
+            time += 0.025;
+            if(time >= 10.0)
+            {
+                time = 0;
+                series.Points.Clear();
+                //series.Points.Add(new DataPoint(0, 0));
+                //series.Points.Add(new DataPoint(10.0, 150.0));
+                //main_joint_angle_timeline_plot_view.Model.Series.ToArray()[0] = series;
+                //main_joint_angle_timeline_plot_view.UpdateLayout();
+            }
+            main_joint_angle_timeline_plot_view.Model.Series.ToArray()[0] = series;
+            main_joint_angle_timeline_plot_view.InvalidatePlot();
+            //main_joint_angle_timeline_plot_view.UpdateLayout();
+
+            main_joint_angle_pannel.UpdateLayout();
+        }
+
+        //********************************** working threads **********************************
         private Thread dataReceivingThread;
         private Thread metronomeThread;
         private Thread[] calculate_segment_threads = new Thread[20];
+        private Thread chart_update_thread;
+        //********************************** working threads **********************************
 
         // *****
         raw_kinematics_data_cls raw_data;
@@ -68,13 +236,17 @@ namespace kinematics_20160720
         histogram_cls histogram;
 
         private Int32 packet_counter = 0;
-        private delegate void NoArgDelegate();
+        
+        void debug_pannel_add_string(String message)
+        {
+            debug_info_panel.Content += message;
+        }
 
         //udp***
-        UdpClient kinematics_listener;
-        IPEndPoint remote_endpoint = new IPEndPoint(0, 0);
+        //UdpClient kinematics_listener;
+        //IPEndPoint remote_endpoint = new IPEndPoint(0, 0);
 
-        IPEndPoint local_kinematics_endpoint = new IPEndPoint(0, 0);
+        //IPEndPoint local_kinematics_endpoint = new IPEndPoint(0, 0);
 
         angle_graph_cls angle_chart0, angle_chart1, angle_chart2;
         mean_cycle_graph_cls mean_cycle_chart0, mean_cycle_chart1, mean_cycle_chart2;
@@ -102,86 +274,14 @@ namespace kinematics_20160720
         PlotModel aux0_plot_model, aux1_plot_model, aux2_plot_model;
         OxyPlot.Series.LineSeries aux0_series;
 
-        // constructor
-        public MainWindow()
-        {
-            InitializeComponent();
-
-            string Host = System.Net.Dns.GetHostName();
-            debug_info_panel.Content += "my host -> " + Host + "\r\n";
-            string IP1 = System.Net.Dns.GetHostByName(Host).AddressList[0].ToString();
-            debug_info_panel.Content += "my ip -> " + IP1 + "\r\n";
-
-            //local_kinematics_endpoint.Address = IPAddress.Parse("192.168.1.1");
-            local_kinematics_endpoint.Address = IPAddress.Parse(IP1);
-            local_kinematics_endpoint.Port = 112;
-
-            kinematics_listener = new UdpClient();
-
-            try
-            {
-                kinematics_listener.Client.Bind(local_kinematics_endpoint);
-            }
-            catch (Exception e)
-            {
-                
-            }
-
-            raw_data = new raw_kinematics_data_cls();
-            model = new model_cls(raw_data);
-            // fill model
-            model.add_channel(new angle_cls(model.Segments[1], model.Segments[2]));
-            model.add_channel(new angle_cls(model.Segments[1], model.Segments[3]));
-            model.add_channel(new angle_cls(model.Segments[1], model.Segments[4]));
-            model.add_channel(new angle_cls(model.Segments[2], model.Segments[3]));
-            model.add_channel(new angle_cls(model.Segments[2], model.Segments[4]));
-            model.add_channel(new angle_cls(model.Segments[3], model.Segments[4]));
+        joint_chart_pannel_cls joint_chart_pannel;
 
 
-            histogram = new histogram_cls(160, 13, 40);  // object just to run tests
 
-            //metronomeThread = new Thread(new ThreadStart(this.metronome_thread_method));
-            //metronomeThread.IsBackground = true;
-            stop_metronome_button.IsEnabled = false;
-            //metronomeThread.Start();
-
-            angle_chart0 = new angle_graph_cls(angle_0_graph_canvas, chart0_legend_label);
-            angle_chart1 = new angle_graph_cls(angle_1_graph_canvas, chart1_legend_label);
-            angle_chart2 = new angle_graph_cls(angle_2_graph_canvas, chart2_legend_label);
-            //mean_cycle_chart0 = new mean_cycle_graph_cls(channel_0_mean_graph_canvas);
-            //mean_cycle_chart1 = new mean_cycle_graph_cls(channel_1_mean_graph_canvas);
-            //mean_cycle_chart2 = new mean_cycle_graph_cls(channel_2_mean_graph_canvas);
-
-            registrator0 = new registrator_cls(storage0, metronome);
-            registrator1 = new registrator_cls(storage1, metronome);
-            registrator2 = new registrator_cls(storage2, metronome);
-
-            //windowsFormsHost.Child = userControl_unity3d;
-            //MyPSI = new ProcessStartInfo(unity_game_path);
-            //unity_game_process = new Process();
-            //unity_game_process.StartInfo = MyPSI;
-            //unity_game_process.Start();
-            //System.IntPtr handle1 = unity_game_process.MainWindowHandle;
-            //System.IntPtr handle2 = userControl_unity3d.Handle;
-            //SetParent(handle1, handle2);
-
-
-            //(windowsFormsHost.Child as System.Windows.Forms.WebBrowser).Navigate("file:///C:/workspace/unity_workspace/skeleton/skeleton_00_01/skeleton_00_01/web_play/web_play.html");
-
-            //subscribe on metronome events
-            metronome.Metronome_tick += on_metronome_tick;
-            metronome.Metronome_master_tick += on_metronome_master_tick;
-            metronome.Lamp_on += on_metronome_lamp_on;
-            metronome.Lamp_off += on_metronome_lamp_off;
-
-            
-        }// end constructor
-
-        
-
+        /*
         private Boolean doJob = true;
 
-
+        
         private void dataReceivingMethod()
         {
             doJob = true;
@@ -245,17 +345,19 @@ namespace kinematics_20160720
             }
 
         }// end dataReceivingMethod
+        */
 
         private void UpdateUserInterface()
         {
-            
 
-            info_panel_label.Content = debug_string;
+            info_panel_label.Content = udp_receiver.debug_string;
             info_panel_label.UpdateLayout();
 
-            //*
+            
+
+            
             // zapolnenie tablicy dannyh datchikov
-            if (raw_data.Kinematics_Data.Length == raw_data.Raw_Data_Length)
+            if (!(raw_data_storage.frame.frame_empty_flag))
             {
                 data_panel_label.Content = "";
                 for(int i=0; i<19; i++)
@@ -263,7 +365,8 @@ namespace kinematics_20160720
                     string data_string = "";
                     for(int j=0; j<9; j++)
                     {
-                        Int16 data = (Int16)((Int16)raw_data.Kinematics_Data[i * 18 + j * 2] + ((Int16)(raw_data.Kinematics_Data[i * 18 + j * 2 + 1]) << 8));
+                        //Int16 data = (Int16)((Int16)raw_data.Kinematics_Data[i * 18 + j * 2] + ((Int16)(raw_data.Kinematics_Data[i * 18 + j * 2 + 1]) << 8));
+                        Int16 data = raw_data_storage.frame.get_frame_data(i * 9 + j);
                         data_string += String.Format("{0, 10}  ", data);
                     }
                     data_string += "\n";
@@ -271,8 +374,8 @@ namespace kinematics_20160720
                 }
             }
             data_panel_label.UpdateLayout();
-            
-            //*/
+
+            /*
             Double angle1 = (model.Channels.ToArray())[0].Angle.Angle;
             Double angle2 = (model.Channels.ToArray())[1].Angle.Angle;
             Double angle3 = (model.Channels.ToArray())[3].Angle.Angle;
@@ -368,7 +471,7 @@ namespace kinematics_20160720
 
             stop_button.IsEnabled = true;
 
-            dataReceivingThread = new Thread(new ThreadStart(this.dataReceivingMethod));
+            dataReceivingThread = new Thread(new ThreadStart(udp_receiver.data_receiving_method));
             dataReceivingThread.IsBackground = true;
             dataReceivingThread.Start();
 
@@ -376,8 +479,11 @@ namespace kinematics_20160720
 
         private void stop_button_Click(object sender, RoutedEventArgs e)
         {
-            doJob = false;
-            dataReceivingThread.Abort();
+            start_button.Content = "Start";
+            start_button.IsEnabled = true;
+            stop_button.IsEnabled = false;
+            udp_receiver.data_receiving_thread_stop();
+            //dataReceivingThread.Abort();
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -455,6 +561,9 @@ namespace kinematics_20160720
 
             start_metronome_button.IsEnabled = false;
             stop_metronome_button.IsEnabled = true;
+            metronome.tick_length = tick_length;
+            metronome.ticks_in_cycle = ticks_in_cycle;
+            metronome.period_ms = tick_length * ticks_in_cycle;
             metronome.metronome_on = true;
             //metronomeThread.Start();
             metronomeThread = new Thread(new ThreadStart(metronome.metronome_thread_method));
@@ -646,7 +755,7 @@ namespace kinematics_20160720
 
         private void wbWinForms_DocumentTitleChanged(object sender, EventArgs e)
         {
-                this.Title = (sender as System.Windows.Forms.WebBrowser).DocumentTitle;
+            this.Title = (sender as System.Windows.Forms.WebBrowser).DocumentTitle;
         }
 
         
@@ -721,6 +830,11 @@ namespace kinematics_20160720
 
             chart2Window.channel2_mean_plot_view.Model.Series.Add(series0);
             chart2Window.Show();
+        }
+
+        private void main_joint_angle_timeline_double_click(object sender, MouseButtonEventArgs e)
+        {
+
         }
 
     }//end public partial class MainWindow : Window

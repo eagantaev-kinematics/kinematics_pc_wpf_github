@@ -8,14 +8,14 @@ namespace kinematics_20160720
 {
     public class angle_cls
     {
-        private Segment_cls segment1, segment2;
+        private segment_cls segment1, segment2;
         private Double angle;
 
         public Double Angle
         {
             get { return angle; }
         }
-        public angle_cls(Segment_cls segm1, Segment_cls segm2)
+        public angle_cls(segment_cls segm1, segment_cls segm2)
         {
             segment1 = segm1;
             segment2 = segm2;
@@ -23,8 +23,8 @@ namespace kinematics_20160720
 
         public void calculate()
         {
-            segment1.calculate_segment_position();
-            segment2.calculate_segment_position();
+            //segment1.calculate_segment_position();
+            //segment2.calculate_segment_position();
 
             Double X1 = segment1.get_X();
             Double X2 = segment2.get_X();

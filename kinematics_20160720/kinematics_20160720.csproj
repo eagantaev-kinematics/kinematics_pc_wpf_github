@@ -76,20 +76,28 @@
     <Compile Include="chart2_window.xaml.cs">
       <DependentUpon>chart2_window.xaml</DependentUpon>
     </Compile>
+    <Compile Include="cycle_chart_cls.cs" />
     <Compile Include="data_storage_cls.cs" />
     <Compile Include="gyroscope_cls.cs" />
     <Compile Include="histogram_cls.cs" />
+    <Compile Include="joint_chart_pannel_cls.cs" />
+    <Compile Include="joint_cls.cs" />
     <Compile Include="magnetometer_cls.cs" />
     <Compile Include="MainViewModel.cs" />
     <Compile Include="mean_cycle_graph_cls.cs" />
     <Compile Include="metronome_cls.cs" />
     <Compile Include="model_cls.cs" />
+    <Compile Include="raw_data_frame_cls.cs" />
+    <Compile Include="raw_data_storage_cls.cs" />
     <Compile Include="raw_kinematics_data_cls.cs" />
     <Compile Include="registrator_cls.cs" />
     <Compile Include="segment_cls.cs" />
     <Compile Include="sensor_cls.cs" />
+    <Compile Include="skeleton_cls.cs" />
     <Compile Include="Smoother_cls.cs" />
     <Compile Include="tester_cls.cs" />
+    <Compile Include="timeline_chart_cls.cs" />
+    <Compile Include="udp_receiver_cls.cs" />
     <Page Include="chart0_window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

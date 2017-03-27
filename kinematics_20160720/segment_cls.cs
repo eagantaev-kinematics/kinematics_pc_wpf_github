@@ -6,10 +6,14 @@ using System.Threading.Tasks;
 
 namespace kinematics_20160720
 {
-    public class Segment_cls
+    public class segment_cls
     {
-        private raw_kinematics_data_cls raw_data;
         private int segment_id;
+        public int id
+        {
+            set { segment_id = value; }
+            get { return segment_id; }
+        }
         private Double[] segment_axis;
         private Double X, Y, Z;
         private Double[] x;
@@ -43,9 +47,8 @@ namespace kinematics_20160720
             get { return Sensors_array; }
         }
 
-        public Segment_cls(int Segment_id, raw_kinematics_data_cls Raw_data)
+        public segment_cls(int Segment_id)
         {
-            raw_data = Raw_data;
             segment_id = Segment_id;
             segment_axis = new Double[3];
             x = new Double[3];
@@ -64,11 +67,11 @@ namespace kinematics_20160720
             Sensors_array[2] = Magnetometer;
         }
 
-        public void calculate_segment_position()
+        public void calculate_segment_position(raw_data_frame_cls frame)
         {
             //*
             // zabrat' dannye svoego datchika
-            if(raw_data.Kinematics_Data.Length == raw_data.Raw_Data_Length)
+            if(!(frame.frame_empty_flag))   // frame is filled and data length and so on OK
             {
                 Double[] gyro = new Double[3];
                 Double[] accel = new Double[3];
@@ -77,27 +80,18 @@ namespace kinematics_20160720
 
                 // fill data arrays
                 //int i = 1;
-                int i = segment_id - 1;
+                int i = segment_id - 1;     // base segment data index
                 for (int j = 0; j < 3; j++)
                 {
-                    Int16 aux = (Int16)(raw_data.Kinematics_Data[i * 18 + j * 2 + 1]); // high byte
-                    aux <<= 8; // shift
-                    aux += (Int16)(raw_data.Kinematics_Data[i * 18 + j * 2]); // low byte
-                    gyro[j] = (Double)aux;
+                    gyro[j] = (Double)(frame.get_frame_data(i*9 + j));
                 }
                 for (int j = 3; j < 6; j++)
                 {
-                    Int16 aux = (Int16)(raw_data.Kinematics_Data[i * 18 + j * 2 + 1]); // high byte
-                    aux <<= 8; // shift
-                    aux += (Int16)(raw_data.Kinematics_Data[i * 18 + j * 2]); // low byte
-                    accel[j - 3] = (Double)aux;
+                    accel[j - 3] = (Double)(frame.get_frame_data(i * 9 + j));
                 }
                 for (int j = 6; j < 9; j++)
                 {
-                    Int16 aux = (Int16)(raw_data.Kinematics_Data[i * 18 + j * 2 + 1]); // high byte
-                    aux <<= 8; // shift
-                    aux += (Int16)(raw_data.Kinematics_Data[i * 18 + j * 2]); // low byte
-                    magnet[j - 6] = (Double)aux;
+                    magnet[j - 6] = (Double)(frame.get_frame_data(i * 9 + j));
                 }
 
                 Accelerometer.x = (int)accel[0];
