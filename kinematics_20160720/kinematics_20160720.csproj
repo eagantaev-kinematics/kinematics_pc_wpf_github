@@ -73,9 +73,6 @@
     <Compile Include="chart1_window.xaml.cs">
       <DependentUpon>chart1_window.xaml</DependentUpon>
     </Compile>
-    <Compile Include="chart2_window.xaml.cs">
-      <DependentUpon>chart2_window.xaml</DependentUpon>
-    </Compile>
     <Compile Include="cycle_chart_cls.cs" />
     <Compile Include="data_storage_cls.cs" />
     <Compile Include="gyroscope_cls.cs" />
@@ -103,10 +100,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="chart1_window.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="chart2_window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

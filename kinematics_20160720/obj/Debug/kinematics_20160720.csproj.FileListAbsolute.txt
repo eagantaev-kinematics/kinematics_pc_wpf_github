@@ -45,9 +45,6 @@ C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\
 C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\bin\Debug\OxyPlot.xml
 C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\bin\Debug\OxyPlot.Wpf.pdb
 C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\bin\Debug\OxyPlot.Wpf.xml
-C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug\kinematics_20160720_MarkupCompile.lref
 C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug\chart1_window.g.cs
 C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug\chart1_window.baml
-C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug\chart2_window.g.cs
-C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug\chart2_window.baml

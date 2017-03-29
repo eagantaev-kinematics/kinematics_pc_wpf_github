@@ -15,7 +15,7 @@ namespace kinematics_20160720
         private int FRAME_PERIOD = 24;
 
         private timeline_chart_cls timeline_chart;
-        private cycle_chart_cls frontal_chart, saggital_chart, horizontal_chart;
+        private cycle_chart_cls axis_angle_chart, frontal_chart, sagittal_chart, horizontal_chart;
 
         //private OxyPlot.Wpf.PlotView plotview;
         private PlotModel plotmodel;
@@ -25,9 +25,11 @@ namespace kinematics_20160720
         Boolean do_job = true;
 
         // public constructor
-        public joint_chart_pannel_cls(ref OxyPlot.Wpf.PlotView plotview)
+        public joint_chart_pannel_cls(OxyPlot.Wpf.PlotView main_timeline_plotview, OxyPlot.Wpf.PlotView main_joint_angle_plot_view,
+                                      OxyPlot.Wpf.PlotView frontal_projection_plot_view, OxyPlot.Wpf.PlotView sagittal_projection_plot_view, 
+                                      OxyPlot.Wpf.PlotView horizontal_projection_plot_view) 
         {
-            plotview.Model = new PlotModel();
+            main_timeline_plotview.Model = new PlotModel();
             OxyPlot.Axes.LinearAxis time_axis = new OxyPlot.Axes.LinearAxis();
             OxyPlot.Axes.LinearAxis angle_axis = new OxyPlot.Axes.LinearAxis();
             time_axis.Position = OxyPlot.Axes.AxisPosition.Bottom;
@@ -36,10 +38,23 @@ namespace kinematics_20160720
             time_axis.Maximum = 10;
             angle_axis.Minimum = 0;
             angle_axis.Maximum = 180;
-            plotview.Model.Axes.Add(time_axis);
-            plotview.Model.Axes.Add(angle_axis);
+            main_timeline_plotview.Model.Axes.Add(time_axis);
+            main_timeline_plotview.Model.Axes.Add(angle_axis);
             LineSeries series = new LineSeries();
-            plotview.Model.Series.Add(series);
+            main_timeline_plotview.Model.Series.Add(series);
+
+            axis_angle_chart = new cycle_chart_cls(main_joint_angle_plot_view, "Угол между осями");
+            axis_angle_chart.set_time_axis(0, 10);
+            axis_angle_chart.set_angle_axis(0, 180);
+            frontal_chart = new cycle_chart_cls(frontal_projection_plot_view, "Фронтальная проекция");
+            frontal_chart.set_time_axis(0, 10);
+            frontal_chart.set_angle_axis(-90, 90);
+            sagittal_chart = new cycle_chart_cls(sagittal_projection_plot_view, "Сагиттальная проекция");
+            sagittal_chart.set_time_axis(0, 10);
+            sagittal_chart.set_angle_axis(-90, 90);
+            horizontal_chart = new cycle_chart_cls(horizontal_projection_plot_view, "Горизонтальная проекция");
+            horizontal_chart.set_time_axis(0, 10);
+            horizontal_chart.set_angle_axis(-90, 90);
         }
 
         EventArgs e;

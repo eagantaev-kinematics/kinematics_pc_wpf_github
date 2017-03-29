@@ -23,7 +23,8 @@ namespace kinematics_20160720
         private int number_of_channels = 0;
 
         public model_cls(raw_kinematics_data_cls raw_data)
-        {
+        {   
+            /*
             channels = new List<channel_cls>();
             number_of_channels = 0;
 
@@ -34,6 +35,7 @@ namespace kinematics_20160720
                 segments[i] = new segment_cls(i);
             }
             segments[0] = null;
+            */
         }
 
         public void add_channel(angle_cls angle)

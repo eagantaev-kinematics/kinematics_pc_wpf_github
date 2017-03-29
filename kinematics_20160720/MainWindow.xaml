@@ -336,7 +336,7 @@
                                 <Canvas x:Name="channel_0_mean_graph_canvas" Height="250" Width="360" Background="Black" MouseLeftButtonUp="on_channel0_mean_chart_mouse_left_up">
                                 </Canvas>
                                 <-->
-                                <oxy:PlotView x:Name="channel0_raw_plot_view" Height="250" Width="360" MouseDoubleClick="mean_graph0_double_click"/>
+                                <oxy:PlotView x:Name="channel0_raw_plot_view" Height="250" Width="360" />
                             </Border>
                             <Border Grid.Row="0" Grid.Column="1"
                             BorderThickness="2"
@@ -346,7 +346,7 @@
                                 <Canvas x:Name="channel_1_mean_graph_canvas" Height="250" Width="360" Background="Black" MouseLeftButtonUp="on_channel1_mean_chart_mouse_left_up">
                                 </Canvas>
                                 <!-->
-                                <oxy:PlotView x:Name="channel1_raw_plot_view" Height="250" Width="360" MouseDoubleClick="mean_graph1_double_click"/>
+                                <oxy:PlotView x:Name="channel1_raw_plot_view" Height="250" Width="360" />
                             </Border>
                             <Border Grid.Row="0" Grid.Column="2"
                             BorderThickness="2"
@@ -356,7 +356,7 @@
                                 <Canvas x:Name="channel_2_mean_graph_canvas" Height="250" Width="360" Background="Black" MouseLeftButtonUp="on_channel2_mean_chart_mouse_left_up">
                                 </Canvas>
                                 <!-->
-                                <oxy:PlotView x:Name="channel2_raw_plot_view" Height="250" Width="360" MouseDoubleClick="mean_graph2_double_click"/>
+                                <oxy:PlotView x:Name="channel2_raw_plot_view" Height="250" Width="360" />
                             </Border>
                         </Grid>
                     </Grid>
@@ -489,32 +489,32 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Button Grid.Row="0" Grid.Column="0" x:Name="joint1_button" Content="Шея верх"/>
-                            <Button Grid.Row="1" Grid.Column="0" x:Name="joint2_button" Content="Шея низ"/>
-                            <Button Grid.Row="2" Grid.Column="0" x:Name="joint3_button" Content="Грудной отдел"/>
-                            <Button Grid.Row="3" Grid.Column="0" x:Name="joint4_button" Content="Поясничный отдел"/>
-                            <Button Grid.Row="4" Grid.Column="0" x:Name="joint5_button" Content="Ключица левая"/>
-                            <Button Grid.Row="5" Grid.Column="0" x:Name="joint6_button" Content="Ключица правая"/>
-                            <Button Grid.Row="6" Grid.Column="0" x:Name="joint7_button" Content="Плечо левое"/>
-                            <Button Grid.Row="7" Grid.Column="0" x:Name="joint8_button" Content="Плечо правое"/>
-                            <Button Grid.Row="8" Grid.Column="0" x:Name="joint9_button" Content="Локоть левый"/>
-                            <Button Grid.Row="9" Grid.Column="0" x:Name="joint10_button" Content="Локоть правый"/>
-                            <Button Grid.Row="10" Grid.Column="0" x:Name="joint11_button" Content="Запястье левое"/>
-                            <Button Grid.Row="11" Grid.Column="0" x:Name="joint12_button" Content="Запястье правое"/>
-                            <Button Grid.Row="12" Grid.Column="0" x:Name="joint13_button" Content="Тазобедренный левый"/>
-                            <Button Grid.Row="13" Grid.Column="0" x:Name="joint14_button" Content="Тазобедренный правый"/>
-                            <Button Grid.Row="14" Grid.Column="0" x:Name="joint15_button" Content="Колено левое"/>
-                            <Button Grid.Row="15" Grid.Column="0" x:Name="joint16_button" Content="Колено правое"/>
-                            <Button Grid.Row="16" Grid.Column="0" x:Name="joint17_button" Content="Голеностоп левый"/>
-                            <Button Grid.Row="17" Grid.Column="0" x:Name="joint18_button" Content="Голеностоп правый"/>
+                            <Button Grid.Row="0" Grid.Column="0" x:Name="joint1_button" Content="Шея верх" Click="joint1_button_Click"/>
+                            <Button Grid.Row="1" Grid.Column="0" x:Name="joint2_button" Content="Шея низ" Click="joint2_button_Click"/>
+                            <Button Grid.Row="2" Grid.Column="0" x:Name="joint3_button" Content="Грудной отдел" Click="joint3_button_Click"/>
+                            <Button Grid.Row="3" Grid.Column="0" x:Name="joint4_button" Content="Поясничный отдел" Click="joint4_button_Click"/>
+                            <Button Grid.Row="4" Grid.Column="0" x:Name="joint5_button" Content="Ключица левая" Click="joint5_button_Click"/>
+                            <Button Grid.Row="5" Grid.Column="0" x:Name="joint6_button" Content="Плечо левое" Click="joint6_button_Click"/>
+                            <Button Grid.Row="6" Grid.Column="0" x:Name="joint7_button" Content="Локоть левый" Click="joint7_button_Click"/>
+                            <Button Grid.Row="7" Grid.Column="0" x:Name="joint8_button" Content="Запястье левое" Click="joint8_button_Click"/>
+                            <Button Grid.Row="8" Grid.Column="0" x:Name="joint9_button" Content="Ключица правая" Click="joint9_button_Click"/>
+                            <Button Grid.Row="9" Grid.Column="0" x:Name="joint10_button" Content="Плечо правое" Click="joint10_button_Click"/>
+                            <Button Grid.Row="10" Grid.Column="0" x:Name="joint11_button" Content="Локоть правый" Click="joint11_button_Click"/>
+                            <Button Grid.Row="11" Grid.Column="0" x:Name="joint12_button" Content="Запястье правое" Click="joint12_button_Click"/>
+                            <Button Grid.Row="12" Grid.Column="0" x:Name="joint13_button" Content="Тазобедренный левый" Click="joint13_button_Click"/>
+                            <Button Grid.Row="13" Grid.Column="0" x:Name="joint14_button" Content="Колено левое" Click="joint14_button_Click"/>
+                            <Button Grid.Row="14" Grid.Column="0" x:Name="joint15_button" Content="Голеностоп левый" Click="joint15_button_Click"/>
+                            <Button Grid.Row="15" Grid.Column="0" x:Name="joint16_button" Content="Тазобедренный правый" Click="joint16_button_Click"/>
+                            <Button Grid.Row="16" Grid.Column="0" x:Name="joint17_button" Content="Колено правое" Click="joint17_button_Click"/>
+                            <Button Grid.Row="17" Grid.Column="0" x:Name="joint18_button" Content="Голеностоп правый" Click="joint18_button_Click"/>
                         </Grid>
                     </Grid> 
                     <Grid Grid.Row="0" Grid.Column="1" ShowGridLines="True"> <!-- pole s grafikami -->
                         <!-- graphs grid -->
                         <!-- 2 rows -->
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="1.5*"></RowDefinition>
-                            <RowDefinition Height="5.5*"></RowDefinition>
+                            <RowDefinition Height="2*"></RowDefinition>
+                            <RowDefinition Height="5*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <!-- 1 column -->
                         <Grid.ColumnDefinitions>
@@ -564,7 +564,7 @@
                             BorderThickness="2"
                             BorderBrush="Black"
                             Background="LightGray">
-                                <oxy:PlotView x:Name="horizontal_projection_plot_view" MouseDoubleClick="mean_graph2_double_click" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"/>
+                                <oxy:PlotView x:Name="horizontal_projection_plot_view" MouseDoubleClick="mean_graph3_double_click" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"/>
                             </Border>
                         </Grid>
                     </Grid>

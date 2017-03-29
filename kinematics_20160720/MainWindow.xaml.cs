@@ -58,7 +58,8 @@ namespace kinematics_20160720
             debug_log debug_log_append = new debug_log(debug_pannel_add_string);
             udp_receiver = new udp_receiver_cls(debug_log_append);
             metronome = new metronome_cls();
-            joint_chart_pannel = new joint_chart_pannel_cls(ref main_joint_angle_timeline_plot_view);
+            joint_chart_pannel = new joint_chart_pannel_cls(main_joint_angle_timeline_plot_view, main_joint_angle_plot_view, frontal_projection_plot_view,
+                                                            sagittal_projection_plot_view, horizontal_projection_plot_view);
             raw_data_storage = new raw_data_storage_cls(udp_receiver);
             skeleton = new skeleton_cls(raw_data_storage);
 
@@ -127,7 +128,9 @@ namespace kinematics_20160720
         //***********************************************************************************************************************************
 
 
-        // events *****************************
+        //                                        ********************
+        //                                               EVENTS
+        //                                        ********************
         // Define what actions to take when the event is raised.
         void on_metronome_tick(object sender, EventArgs e)
         {
@@ -146,6 +149,8 @@ namespace kinematics_20160720
         void metronome_master_tick_processing()
         {
             CrashTom_wav.Play();
+
+            // ochistka grafikov proekciy
         }
 
         //*
@@ -203,22 +208,34 @@ namespace kinematics_20160720
         void add_point_to_main_timeline_chart()
         {
             LineSeries series = (LineSeries)(main_joint_angle_timeline_plot_view.Model.Series.ToArray()[0]);
-            series.Points.Add(new DataPoint(time, skeleton.joints.ToArray()[0].yy_axis_angle));
+            LineSeries series1 = (LineSeries)(main_joint_angle_plot_view.Model.Series.ToArray()[0]);
+            LineSeries series2 = (LineSeries)(frontal_projection_plot_view.Model.Series.ToArray()[0]);
+
+            //series.Points.Add(new DataPoint(time, skeleton.joints.ToArray()[skeleton.active_joint_index].yy_axis_angle));
+            //series1.Points.Add(new DataPoint(time, skeleton.joints.ToArray()[skeleton.active_joint_index].yy_axis_angle));
+            series2.Points.Add(new DataPoint(time, skeleton.joints.ToArray()[skeleton.active_joint_index].frontal_angle));
             time += 0.025;
             if(time >= 10.0)
             {
                 time = 0;
-                series.Points.Clear();
-                //series.Points.Add(new DataPoint(0, 0));
-                //series.Points.Add(new DataPoint(10.0, 150.0));
-                //main_joint_angle_timeline_plot_view.Model.Series.ToArray()[0] = series;
-                //main_joint_angle_timeline_plot_view.UpdateLayout();
+                //series.Points.Clear();
+                //series1.Points.Clear();
+                series2.Points.Clear();
             }
-            main_joint_angle_timeline_plot_view.Model.Series.ToArray()[0] = series;
-            main_joint_angle_timeline_plot_view.InvalidatePlot();
-            //main_joint_angle_timeline_plot_view.UpdateLayout();
 
-            main_joint_angle_pannel.UpdateLayout();
+            //main_joint_angle_timeline_plot_view.Model.Series.ToArray()[0] = series;
+            //main_joint_angle_timeline_plot_view.InvalidatePlot();
+
+            //main_joint_angle_plot_view.Model.Series.ToArray()[0] = series1;
+            //main_joint_angle_plot_view.InvalidatePlot();
+
+            frontal_projection_plot_view.Model.Series.ToArray()[0] = series1;
+            frontal_projection_plot_view.InvalidatePlot();
+
+            //main_joint_angle_pannel.UpdateLayout();
+
+            // add points to projection cycle charts
+
         }
 
         //********************************** working threads **********************************
@@ -269,7 +286,8 @@ namespace kinematics_20160720
 
         chart0_window chart0Window;
         chart1_window chart1Window;
-        chart2_window chart2Window;
+        //chart2_window chart2Window;
+        //chart3_window chart3Window;
 
         PlotModel aux0_plot_model, aux1_plot_model, aux2_plot_model;
         OxyPlot.Series.LineSeries aux0_series;
@@ -351,7 +369,7 @@ namespace kinematics_20160720
         {
 
             info_panel_label.Content = udp_receiver.debug_string;
-            info_panel_label.UpdateLayout();
+            //info_panel_label.UpdateLayout();
 
             
 
@@ -558,6 +576,14 @@ namespace kinematics_20160720
             }
             catch (Exception ex)
             { }
+
+            // raschet osei grafikov proekciy
+            //*********************************************
+            {
+                int cycle_length = ticks_in_cycle * tick_length;
+
+            }
+            //*********************************************
 
             start_metronome_button.IsEnabled = false;
             stop_metronome_button.IsEnabled = true;
@@ -808,10 +834,10 @@ namespace kinematics_20160720
             chart1Window.Show();
         }
 
+        //*
         private void mean_graph2_double_click(object sender, MouseButtonEventArgs e)
         {
-            chart2Window = new chart2_window();
-            //chart0Window.Owner = this;
+            //chart2Window = new chart2_window();
 
             OxyPlot.Series.LineSeries series0 = new LineSeries();
             series0.Color = OxyColor.FromRgb(255, 0, 0);
@@ -828,13 +854,169 @@ namespace kinematics_20160720
                 }
             }
 
-            chart2Window.channel2_mean_plot_view.Model.Series.Add(series0);
-            chart2Window.Show();
+            //chart2Window.channel2_mean_plot_view.Model.Series.Add(series0);
+            //chart2Window.Show();
         }
+
+        private void mean_graph3_double_click(object sender, MouseButtonEventArgs e)
+        {
+            //chart3Window = new chart3_window();
+
+            OxyPlot.Series.LineSeries series0 = new LineSeries();
+            series0.Color = OxyColor.FromRgb(255, 0, 0);
+
+            if (registrator2.smoothed_cycle_buffer != null)
+            {
+                int length = registrator2.smoothed_cycle_buffer.Length;
+                for (int i = 0; i < length; i++)
+                {
+                    if (!Double.IsNaN(registrator2.smoothed_cycle_buffer[i]))
+                    {
+                        series0.Points.Add(new DataPoint(i * 0.025, registrator2.smoothed_cycle_buffer[i]));
+                    }
+                }
+            }
+
+            //chart3Window.channel3_mean_plot_view.Model.Series.Add(series0);
+            //chart3Window.Show();
+        }
+        //*/
 
         private void main_joint_angle_timeline_double_click(object sender, MouseButtonEventArgs e)
         {
 
+        }
+
+
+        //                                        ********************
+        //                                            JOINT BUTTONS
+        //                                        ********************
+
+
+        private void joint1_button_Click(object sender, RoutedEventArgs e)
+        {
+            skeleton.active_joint_index = 0;
+            main_joint_angle_timeline_plot_view.Model.Title = skeleton.joints.ToArray()[0].name;
+            main_joint_angle_timeline_plot_view.Model.InvalidatePlot(true);
+        }
+
+        private void joint2_button_Click(object sender, RoutedEventArgs e)
+        {
+            skeleton.active_joint_index = 1;
+            main_joint_angle_timeline_plot_view.Model.Title = skeleton.joints.ToArray()[1].name;
+            main_joint_angle_timeline_plot_view.Model.InvalidatePlot(true);
+        }
+
+        private void joint3_button_Click(object sender, RoutedEventArgs e)
+        {
+            skeleton.active_joint_index = 2;
+            main_joint_angle_timeline_plot_view.Model.Title = skeleton.joints.ToArray()[2].name;
+            main_joint_angle_timeline_plot_view.Model.InvalidatePlot(true);
+        }
+
+        private void joint4_button_Click(object sender, RoutedEventArgs e)
+        {
+            skeleton.active_joint_index = 3;
+            main_joint_angle_timeline_plot_view.Model.Title = skeleton.joints.ToArray()[3].name;
+            main_joint_angle_timeline_plot_view.Model.InvalidatePlot(true);
+        }
+
+        private void joint5_button_Click(object sender, RoutedEventArgs e)
+        {
+            skeleton.active_joint_index = 4;
+            main_joint_angle_timeline_plot_view.Model.Title = skeleton.joints.ToArray()[4].name;
+            main_joint_angle_timeline_plot_view.Model.InvalidatePlot(true);
+        }
+
+        private void joint6_button_Click(object sender, RoutedEventArgs e)
+        {
+            skeleton.active_joint_index = 5;
+            main_joint_angle_timeline_plot_view.Model.Title = skeleton.joints.ToArray()[5].name;
+            main_joint_angle_timeline_plot_view.Model.InvalidatePlot(true);
+        }
+
+        private void joint7_button_Click(object sender, RoutedEventArgs e)
+        {
+            skeleton.active_joint_index = 6;
+            main_joint_angle_timeline_plot_view.Model.Title = skeleton.joints.ToArray()[6].name;
+            main_joint_angle_timeline_plot_view.Model.InvalidatePlot(true);
+        }
+
+        private void joint8_button_Click(object sender, RoutedEventArgs e)
+        {
+            skeleton.active_joint_index = 7;
+            main_joint_angle_timeline_plot_view.Model.Title = skeleton.joints.ToArray()[7].name;
+            main_joint_angle_timeline_plot_view.Model.InvalidatePlot(true);
+        }
+
+        private void joint9_button_Click(object sender, RoutedEventArgs e)
+        {
+            skeleton.active_joint_index = 8;
+            main_joint_angle_timeline_plot_view.Model.Title = skeleton.joints.ToArray()[8].name;
+            main_joint_angle_timeline_plot_view.Model.InvalidatePlot(true);
+        }
+
+        private void joint10_button_Click(object sender, RoutedEventArgs e)
+        {
+            skeleton.active_joint_index = 9;
+            main_joint_angle_timeline_plot_view.Model.Title = skeleton.joints.ToArray()[9].name;
+            main_joint_angle_timeline_plot_view.Model.InvalidatePlot(true);
+        }
+
+        private void joint11_button_Click(object sender, RoutedEventArgs e)
+        {
+            skeleton.active_joint_index = 10;
+            main_joint_angle_timeline_plot_view.Model.Title = skeleton.joints.ToArray()[10].name;
+            main_joint_angle_timeline_plot_view.Model.InvalidatePlot(true);
+        }
+
+        private void joint12_button_Click(object sender, RoutedEventArgs e)
+        {
+            skeleton.active_joint_index = 11;
+            main_joint_angle_timeline_plot_view.Model.Title = skeleton.joints.ToArray()[11].name;
+            main_joint_angle_timeline_plot_view.Model.InvalidatePlot(true);
+        }
+
+        private void joint13_button_Click(object sender, RoutedEventArgs e)
+        {
+            skeleton.active_joint_index = 12;
+            main_joint_angle_timeline_plot_view.Model.Title = skeleton.joints.ToArray()[12].name;
+            main_joint_angle_timeline_plot_view.Model.InvalidatePlot(true);
+        }
+
+        private void joint14_button_Click(object sender, RoutedEventArgs e)
+        {
+            skeleton.active_joint_index = 13;
+            main_joint_angle_timeline_plot_view.Model.Title = skeleton.joints.ToArray()[13].name;
+            main_joint_angle_timeline_plot_view.Model.InvalidatePlot(true);
+        }
+
+        private void joint15_button_Click(object sender, RoutedEventArgs e)
+        {
+            skeleton.active_joint_index = 14;
+            main_joint_angle_timeline_plot_view.Model.Title = skeleton.joints.ToArray()[14].name;
+            main_joint_angle_timeline_plot_view.Model.InvalidatePlot(true);
+        }
+
+        private void joint16_button_Click(object sender, RoutedEventArgs e)
+        {
+            skeleton.active_joint_index = 15;
+            main_joint_angle_timeline_plot_view.Model.Title = skeleton.joints.ToArray()[15].name;
+            main_joint_angle_timeline_plot_view.Model.InvalidatePlot(true);
+        }
+
+        private void joint17_button_Click(object sender, RoutedEventArgs e)
+        {
+            skeleton.active_joint_index = 16;
+            main_joint_angle_timeline_plot_view.Model.Title = skeleton.joints.ToArray()[16].name;
+            main_joint_angle_timeline_plot_view.Model.InvalidatePlot(true);
+        }
+
+        private void joint18_button_Click(object sender, RoutedEventArgs e)
+        {
+            skeleton.active_joint_index = 17;
+            main_joint_angle_timeline_plot_view.Model.Title = skeleton.joints.ToArray()[17].name;
+            main_joint_angle_timeline_plot_view.Model.InvalidatePlot(true);
         }
 
     }//end public partial class MainWindow : Window

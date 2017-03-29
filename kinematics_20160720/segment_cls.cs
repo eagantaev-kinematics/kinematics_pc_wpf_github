@@ -9,6 +9,7 @@ namespace kinematics_20160720
     public class segment_cls
     {
         private int segment_id;
+        private int base_raw_data_index;
         public int id
         {
             set { segment_id = value; }
@@ -47,8 +48,10 @@ namespace kinematics_20160720
             get { return Sensors_array; }
         }
 
-        public segment_cls(int Segment_id)
+        public segment_cls(int Segment_id, int base_index_parameter)
         {
+            base_raw_data_index = base_index_parameter;
+
             segment_id = Segment_id;
             segment_axis = new Double[3];
             x = new Double[3];
@@ -80,7 +83,7 @@ namespace kinematics_20160720
 
                 // fill data arrays
                 //int i = 1;
-                int i = segment_id - 1;     // base segment data index
+                int i = base_raw_data_index;     // base segment data index
                 for (int j = 0; j < 3; j++)
                 {
                     gyro[j] = (Double)(frame.get_frame_data(i*9 + j));
