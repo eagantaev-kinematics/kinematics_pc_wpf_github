@@ -27,6 +27,9 @@ namespace kinematics_20160720
             get { return Frontal_angle; }
         }
 
+        private Double Sagittal_angle;
+        private Double Horizontal_angle;
+
         private Double[] Angles;
         public Double[] angles
         {
@@ -72,6 +75,15 @@ namespace kinematics_20160720
                 //Frontal_angle = -(Math.Atan((X2/Z2)))*180/Math.PI;
                 Frontal_angle = Math.Sign(X2)*(Math.Acos((Z2/Math.Sqrt(X2*X2 + Z2*Z2)))) * 180 / Math.PI;
             Angles[1] = Frontal_angle;
+
+            // calculate sagittal projection
+            Sagittal_angle = -Math.Sign(Y2) * (Math.Acos((Z2 / Math.Sqrt(Y2 * Y2 + Z2 * Z2)))) * 180 / Math.PI; ;
+            Angles[2] = Sagittal_angle;
+
+
+            // calculate horizontal projection
+            Horizontal_angle = Math.Sign(X2) * (Math.Acos((-Y2 / Math.Sqrt(X2 * X2 + Y2 * Y2)))) * 180 / Math.PI; ;
+            Angles[3] = Horizontal_angle;
         }
 
 

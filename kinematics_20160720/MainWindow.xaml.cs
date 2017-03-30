@@ -624,14 +624,14 @@ namespace kinematics_20160720
 
         private void start_registration_button_Click(object sender, RoutedEventArgs e)
         {
-            registrator0.start_registering();
-            registrator1.start_registering();
-            registrator2.start_registering();
+            //registrator0.start_registering();
+            //registrator1.start_registering();
+            //registrator2.start_registering();
         }
 
         private void stop_registration_button_Click(object sender, RoutedEventArgs e)
         {
-            
+            /*
             registrator0.stop_registering();
             
             aux0_plot_model = new PlotModel();
@@ -658,7 +658,7 @@ namespace kinematics_20160720
             draw_mean_cycle_chart(registrator2, channel2_raw_plot_view, aux2_plot_model);
             draw_filtered_mean_cycle_chart(registrator2, channel2_raw_plot_view, aux2_plot_model);
             draw_smoothed_mean_cycle_chart(registrator2, channel2_raw_plot_view, aux2_plot_model);
-
+            */
             
             
 
