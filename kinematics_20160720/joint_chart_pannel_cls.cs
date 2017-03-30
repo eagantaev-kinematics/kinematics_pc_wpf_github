@@ -48,13 +48,13 @@ namespace kinematics_20160720
             axis_angle_chart.set_angle_axis(0, 180);
             frontal_chart = new cycle_chart_cls(frontal_projection_plot_view, "Фронтальная проекция");
             frontal_chart.set_time_axis(0, 10);
-            frontal_chart.set_angle_axis(-90, 90);
+            frontal_chart.set_angle_axis(-180, 180);
             sagittal_chart = new cycle_chart_cls(sagittal_projection_plot_view, "Сагиттальная проекция");
             sagittal_chart.set_time_axis(0, 10);
-            sagittal_chart.set_angle_axis(-90, 90);
+            sagittal_chart.set_angle_axis(-180, 180);
             horizontal_chart = new cycle_chart_cls(horizontal_projection_plot_view, "Горизонтальная проекция");
             horizontal_chart.set_time_axis(0, 10);
-            horizontal_chart.set_angle_axis(-90, 90);
+            horizontal_chart.set_angle_axis(-180, 180);
         }
 
         EventArgs e;

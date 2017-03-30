@@ -41,6 +41,10 @@ namespace kinematics_20160720
 
     public partial class MainWindow : Window
     {
+        // variables ***************************
+        OxyPlot.Wpf.PlotView[] plotviews;
+        int active_plotview_index = 0;
+
         // objects ***************************
         metronome_cls metronome;
         udp_receiver_cls udp_receiver;
@@ -123,6 +127,12 @@ namespace kinematics_20160720
             // threads *****************************
             chart_update_thread = new Thread(new ThreadStart(joint_chart_pannel.chart_update_thread_method));
             chart_update_thread.Start();
+
+            plotviews = new OxyPlot.Wpf.PlotView[4];
+            plotviews[0] = main_joint_angle_plot_view;
+            plotviews[1] = frontal_projection_plot_view;
+            plotviews[2] = sagittal_projection_plot_view;
+            plotviews[3] = horizontal_projection_plot_view;
 
         }// end constructor
         //***********************************************************************************************************************************
@@ -207,20 +217,21 @@ namespace kinematics_20160720
         Double time = 0;
         void add_point_to_main_timeline_chart()
         {
-            LineSeries series = (LineSeries)(main_joint_angle_timeline_plot_view.Model.Series.ToArray()[0]);
-            LineSeries series1 = (LineSeries)(main_joint_angle_plot_view.Model.Series.ToArray()[0]);
-            LineSeries series2 = (LineSeries)(frontal_projection_plot_view.Model.Series.ToArray()[0]);
+            LineSeries series = (LineSeries)(plotviews[active_plotview_index].Model.Series.ToArray()[0]);
+            //LineSeries series1 = (LineSeries)(main_joint_angle_plot_view.Model.Series.ToArray()[0]);
+            //LineSeries series2 = (LineSeries)(frontal_projection_plot_view.Model.Series.ToArray()[0]);
 
             //series.Points.Add(new DataPoint(time, skeleton.joints.ToArray()[skeleton.active_joint_index].yy_axis_angle));
             //series1.Points.Add(new DataPoint(time, skeleton.joints.ToArray()[skeleton.active_joint_index].yy_axis_angle));
-            series2.Points.Add(new DataPoint(time, skeleton.joints.ToArray()[skeleton.active_joint_index].frontal_angle));
+
+            series.Points.Add(new DataPoint(time, skeleton.joints.ToArray()[skeleton.active_joint_index].angles[skeleton.active_angle_index]));
             time += 0.025;
             if(time >= 10.0)
             {
                 time = 0;
                 //series.Points.Clear();
                 //series1.Points.Clear();
-                series2.Points.Clear();
+                series.Points.Clear();
             }
 
             //main_joint_angle_timeline_plot_view.Model.Series.ToArray()[0] = series;
@@ -229,8 +240,13 @@ namespace kinematics_20160720
             //main_joint_angle_plot_view.Model.Series.ToArray()[0] = series1;
             //main_joint_angle_plot_view.InvalidatePlot();
 
-            frontal_projection_plot_view.Model.Series.ToArray()[0] = series1;
-            frontal_projection_plot_view.InvalidatePlot();
+            //frontal_projection_plot_view.Model.Series.ToArray()[0] = series1;
+
+            plotviews[active_plotview_index].Model.Series.ToArray()[0] = series;
+
+            //frontal_projection_plot_view.InvalidatePlot();
+
+            plotviews[active_plotview_index].InvalidatePlot();
 
             //main_joint_angle_pannel.UpdateLayout();
 
@@ -784,101 +800,54 @@ namespace kinematics_20160720
             this.Title = (sender as System.Windows.Forms.WebBrowser).DocumentTitle;
         }
 
-        
+        void clear_scene()
+        {
+            LineSeries series = (LineSeries)(main_joint_angle_plot_view.Model.Series.ToArray()[0]);
+            series.Points.Clear();
+            main_joint_angle_plot_view.InvalidatePlot();
+            series = (LineSeries)(frontal_projection_plot_view.Model.Series.ToArray()[0]);
+            series.Points.Clear();
+            frontal_projection_plot_view.InvalidatePlot();
+            series = (LineSeries)(sagittal_projection_plot_view.Model.Series.ToArray()[0]);
+            series.Points.Clear();
+            sagittal_projection_plot_view.InvalidatePlot();
+            series = (LineSeries)(horizontal_projection_plot_view.Model.Series.ToArray()[0]);
+            series.Points.Clear();
+            horizontal_projection_plot_view.InvalidatePlot();
+            time = 0;
+        }
 
         private void mean_graph0_double_click(object sender, MouseButtonEventArgs e)
         {
-            chart0Window = new chart0_window();
-            //chart0Window.Owner = this;
+            clear_scene();
 
-            OxyPlot.Series.LineSeries series0 = new LineSeries();
-            series0.Color = OxyColor.FromRgb(255, 0, 0);
-
-            if (registrator0.smoothed_cycle_buffer != null)
-            {
-                int length = registrator0.smoothed_cycle_buffer.Length;
-                for (int i = 0; i < length; i++)
-                {
-                    if (!Double.IsNaN(registrator0.smoothed_cycle_buffer[i]))
-                    {
-                        series0.Points.Add(new DataPoint(i * 0.025, registrator0.smoothed_cycle_buffer[i]));
-                    }
-                }
-            }
-
-            chart0Window.channel0_mean_plot_view.Model.Series.Add(series0);
-            chart0Window.Show();
+            active_plotview_index = 0;
+            skeleton.active_angle_index = 0;
         }
 
         private void mean_graph1_double_click(object sender, MouseButtonEventArgs e)
         {
-            chart1Window = new chart1_window();
-            //chart0Window.Owner = this;
+            clear_scene();
 
-            OxyPlot.Series.LineSeries series0 = new LineSeries();
-            series0.Color = OxyColor.FromRgb(255, 0, 0);
-
-            if (registrator1.smoothed_cycle_buffer != null)
-            {
-                int length = registrator1.smoothed_cycle_buffer.Length;
-                for (int i = 0; i < length; i++)
-                {
-                    if (!Double.IsNaN(registrator1.smoothed_cycle_buffer[i]))
-                    {
-                        series0.Points.Add(new DataPoint(i * 0.025, registrator1.smoothed_cycle_buffer[i]));
-                    }
-                }
-            }
-
-            chart1Window.channel1_mean_plot_view.Model.Series.Add(series0);
-            chart1Window.Show();
+            active_plotview_index = 1;
+            skeleton.active_angle_index = 1;
         }
 
         //*
         private void mean_graph2_double_click(object sender, MouseButtonEventArgs e)
         {
-            //chart2Window = new chart2_window();
+            clear_scene();
 
-            OxyPlot.Series.LineSeries series0 = new LineSeries();
-            series0.Color = OxyColor.FromRgb(255, 0, 0);
-
-            if (registrator2.smoothed_cycle_buffer != null)
-            {
-                int length = registrator2.smoothed_cycle_buffer.Length;
-                for (int i = 0; i < length; i++)
-                {
-                    if (!Double.IsNaN(registrator2.smoothed_cycle_buffer[i]))
-                    {
-                        series0.Points.Add(new DataPoint(i * 0.025, registrator2.smoothed_cycle_buffer[i]));
-                    }
-                }
-            }
-
-            //chart2Window.channel2_mean_plot_view.Model.Series.Add(series0);
-            //chart2Window.Show();
+            active_plotview_index = 2;
+            skeleton.active_angle_index = 2;
         }
 
         private void mean_graph3_double_click(object sender, MouseButtonEventArgs e)
         {
-            //chart3Window = new chart3_window();
+            clear_scene();
 
-            OxyPlot.Series.LineSeries series0 = new LineSeries();
-            series0.Color = OxyColor.FromRgb(255, 0, 0);
-
-            if (registrator2.smoothed_cycle_buffer != null)
-            {
-                int length = registrator2.smoothed_cycle_buffer.Length;
-                for (int i = 0; i < length; i++)
-                {
-                    if (!Double.IsNaN(registrator2.smoothed_cycle_buffer[i]))
-                    {
-                        series0.Points.Add(new DataPoint(i * 0.025, registrator2.smoothed_cycle_buffer[i]));
-                    }
-                }
-            }
-
-            //chart3Window.channel3_mean_plot_view.Model.Series.Add(series0);
-            //chart3Window.Show();
+            active_plotview_index = 3;
+            skeleton.active_angle_index = 3;
         }
         //*/
 

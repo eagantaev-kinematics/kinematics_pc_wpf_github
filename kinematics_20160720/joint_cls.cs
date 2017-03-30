@@ -27,6 +27,12 @@ namespace kinematics_20160720
             get { return Frontal_angle; }
         }
 
+        private Double[] Angles;
+        public Double[] angles
+        {
+            get { return Angles; }
+        }
+
         //........................................................
 
         public joint_cls(segment_cls segment0_parameter, segment_cls segment1_parameter, String name_parameter)
@@ -40,6 +46,8 @@ namespace kinematics_20160720
             id[1] = segment1.id;
 
             Name = name_parameter;
+
+            Angles = new Double[4];
         }
         public void calculate_angles()
         {
@@ -56,11 +64,14 @@ namespace kinematics_20160720
             Double n2 = Math.Sqrt(X2 * X2 + Y2 * Y2 + Z2 * Z2);
             Double angle_1_2 = Math.Acos((X1 * X2 + Y1 * Y2 + Z1 * Z2) / n1 / n2);
             YY_axis_angle = angle_1_2 * 180.0 / Math.PI;
+            Angles[0] = YY_axis_angle;
 
             // calculate frontal projection
             Double arg = X2 / Z2;
             if(!Double.IsNaN(arg))
-                Frontal_angle = (Math.Atan((X2/Z2)))*180/Math.PI;
+                //Frontal_angle = -(Math.Atan((X2/Z2)))*180/Math.PI;
+                Frontal_angle = Math.Sign(X2)*(Math.Acos((Z2/Math.Sqrt(X2*X2 + Z2*Z2)))) * 180 / Math.PI;
+            Angles[1] = Frontal_angle;
         }
 
 

@@ -23,6 +23,12 @@ namespace kinematics_20160720
             set { Active_joint_index = value; }
             get { return Active_joint_index; }
         }
+        private int Active_angle_index = 0;
+        public int active_angle_index
+        {
+            set { Active_angle_index = value; }
+            get { return Active_angle_index; }
+        }
 
         private segment_cls segment;
         private joint_cls joint;
