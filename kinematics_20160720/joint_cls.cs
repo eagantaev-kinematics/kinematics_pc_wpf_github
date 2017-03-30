@@ -8,6 +8,8 @@ namespace kinematics_20160720
 {
     class joint_cls
     {
+
+        int FRAME_LENGTH = 25;
         //........................................................
         private int[] id;
         private String Name;
@@ -34,6 +36,25 @@ namespace kinematics_20160720
         public Double[] angles
         {
             get { return Angles; }
+        }
+
+        private Double[,] Mean_cycle;
+        public Double[,] mean_cycle
+        {
+            get { return Mean_cycle; }
+        }
+        private int[] Mean_cycle_sample_counters;
+        private int Mean_cycle_length;
+        public int mean_cycle_length
+        {
+            get { return Mean_cycle_length; }
+        }
+        private int Mean_cycle_index = 0;
+
+        private Boolean Registering_flag = false;
+        public Boolean registering_flag
+        {
+            get { return Registering_flag; }
         }
 
         //........................................................
@@ -84,6 +105,48 @@ namespace kinematics_20160720
             // calculate horizontal projection
             Horizontal_angle = Math.Sign(X2) * (Math.Acos((-Y2 / Math.Sqrt(X2 * X2 + Y2 * Y2)))) * 180 / Math.PI; ;
             Angles[3] = Horizontal_angle;
+
+            if (Registering_flag)
+            {
+                // if registering, save data in mean cycle array
+                for (int i = 0; i < 4; i++)
+                {
+                    Mean_cycle[i, Mean_cycle_index] += Angles[i];   // uppend data to mean cycle integral
+                }
+                Mean_cycle_sample_counters[Mean_cycle_index]++;
+                //
+                Mean_cycle_index++; 
+            }
+        }
+
+        public void start_register(metronome_cls metronome)
+        {
+            Mean_cycle_length = (metronome.tick_length * metronome.ticks_in_cycle) / FRAME_LENGTH;
+            Mean_cycle = new Double[4, Mean_cycle_length + 10];
+            Mean_cycle_sample_counters = new int[Mean_cycle_length + 10];
+
+            Registering_flag = true;
+        }
+
+        public void metronome_master_tick_reset()
+        {
+            Mean_cycle_index = 0;
+        }
+
+        public void stop_register()
+        {
+            // calculate mean cycle
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < Mean_cycle_length; j++)
+                {
+                    if (Mean_cycle_sample_counters[j] != 0)
+                        Mean_cycle[i, j] /= Mean_cycle_sample_counters[j];   // calculate mean
+                }
+            }
+
+            Mean_cycle_index = 0;
+            Registering_flag = false;
         }
 
 

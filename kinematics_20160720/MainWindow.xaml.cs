@@ -44,6 +44,12 @@ namespace kinematics_20160720
         // variables ***************************
         OxyPlot.Wpf.PlotView[] plotviews;
         int active_plotview_index = 0;
+        int cycle_counter = 0;
+
+        #region создаем строку-префикс имени файла для сохранения данных
+        string file_prefix;
+        StreamWriter mean_cycle_out;
+        #endregion
 
         // objects ***************************
         metronome_cls metronome;
@@ -134,6 +140,8 @@ namespace kinematics_20160720
             plotviews[2] = sagittal_projection_plot_view;
             plotviews[3] = horizontal_projection_plot_view;
 
+            
+
         }// end constructor
         //***********************************************************************************************************************************
 
@@ -150,6 +158,7 @@ namespace kinematics_20160720
         void metronome_tick_processing()
         {
             chery1_wav.Play();
+
         }
         void on_metronome_master_tick(object sender, EventArgs e)
         {
@@ -158,9 +167,22 @@ namespace kinematics_20160720
         }
         void metronome_master_tick_processing()
         {
+            
             CrashTom_wav.Play();
 
-            // ochistka grafikov proekciy
+            foreach(joint_cls joint in skeleton.joints )
+            {
+                joint.metronome_master_tick_reset();
+            }
+
+            // if registering now
+            if(skeleton.joints.ToArray()[0].registering_flag)
+            {
+                cycle_counter++;
+                cycle_count_label1.Content = "Циклы: " + cycle_counter.ToString();
+                if (cycle_counter >= 20)
+                    stop_registration_button_Click(null, null);
+            }
         }
 
         //*
@@ -175,6 +197,7 @@ namespace kinematics_20160720
         void switch_metronome_lamp_on()
         {
             metronome_lamp_label1.Background = System.Windows.Media.Brushes.Red;
+            
         }
 
         
@@ -218,39 +241,19 @@ namespace kinematics_20160720
         void add_point_to_main_timeline_chart()
         {
             LineSeries series = (LineSeries)(plotviews[active_plotview_index].Model.Series.ToArray()[0]);
-            //LineSeries series1 = (LineSeries)(main_joint_angle_plot_view.Model.Series.ToArray()[0]);
-            //LineSeries series2 = (LineSeries)(frontal_projection_plot_view.Model.Series.ToArray()[0]);
-
-            //series.Points.Add(new DataPoint(time, skeleton.joints.ToArray()[skeleton.active_joint_index].yy_axis_angle));
-            //series1.Points.Add(new DataPoint(time, skeleton.joints.ToArray()[skeleton.active_joint_index].yy_axis_angle));
 
             series.Points.Add(new DataPoint(time, skeleton.joints.ToArray()[skeleton.active_joint_index].angles[skeleton.active_angle_index]));
             time += 0.025;
             if(time >= 10.0)
             {
                 time = 0;
-                //series.Points.Clear();
-                //series1.Points.Clear();
                 series.Points.Clear();
             }
 
-            //main_joint_angle_timeline_plot_view.Model.Series.ToArray()[0] = series;
-            //main_joint_angle_timeline_plot_view.InvalidatePlot();
-
-            //main_joint_angle_plot_view.Model.Series.ToArray()[0] = series1;
-            //main_joint_angle_plot_view.InvalidatePlot();
-
-            //frontal_projection_plot_view.Model.Series.ToArray()[0] = series1;
 
             plotviews[active_plotview_index].Model.Series.ToArray()[0] = series;
 
-            //frontal_projection_plot_view.InvalidatePlot();
-
             plotviews[active_plotview_index].InvalidatePlot();
-
-            //main_joint_angle_pannel.UpdateLayout();
-
-            // add points to projection cycle charts
 
         }
 
@@ -601,8 +604,8 @@ namespace kinematics_20160720
             }
             //*********************************************
 
-            start_metronome_button.IsEnabled = false;
-            stop_metronome_button.IsEnabled = true;
+            start_metronome_button1.IsEnabled = false;
+            stop_metronome_button1.IsEnabled = true;
             metronome.tick_length = tick_length;
             metronome.ticks_in_cycle = ticks_in_cycle;
             metronome.period_ms = tick_length * ticks_in_cycle;
@@ -611,15 +614,20 @@ namespace kinematics_20160720
             metronomeThread = new Thread(new ThreadStart(metronome.metronome_thread_method));
             metronomeThread.IsBackground = true;
             metronomeThread.Start();
+
+            start_registration_button1.IsEnabled = true;
         }
 
         private void stop_metronome_button_Click(object sender, RoutedEventArgs e)
         {
-            start_metronome_button.IsEnabled = true;
-            stop_metronome_button.IsEnabled = false;
+            start_metronome_button1.IsEnabled = true;
+            stop_metronome_button1.IsEnabled = false;
             metronome.metronome_on = false;
             metronomeThread.Abort();
             metronome_lamp_label.Background = System.Windows.Media.Brushes.Black;
+
+            // stop registering (if registering)
+            //stop_registration_button_Click(null, null);
         }
 
         private void start_registration_button_Click(object sender, RoutedEventArgs e)
@@ -627,6 +635,14 @@ namespace kinematics_20160720
             //registrator0.start_registering();
             //registrator1.start_registering();
             //registrator2.start_registering();
+
+            start_registration_button1.IsEnabled = false;
+            stop_registration_button1.IsEnabled = true;
+
+            foreach(joint_cls joint in skeleton.joints )
+            {
+                joint.start_register(metronome);
+            }
         }
 
         private void stop_registration_button_Click(object sender, RoutedEventArgs e)
@@ -659,8 +675,33 @@ namespace kinematics_20160720
             draw_filtered_mean_cycle_chart(registrator2, channel2_raw_plot_view, aux2_plot_model);
             draw_smoothed_mean_cycle_chart(registrator2, channel2_raw_plot_view, aux2_plot_model);
             */
-            
-            
+
+            stop_registration_button1.IsEnabled = false;
+            start_registration_button1.IsEnabled = true;
+
+            foreach (joint_cls joint in skeleton.joints)
+            {
+                joint.stop_register();
+            }
+
+            cycle_counter = 0;
+
+            // save data in file
+            file_prefix = DateTime.Now.ToString("yyyy_MM_dd__HH_mm_ss__");
+            mean_cycle_out = new StreamWriter(@"c:\temp\" + file_prefix + "kinematics.txt", true);
+
+            foreach (joint_cls joint in skeleton.joints)
+            {
+                mean_cycle_out.WriteLine(joint.name);
+                mean_cycle_out.WriteLine("main frontal sagittal horizontal");
+                for(int i=0; i<joint.mean_cycle_length; i++)
+                {
+                    mean_cycle_out.WriteLine(joint.mean_cycle[0, i].ToString() + " " + joint.mean_cycle[1, i].ToString() + " " + joint.mean_cycle[2, i].ToString() + " " + joint.mean_cycle[3, i].ToString()); 
+                }
+            }
+            mean_cycle_out.Close();
+
+            //double x = skeleton.joints.ToArray()[0].mean_cycle[0, 0];
 
 
         }//end private void stop_registration_button_Click(object sender, RoutedEventArgs e)
