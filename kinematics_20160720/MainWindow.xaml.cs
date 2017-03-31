@@ -46,10 +46,10 @@ namespace kinematics_20160720
         int active_plotview_index = 0;
         int cycle_counter = 0;
 
-        #region создаем строку-префикс имени файла для сохранения данных
         string file_prefix;
         StreamWriter mean_cycle_out;
-        #endregion
+
+        int data_result_switch = 0;
 
         // objects ***************************
         metronome_cls metronome;
@@ -240,20 +240,23 @@ namespace kinematics_20160720
         Double time = 0;
         void add_point_to_main_timeline_chart()
         {
-            LineSeries series = (LineSeries)(plotviews[active_plotview_index].Model.Series.ToArray()[0]);
-
-            series.Points.Add(new DataPoint(time, skeleton.joints.ToArray()[skeleton.active_joint_index].angles[skeleton.active_angle_index]));
-            time += 0.025;
-            if(time >= 10.0)
+            if (data_result_switch == 0)    // data
             {
-                time = 0;
-                series.Points.Clear();
+                LineSeries series = (LineSeries)(plotviews[active_plotview_index].Model.Series.ToArray()[0]);
+
+                series.Points.Add(new DataPoint(time, skeleton.joints.ToArray()[skeleton.active_joint_index].angles[skeleton.active_angle_index]));
+                time += 0.025;
+                if (time >= 10.0)
+                {
+                    time = 0;
+                    series.Points.Clear();
+                }
+
+
+                plotviews[active_plotview_index].Model.Series.ToArray()[0] = series;
+
+                plotviews[active_plotview_index].InvalidatePlot(); 
             }
-
-
-            plotviews[active_plotview_index].Model.Series.ToArray()[0] = series;
-
-            plotviews[active_plotview_index].InvalidatePlot();
 
         }
 
@@ -701,6 +704,10 @@ namespace kinematics_20160720
             }
             mean_cycle_out.Close();
 
+            data_result_switch = 1;
+            data_result_button.Content = "Результат";
+            show_result();
+
             //double x = skeleton.joints.ToArray()[0].mean_cycle[0, 0];
 
 
@@ -1027,6 +1034,44 @@ namespace kinematics_20160720
             skeleton.active_joint_index = 17;
             main_joint_angle_timeline_plot_view.Model.Title = skeleton.joints.ToArray()[17].name;
             main_joint_angle_timeline_plot_view.Model.InvalidatePlot(true);
+        }
+
+        private void data_result_button_Click(object sender, RoutedEventArgs e)
+        {
+            if (data_result_switch == 0) // data
+            {
+                data_result_switch = 1; // result
+                data_result_button.Content = "Результат";
+
+                show_result();
+            }
+            else // result
+            {
+                data_result_switch = 0; // data
+                plotviews[0].Model.Axes.ToArray()[0].Minimum = 0;
+                plotviews[0].Model.Axes.ToArray()[0].Maximum = 10;
+                plotviews[0].Model.Axes.ToArray()[1].Minimum = 0;
+                plotviews[0].Model.Axes.ToArray()[1].Maximum = 180;
+                ((LineSeries)(plotviews[0].Model.Series.ToArray()[0])).Points.Clear();
+                plotviews[0].InvalidatePlot();
+
+            }
+        }
+
+        void show_result()
+        {
+            if (skeleton.joints.ToArray()[0].mean_cycle.Length > 0)
+            {
+                LineSeries series = (LineSeries)(plotviews[0].Model.Series.ToArray()[0]);
+                series.Points.Clear();
+                plotviews[0].InvalidatePlot();
+                for (int i = 0; i < skeleton.joints.ToArray()[0].mean_cycle_length; i++)
+                {
+                    series.Points.Add(new DataPoint(i * 0.025, skeleton.joints.ToArray()[skeleton.active_joint_index].mean_cycle[0, i]));
+                }
+                plotviews[0].InvalidatePlot();
+            }
+            
         }
 
     }//end public partial class MainWindow : Window

@@ -379,7 +379,8 @@
                     </Grid.ColumnDefinitions>
 
                     <!-- Place elements in grid -->
-                    <Grid Grid.Row="0" Grid.Column="0" ShowGridLines="True">  <!-- pole s organami upravleniya -->
+                    <Grid Grid.Row="0" Grid.Column="0" ShowGridLines="True">
+                        <!-- pole s organami upravleniya -->
                         <!-- control grid -->
                         <!-- 3 rows -->
                         <Grid.RowDefinitions>
@@ -450,7 +451,6 @@
                             </Grid.ColumnDefinitions>
                             <!-- Place elements in grid -->
                             <Label x:Name="cycle_count_label1" Grid.Row="1" Grid.Column="1" Content="Циклы:" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="16,14,10,14" Width="125" />
-                            <Label Grid.Row="0" Grid.Column="0" Content="Данные" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
                             <Grid Grid.Row="0" Grid.Column="1" ShowGridLines="True">
                                 <Grid.ColumnDefinitions>
@@ -461,6 +461,7 @@
                                 <Button x:Name="start_registration_button1" Grid.Row="0" Grid.Column="0" Content="Регистрация" HorizontalAlignment="Center" VerticalAlignment="Center" Click="start_registration_button_Click" IsEnabled="False"/>
                                 <Button x:Name="stop_registration_button1" Grid.Row="0" Grid.Column="1" Content="Закончить" HorizontalAlignment="Center" VerticalAlignment="Center" Click="stop_registration_button_Click" IsEnabled="False"/>
                             </Grid>
+                            <Button Grid.Row="0" Grid.Column="0" x:Name="data_result_button" Content="Данные" HorizontalAlignment="Center" Height="25" VerticalAlignment="Center" Width="67" Click="data_result_button_Click"/>
                         </Grid>
                         <Grid Grid.Row="2" Grid.Column="0" ShowGridLines="True">
                             <!-- pole s knopkami vybora sustava -->
@@ -508,8 +509,9 @@
                             <Button Grid.Row="16" Grid.Column="0" x:Name="joint17_button" Content="Колено правое" Click="joint17_button_Click"/>
                             <Button Grid.Row="17" Grid.Column="0" x:Name="joint18_button" Content="Голеностоп правый" Click="joint18_button_Click"/>
                         </Grid>
-                    </Grid> 
-                    <Grid Grid.Row="0" Grid.Column="1" ShowGridLines="True"> <!-- pole s grafikami -->
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="1" ShowGridLines="True">
+                        <!-- pole s grafikami -->
                         <!-- graphs grid -->
                         <!-- 2 rows -->
                         <Grid.RowDefinitions>
