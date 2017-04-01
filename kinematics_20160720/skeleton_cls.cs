@@ -47,11 +47,11 @@ namespace kinematics_20160720
             segments = new List<segment_cls>();
             segments.Add(segment);
             // formiruem spisok segmentov
-            segment = new segment_cls(1, 12);       // golova
+            segment = new segment_cls(1, 14);       // golova
             segments.Add(segment);                  
             segment = new segment_cls(2, 13);       // sheya
             segments.Add(segment);
-            segment = new segment_cls(3, 14);       // grud'
+            segment = new segment_cls(3, 12);       // grud'
             segments.Add(segment);
             segment = new segment_cls(4, 8);        // zhivot
             segments.Add(segment);
@@ -87,13 +87,13 @@ namespace kinematics_20160720
             segments.Add(segment);
 
             // formiruem spisok sustavov
-            joint = new joint_cls(segments.ToArray()[1], segments.ToArray()[2], "Шея верх"); // neck high
+            joint = new joint_cls(segments.ToArray()[2], segments.ToArray()[1], "Шея верх"); // neck high
             Joints.Add(joint);
-            joint = new joint_cls(segments.ToArray()[2], segments.ToArray()[3], "Шея низ"); // neck low
+            joint = new joint_cls(segments.ToArray()[3], segments.ToArray()[2], "Шея низ"); // neck low
             Joints.Add(joint);
-            joint = new joint_cls(segments.ToArray()[3], segments.ToArray()[4], "Грудной отдел"); // chest
+            joint = new joint_cls(segments.ToArray()[4], segments.ToArray()[3], "Грудной отдел"); // chest
             Joints.Add(joint);
-            joint = new joint_cls(segments.ToArray()[4], segments.ToArray()[5], "Поясничный отдел"); // reins
+            joint = new joint_cls(segments.ToArray()[5], segments.ToArray()[4], "Поясничный отдел"); // reins
             Joints.Add(joint);
             joint = new joint_cls(segments.ToArray()[3], segments.ToArray()[6], "Ключица левая"); // collarbone left
             Joints.Add(joint);

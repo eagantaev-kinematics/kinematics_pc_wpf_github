@@ -53,7 +53,8 @@ namespace kinematics_20160720
             debug_message = "my ip -> " + IP1 + "\r\n";
             callback_delegate(debug_message);
 
-            local_kinematics_endpoint.Address = IPAddress.Parse("192.168.1.1");
+            //local_kinematics_endpoint.Address = IPAddress.Parse("192.168.1.1");
+            local_kinematics_endpoint.Address = IPAddress.Any;
             //local_kinematics_endpoint.Address = IPAddress.Parse(IP1);
             local_kinematics_endpoint.Port = 112;
 

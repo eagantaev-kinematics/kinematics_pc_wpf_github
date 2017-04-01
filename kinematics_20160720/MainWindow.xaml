@@ -3,12 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:oxy="http://oxyplot.org/wpf"
         xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
-        Title="Программа контроля кинематики" Height="830" Width="1539.105" Closed="Window_Closed" Loaded="main_window_Loaded">
+        Title="Программа контроля кинематики" Height="830" Width="1539.105" Closed="Window_Closed" Loaded="main_window_Loaded" SizeToContent="WidthAndHeight">
     <Grid x:Name="tab">
         <TabControl HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="1515" Height="781">
 
-            <TabItem Header="Модель">
-                <Grid Background="#FFE5E5E5" ShowGridLines="True" Margin="0,0,4.6,-3.2">
+            <TabItem Header="Модель" IsEnabled="False" Visibility="Collapsed">
+                <Grid Background="#FFE5E5E5" ShowGridLines="True" Margin="0,0,4.6,-3.2" Visibility="Collapsed" IsEnabled="False">
                     <!-- main grid -->
                     <!-- 1 row -->
                     <Grid.RowDefinitions>
@@ -106,7 +106,7 @@
             <!-- *************************************************************************************************************************** -->
 
 
-            <TabItem Header="Данные датчиков">
+            <TabItem x:Name="sensors_data_tab" Header="Данные датчиков">
                 <Grid Background="#FFE5E5E5" Margin="0,0,-0.4,-4.2">
                     <Label x:Name="data_panel_label" Content="..." HorizontalAlignment="Left" Margin="153,167,0,0" VerticalAlignment="Top" Height="450" Width="1118" Background="LightGray" FontFamily="MS Gothic" FontWeight="Bold" FontSize="20"/>
                     <Label x:Name="info_panel_label" Content="..." HorizontalAlignment="Left" Height="35" Margin="41,67,0,0" VerticalAlignment="Top" Width="972"/>
@@ -365,7 +365,7 @@
             <!-- Регистрация -->
             <!-- *************************************************************************************************************************** -->
 
-            <TabItem Header="Регистрация">
+            <TabItem x:Name="registration_tab" Header="Регистрация">
                 <Grid Background="#FFE5E5E5" ShowGridLines="True" Margin="0,0,4.6,-3.2">
                     <!-- main grid; sleva (column 0) -organy upravleniya, sprava (column 1) - grafiki -->
                     <!-- 1 row -->
