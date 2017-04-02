@@ -38,6 +38,8 @@ namespace kinematics_20160720
             main_timeline_plotview.Model.Axes.Add(angle_axis);
             LineSeries series = new LineSeries();
             main_timeline_plotview.Model.Series.Add(series);
+            LinearBarSeries bar_series = new LinearBarSeries();
+            main_timeline_plotview.Model.Series.Add(bar_series);
 
             axis_angle_chart = new cycle_chart_cls(main_joint_angle_plot_view, "Угол между осями");
             axis_angle_chart.set_time_axis(0, 10);

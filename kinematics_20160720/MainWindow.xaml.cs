@@ -125,7 +125,7 @@ namespace kinematics_20160720
             //subscribe on udp receiver event
             udp_receiver.udp_data_received_event += on_udp_data_received;
 
-
+            
             // threads *****************************
             plotviews = new OxyPlot.Wpf.PlotView[4];
             plotviews[0] = main_joint_angle_plot_view;
@@ -171,6 +171,9 @@ namespace kinematics_20160720
             // if registering now
             if(skeleton.joints.ToArray()[0].registering_flag)
             {
+                // draw red vertical bar on top chart
+                ((LinearBarSeries)(main_joint_angle_timeline_plot_view.Model.Series.ToArray()[1])).Points.Add(new DataPoint(time, 180));
+
                 cycle_counter++;
                 cycle_count_label1.Content = "Циклы: " + cycle_counter.ToString();
                 if (cycle_counter >= 20)
@@ -242,6 +245,7 @@ namespace kinematics_20160720
                 {
                     // show graph of main angle of active joint on the top chart pannel
                     LineSeries series = (LineSeries)(main_joint_angle_timeline_plot_view.Model.Series.ToArray()[0]);
+                    LinearBarSeries bar_series = (LinearBarSeries)(main_joint_angle_timeline_plot_view.Model.Series.ToArray()[1]);
 
                     series.Points.Add(new DataPoint(time, skeleton.joints.ToArray()[skeleton.active_joint_index].angles[0]));
                     time += 0.025;
@@ -249,6 +253,7 @@ namespace kinematics_20160720
                     {
                         time = 0;
                         series.Points.Clear();
+                        bar_series.Points.Clear();
                     }
 
 
@@ -663,6 +668,7 @@ namespace kinematics_20160720
             // switch active joint main angle displaing on top chart
             time = 0;
             ((LineSeries)(main_joint_angle_timeline_plot_view.Model.Series.ToArray()[0])).Points.Clear();
+            ((LinearBarSeries)(main_joint_angle_timeline_plot_view.Model.Series.ToArray()[1])).Points.Clear();
             main_joint_angle_timeline_plot_view.InvalidatePlot();
             ((LineSeries)(main_joint_angle_plot_view.Model.Series.ToArray()[0])).Points.Clear();
             main_joint_angle_plot_view.InvalidatePlot();
