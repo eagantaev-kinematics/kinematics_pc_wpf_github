@@ -242,20 +242,41 @@ namespace kinematics_20160720
         {
             if (data_result_switch == 0)    // data
             {
-                LineSeries series = (LineSeries)(plotviews[active_plotview_index].Model.Series.ToArray()[0]);
-
-                series.Points.Add(new DataPoint(time, skeleton.joints.ToArray()[skeleton.active_joint_index].angles[skeleton.active_angle_index]));
-                time += 0.025;
-                if (time >= 10.0)
+                if (skeleton.joints.ToArray()[0].registering_flag) // we now register data
                 {
-                    time = 0;
-                    series.Points.Clear();
+                    // show graph of main angle of active joint on the top chart pannel
+                    LineSeries series = (LineSeries)(main_joint_angle_timeline_plot_view.Model.Series.ToArray()[0]);
+
+                    series.Points.Add(new DataPoint(time, skeleton.joints.ToArray()[skeleton.active_joint_index].angles[0]));
+                    time += 0.025;
+                    if (time >= 20.0)
+                    {
+                        time = 0;
+                        series.Points.Clear();
+                    }
+
+
+                    main_joint_angle_timeline_plot_view.Model.Series.ToArray()[0] = series;
+
+                    main_joint_angle_timeline_plot_view.InvalidatePlot();  
                 }
+                else
+                {
+                    LineSeries series = (LineSeries)(plotviews[active_plotview_index].Model.Series.ToArray()[0]);
+
+                    series.Points.Add(new DataPoint(time, skeleton.joints.ToArray()[skeleton.active_joint_index].angles[skeleton.active_angle_index]));
+                    time += 0.025;
+                    if (time >= 10.0)
+                    {
+                        time = 0;
+                        series.Points.Clear();
+                    }
 
 
-                plotviews[active_plotview_index].Model.Series.ToArray()[0] = series;
+                    plotviews[active_plotview_index].Model.Series.ToArray()[0] = series;
 
-                plotviews[active_plotview_index].InvalidatePlot(); 
+                    plotviews[active_plotview_index].InvalidatePlot();  
+                }
             }
 
         }
@@ -639,12 +660,22 @@ namespace kinematics_20160720
 
         private void start_registration_button_Click(object sender, RoutedEventArgs e)
         {
-            //registrator0.start_registering();
-            //registrator1.start_registering();
-            //registrator2.start_registering();
 
             start_registration_button1.IsEnabled = false;
             stop_registration_button1.IsEnabled = true;
+
+            // switch active joint main angle displaing on top chart
+            time = 0;
+            ((LineSeries)(main_joint_angle_timeline_plot_view.Model.Series.ToArray()[0])).Points.Clear();
+            main_joint_angle_timeline_plot_view.InvalidatePlot();
+            ((LineSeries)(main_joint_angle_plot_view.Model.Series.ToArray()[0])).Points.Clear();
+            main_joint_angle_plot_view.InvalidatePlot();
+            ((LineSeries)(frontal_projection_plot_view.Model.Series.ToArray()[0])).Points.Clear();
+            frontal_projection_plot_view.InvalidatePlot();
+            ((LineSeries)(sagittal_projection_plot_view.Model.Series.ToArray()[0])).Points.Clear();
+            sagittal_projection_plot_view.InvalidatePlot();
+            ((LineSeries)(horizontal_projection_plot_view.Model.Series.ToArray()[0])).Points.Clear();
+            horizontal_projection_plot_view.InvalidatePlot();
 
             foreach(joint_cls joint in skeleton.joints )
             {

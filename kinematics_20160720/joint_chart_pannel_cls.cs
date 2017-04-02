@@ -35,7 +35,7 @@ namespace kinematics_20160720
             time_axis.Position = OxyPlot.Axes.AxisPosition.Bottom;
             angle_axis.Position = OxyPlot.Axes.AxisPosition.Left;
             time_axis.Minimum = 0;
-            time_axis.Maximum = 10;
+            time_axis.Maximum = 20;
             angle_axis.Minimum = 0;
             angle_axis.Maximum = 180;
             main_timeline_plotview.Model.Axes.Add(time_axis);
