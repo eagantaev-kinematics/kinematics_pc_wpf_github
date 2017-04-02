@@ -12,13 +12,9 @@ namespace kinematics_20160720
 {
     class joint_chart_pannel_cls
     {
-        private int FRAME_PERIOD = 24;
-
-        private timeline_chart_cls timeline_chart;
+        //private timeline_chart_cls timeline_chart;
         private cycle_chart_cls axis_angle_chart, frontal_chart, sagittal_chart, horizontal_chart;
 
-        //private OxyPlot.Wpf.PlotView plotview;
-        private PlotModel plotmodel;
 
         // debug 
         int counter = 0;
@@ -57,23 +53,6 @@ namespace kinematics_20160720
             horizontal_chart.set_angle_axis(-180, 180);
         }
 
-        EventArgs e;
-        public event EventHandler chart_update_tick;
-        public void chart_update_thread_method()
-        {
-            while (do_job)
-            {
-                // every ... mSec request current joint data and display them
-                Thread.Sleep(FRAME_PERIOD);
-
-                // request data
-                //Event will be null if there are no subscribers
-                if (chart_update_tick != null)
-                    chart_update_tick(this, e);
-
-                // draw data *****************************************************************
-                counter++;
-            }
-        }
+        
     }
 }

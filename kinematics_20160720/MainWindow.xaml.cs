@@ -125,15 +125,8 @@ namespace kinematics_20160720
             //subscribe on udp receiver event
             udp_receiver.udp_data_received_event += on_udp_data_received;
 
-            // subscribe on joint chart pannel events
-            joint_chart_pannel.chart_update_tick += on_chart_update_tick;
-
-
 
             // threads *****************************
-            chart_update_thread = new Thread(new ThreadStart(joint_chart_pannel.chart_update_thread_method));
-            chart_update_thread.Start();
-
             plotviews = new OxyPlot.Wpf.PlotView[4];
             plotviews[0] = main_joint_angle_plot_view;
             plotviews[1] = frontal_projection_plot_view;
@@ -227,6 +220,9 @@ namespace kinematics_20160720
             // poulate segments data
             Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
                             new NoArgDelegate(skeleton.update_data));
+            // redraw charts
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                           new NoArgDelegate(add_point_to_main_timeline_chart));
         }
 
 
