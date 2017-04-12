@@ -712,6 +712,10 @@ namespace kinematics_20160720
             }
             mean_cycle_out.Close();
 
+            //***** zapis' v bazu dannyh *****
+
+            //***** zapis' v bazu dannyh *****
+
             data_result_switch = 1;
             data_result_button.Content = "Результат";
             //show_result();
@@ -958,6 +962,10 @@ namespace kinematics_20160720
 
                         plotviews[j].Model = model;
                     }
+                    plotviews[0].Model.Title = "Угол между осями";
+                    plotviews[1].Model.Title = "Фронтальная проекция";
+                    plotviews[2].Model.Title = "Сагиттальная проекция";
+                    plotviews[3].Model.Title = "Горизонтальная проекция";
                 }
             }
         }

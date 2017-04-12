@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Npgsql">
+      <HintPath>npgsql\Npgsql.dll</HintPath>
+    </Reference>
     <Reference Include="OxyPlot">
       <HintPath>..\packages\OxyPlot.Core.1.0.0\lib\net45\OxyPlot.dll</HintPath>
     </Reference>
@@ -84,6 +87,7 @@
     <Compile Include="mean_cycle_graph_cls.cs" />
     <Compile Include="metronome_cls.cs" />
     <Compile Include="model_cls.cs" />
+    <Compile Include="pgsql.cs" />
     <Compile Include="raw_data_frame_cls.cs" />
     <Compile Include="raw_data_storage_cls.cs" />
     <Compile Include="raw_kinematics_data_cls.cs" />
