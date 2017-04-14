@@ -1,24 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 using System.Threading;
 using System.IO;
 //using System.IO.Ports;
-using System.Net.Sockets;
-using System.Net;
 
 using System.Runtime.InteropServices;
 
@@ -699,7 +687,10 @@ namespace kinematics_20160720
 
             // save data in file
             file_prefix = DateTime.Now.ToString("yyyy_MM_dd__HH_mm_ss__");
-            mean_cycle_out = new StreamWriter(@"c:\temp\" + file_prefix + "kinematics.txt", true);
+            string date_time_id = file_prefix.Replace("_", "");
+            date_time_id = date_time_id.Substring(4);
+            string out_file_name = @"c:\temp\kinematics\data\" + file_prefix + "kinematics.txt";
+            mean_cycle_out = new StreamWriter(out_file_name, true);
 
             foreach (joint_cls joint in skeleton.joints)
             {
@@ -713,7 +704,34 @@ namespace kinematics_20160720
             mean_cycle_out.Close();
 
             //***** zapis' v bazu dannyh *****
-
+            ///			WRITE TO DB
+			//DBPostgreSQL.init( "127.0.0.1" , "postgres" , "postgres" , "0000" );
+            DBPostgreSQL.init("192.168.0.177", "postgres", "postgres", "0000");
+            if (!DBPostgreSQL.create_schema() || !DBPostgreSQL.create_table())
+            {
+                MessageBox.Show("ERROR");
+                return;
+            }
+            if (!DBPostgreSQL.is_table_exists())
+            {
+                MessageBox.Show("ERROR");
+                return;
+            }
+            //tr("OK TABLE ");
+            var buf = File.ReadAllBytes(out_file_name);      // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!   file for db saving
+                                                                                               //if ( !DBPostgreSQL.insert_bytea( buf , research.researchID , research.tso_id_active.ToArray() ) )
+            if (!DBPostgreSQL.insert_bytea(buf, date_time_id, new int[] { 1, 2 }))
+            {
+                MessageBox.Show("ERROR");
+                return;
+            }
+            //tr("OK INSERT ");
+            if (!DBPostgreSQL.select_bytea())
+            {
+                MessageBox.Show("ERROR");
+                return;
+            }
+            //tr("OK SELECT ");
             //***** zapis' v bazu dannyh *****
 
             data_result_switch = 1;

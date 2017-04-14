@@ -11,7 +11,7 @@ using NpgsqlTypes;
 
 namespace kinematics_20160720
 {
-    public class DBPostgreSQL
+	public class DBPostgreSQL
 	{
 		static string db_schema = "kinematics";
 		static string db_table = "data";
@@ -20,7 +20,7 @@ namespace kinematics_20160720
 		const int tio_cmd = 5; // sec
 		static string db_name = null;
 		static string conn_str = null;
-		static void tr( string msg = "ok" ){ Debug.WriteLine( $"> { MethodBase.GetCurrentMethod().DeclaringType }: {msg}" );}
+		static void tr( string msg = "ok" ) => Debug.WriteLine( $"> { MethodBase.GetCurrentMethod().DeclaringType }: {msg}" );
 
 		public static void init( string server_ip , string database , string user , string pwd )
 		{

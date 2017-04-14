@@ -48,3 +48,5 @@ C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\
 C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug\kinematics_20160720_MarkupCompile.lref
 C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug\chart1_window.g.cs
 C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\obj\Debug\chart1_window.baml
+C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\bin\Debug\Npgsql.dll
+C:\workspace\vsProjects\kinematics\kinematics_pc_wpf_github\kinematics_20160720\bin\Debug\Npgsql.xml
