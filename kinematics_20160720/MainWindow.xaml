@@ -3,12 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:oxy="http://oxyplot.org/wpf"
         xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        xmlns:i="clr-namespace:System.Windows.Interop;assembly=PresentationCore"
         Title="Программа контроля кинематики" Height="830" Width="1539.105" Closed="Window_Closed" Loaded="main_window_Loaded" SizeToContent="WidthAndHeight">
     <Grid x:Name="tab">
         <TabControl HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="1515" Height="781">
 
-            <TabItem Header="Модель" IsEnabled="False" Visibility="Collapsed">
-                <Grid Background="#FFE5E5E5" ShowGridLines="True" Margin="0,0,4.6,-3.2" Visibility="Collapsed" IsEnabled="False">
+            <TabItem Header="Модель" IsEnabled="True">
+                <Grid Background="#FFE5E5E5" ShowGridLines="True" Margin="0,0,4.6,-3.2" IsEnabled="True">
                     <!-- main grid -->
                     <!-- 1 row -->
                     <Grid.RowDefinitions>
@@ -27,79 +28,7 @@
                         <!--<Image x:Name="model_joints_image" Source="pack://application:,,,/Resources/model_schema.jpg" />-->
                     </Border>
 
-                    <Grid Grid.Row="0" Grid.Column="0" ShowGridLines="True">
-                        <!-- 1 row -->
-                        <Grid.RowDefinitions>
-                            <RowDefinition></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <!-- 1 columns -->
-                            <ColumnDefinition></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-
-                        <!-- Place elements in grid -->
-                        <ComboBox Grid.Row="0" Grid.Column="0"  x:Name="standard_channels_combo" HorizontalAlignment="Left" Margin="111,267,0,0" VerticalAlignment="Top" Width="284" ToolTip="Стандартные каналы" Text="Стандартные каналы">
-                            <ComboBoxItem Content="1. Шея 1х3"/>
-                            <ComboBoxItem Content="1.1. Шея сгибание разгибание (сагиттальная)"/>
-                            <ComboBoxItem Content="1.2. Шея наклоны (фронтальная)"/>
-                            <ComboBoxItem Content="1.3. Шея ротация (горизонтальная)"/>
-                            <ComboBoxItem Content="2. Пояснично-грудной 3х5"/>
-                            <ComboBoxItem Content="2.1. Пояснично-грудной сгибание разгибание (сагиттальная)"/>
-                            <ComboBoxItem Content="2.2. Пояснично-грудной наклоны (фронтальная)"/>
-                            <ComboBoxItem Content="2.3. Пояснично-грудной ротация (горизонтальная)"/>
-                            <ComboBoxItem Content="3. Левое плечо 3х7"/>
-                            <ComboBoxItem Content="3.1. Левое плечо сгибание разгибание (сагиттальная)"/>
-                            <ComboBoxItem Content="3.2. Левое плечо отведение приведение (фронтальная)"/>
-                            <ComboBoxItem Content="3.3. Левое плечо ротация (горизонтальная)"/>
-                            <ComboBoxItem Content="4. Правое плечо 3х14"/>
-                            <ComboBoxItem Content="4.1. Правое плечо сгибание разгибание (сагиттальная)"/>
-                            <ComboBoxItem Content="4.2. Правое плечо отведение приведение (фронтальная)"/>
-                            <ComboBoxItem Content="3.3. Правое плечо ротация (горизонтальная)"/>
-                            <ComboBoxItem Content="5. Левый локоть 7х8"/>
-                            <ComboBoxItem Content="6. Правый локоть 14х15"/>
-                            <ComboBoxItem Content="7. Левая кисть 8х9"/>
-                            <ComboBoxItem Content="7.1. Левая кисть сгибание разгибание (сагиттальная)"/>
-                            <ComboBoxItem Content="7.2. Левая кисть отведение приведение (фронтальная)"/>
-                            <ComboBoxItem Content="8. Правая кисть 15х16"/>
-                            <ComboBoxItem Content="8.1. Правая кисть сгибание разгибание (сагиттальная)"/>
-                            <ComboBoxItem Content="8.2. Правая кисть отведение приведение (фронтальная)"/>
-                            <ComboBoxItem Content="9. Левый тазобедренный 5х10"/>
-                            <ComboBoxItem Content="9.1. Левый тазобедренный сгибание разгибание (сагиттальная)"/>
-                            <ComboBoxItem Content="9.2. Левый тазобедренный наклоны (фронтальная)"/>
-                            <ComboBoxItem Content="9.3. Левый тазобедренный ротация (горизонтальная)"/>
-                            <ComboBoxItem Content="10. Правый тазобедренный 5х17"/>
-                            <ComboBoxItem Content="10.1. Правый тазобедренный сгибание разгибание (сагиттальная)"/>
-                            <ComboBoxItem Content="10.2. Правый тазобедренный наклоны (фронтальная)"/>
-                            <ComboBoxItem Content="10.3. Правый тазобедренный ротация (горизонтальная)"/>
-                            <ComboBoxItem Content="11. Левое колено 10х11"/>
-                            <ComboBoxItem Content="12. Правое колено 17х18"/>
-                            <ComboBoxItem Content="13. Левый голеностоп 11х12"/>
-                            <ComboBoxItem Content="13.1. Левый голеностоп сгибание разгибание (сагиттальная)"/>
-                            <ComboBoxItem Content="13.2. Левый голеностоп отведение приведение (фронтальная)"/>
-                            <ComboBoxItem Content="14. Правый голеностоп 18х19"/>
-                            <ComboBoxItem Content="14.1. Правый голеностоп сгибание разгибание (сагиттальная)"/>
-                            <ComboBoxItem Content="14.2. Правый голеностоп отведение приведение (фронтальная)"/>
-                        </ComboBox>
-                        <Label Grid.Row="0" Grid.Column="0" Content="Стандартные каналы" HorizontalAlignment="Left" Margin="111,236,0,0" VerticalAlignment="Top"/>
-                        <Label Grid.Row="0" Grid.Column="0" Content="Нестандартные каналы" HorizontalAlignment="Left" Margin="111,321,0,0" VerticalAlignment="Top"/>
-                        <Label Grid.Row="0" Grid.Column="0" Content="Номер канала" HorizontalAlignment="Left" Margin="111,70,0,0" VerticalAlignment="Top"/>
-                        <Label Grid.Row="0" Grid.Column="0" Content="Название канала" HorizontalAlignment="Left" Margin="210,69,0,0" VerticalAlignment="Top" Width="426" HorizontalContentAlignment="Center"/>
-                        <Label Grid.Row="0" Grid.Column="0" Content="Датчик 1" HorizontalAlignment="Left" Margin="641,69,0,0" VerticalAlignment="Top"/>
-                        <Label Grid.Row="0" Grid.Column="0" Content="Датчик 2" HorizontalAlignment="Left" Margin="705,69,0,0" VerticalAlignment="Top"/>
-                        <Label Grid.Row="0" Grid.Column="0" Content="Добавить/Удалить" HorizontalAlignment="Left" Margin="769,69,0,0" VerticalAlignment="Top" Width="111"/>
-                        <TextBox Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Height="23" Margin="138,100,0,0" TextWrapping="Wrap" Text="15" VerticalAlignment="Top" Width="34" HorizontalContentAlignment="Center"/>
-                        <TextBox Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Height="23" Margin="210,100,0,0" TextWrapping="Wrap" Text="Нестандартный канал" VerticalAlignment="Top" Width="426"/>
-                        <TextBox Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Height="23" Margin="654,100,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="34" HorizontalContentAlignment="Center"/>
-                        <TextBox Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Height="23" Margin="718,100,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="34" HorizontalContentAlignment="Center"/>
-                        <Button Grid.Row="0" Grid.Column="0" Content="+" HorizontalAlignment="Left" Margin="808,97,0,0" VerticalAlignment="Top" Width="27" Foreground="Lime" FontSize="16" FontWeight="Bold" VerticalContentAlignment="Top"/>
-                        <ComboBox Grid.Row="0" Grid.Column="0" x:Name="nonstandard_channels_combo" HorizontalAlignment="Left" Margin="111,352,0,0" VerticalAlignment="Top" Width="284" ToolTip="Нестандартные каналы" Text="Стандартные каналы">
-                        </ComboBox>
-                        <Label Grid.Row="0" Grid.Column="0" Content="Управление нестандартными каналами" HorizontalAlignment="Left" Margin="111,38,0,0" VerticalAlignment="Top"/>
-                        <Label Grid.Row="0" Grid.Column="0" Content="Добавить/Удалить" HorizontalAlignment="Left" Margin="415,236,0,0" VerticalAlignment="Top" Width="111"/>
-                        <Button Grid.Row="0" Grid.Column="0" Content="+" HorizontalAlignment="Left" Margin="454,264,0,0" VerticalAlignment="Top" Width="27" Foreground="Lime" FontSize="16" FontWeight="Bold" VerticalContentAlignment="Top"/>
-                        <Button Grid.Row="0" Grid.Column="0" Content="+" HorizontalAlignment="Left" Margin="454,349,0,0" VerticalAlignment="Top" Width="27" Foreground="Lime" FontSize="16" FontWeight="Bold" VerticalContentAlignment="Top"/>
-                        <Label Grid.Row="0" Grid.Column="0" Content="Модель" HorizontalAlignment="Left" Margin="718,153,0,0" VerticalAlignment="Top" Width="53"/>
-                    </Grid>
+                   
                     <Label Grid.Row="0" Grid.Column="0" Content="" HorizontalAlignment="Left" Margin="553,184,0,0" VerticalAlignment="Top" Width="384" Height="490" Background="White"/>
                 </Grid>
             </TabItem>
@@ -462,6 +391,7 @@
                                 <Button x:Name="stop_registration_button1" Grid.Row="0" Grid.Column="1" Content="Закончить" HorizontalAlignment="Center" VerticalAlignment="Center" Click="stop_registration_button_Click" IsEnabled="False"/>
                             </Grid>
                             <Button Grid.Row="0" Grid.Column="0" x:Name="data_result_button" Content="Данные" HorizontalAlignment="Center" Height="25" VerticalAlignment="Center" Width="67" Click="data_result_button_Click"/>
+                            <Button Grid.Row="1" Grid.Column="0" x:Name="angle_rotation_button" Content="Плоские углы" HorizontalAlignment="Center" Height="25" VerticalAlignment="Center" Width="88" Click="angle_rotation_button_Click" Margin="42,14.6,20.4,14"/>
                         </Grid>
                         <Grid Grid.Row="2" Grid.Column="0" ShowGridLines="True">
                             <!-- pole s knopkami vybora sustava -->
@@ -490,22 +420,22 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Button Grid.Row="0" Grid.Column="0" x:Name="joint1_button" Content="Шея верх (2-1)" Click="joint1_button_Click"/>
-                            <Button Grid.Row="1" Grid.Column="0" x:Name="joint2_button" Content="Шея низ (3-2)" Click="joint2_button_Click"/>
+                            <Button Grid.Row="0" Grid.Column="0" x:Name="joint1_button" Content="Шейный отдел (3-1)" Click="joint1_button_Click"/>
+                            <Button Grid.Row="1" Grid.Column="0" x:Name="joint2_button" Content="Шейно-грудной отдел (3-2)" Click="joint2_button_Click"/>
                             <Button Grid.Row="2" Grid.Column="0" x:Name="joint3_button" Content="Грудной отдел (4-3)" Click="joint3_button_Click"/>
                             <Button Grid.Row="3" Grid.Column="0" x:Name="joint4_button" Content="Поясничный отдел (5-4)" Click="joint4_button_Click"/>
                             <Button Grid.Row="4" Grid.Column="0" x:Name="joint5_button" Content="Ключица левая (3-6)" Click="joint5_button_Click"/>
-                            <Button Grid.Row="5" Grid.Column="0" x:Name="joint6_button" Content="Плечо левое (6-7)" Click="joint6_button_Click"/>
-                            <Button Grid.Row="6" Grid.Column="0" x:Name="joint7_button" Content="Локоть левый (7-8)" Click="joint7_button_Click"/>
-                            <Button Grid.Row="7" Grid.Column="0" x:Name="joint8_button" Content="Запястье левое (8-9)" Click="joint8_button_Click"/>
+                            <Button Grid.Row="5" Grid.Column="0" x:Name="joint6_button" Content="Плечевой сустав левый (6-7)" Click="joint6_button_Click"/>
+                            <Button Grid.Row="6" Grid.Column="0" x:Name="joint7_button" Content="Локтевой сустав левый (7-8)" Click="joint7_button_Click"/>
+                            <Button Grid.Row="7" Grid.Column="0" x:Name="joint8_button" Content="Луче-запястный сустав левый (8-9)" Click="joint8_button_Click"/>
                             <Button Grid.Row="8" Grid.Column="0" x:Name="joint9_button" Content="Ключица правая (3-13)" Click="joint9_button_Click"/>
-                            <Button Grid.Row="9" Grid.Column="0" x:Name="joint10_button" Content="Плечо правое (13-14)" Click="joint10_button_Click"/>
-                            <Button Grid.Row="10" Grid.Column="0" x:Name="joint11_button" Content="Локоть правый (14-15)" Click="joint11_button_Click"/>
-                            <Button Grid.Row="11" Grid.Column="0" x:Name="joint12_button" Content="Запястье правое (15-16)" Click="joint12_button_Click"/>
-                            <Button Grid.Row="12" Grid.Column="0" x:Name="joint13_button" Content="Тазобедренный левый (5-10)" Click="joint13_button_Click"/>
+                            <Button Grid.Row="9" Grid.Column="0" x:Name="joint10_button" Content="Плечевой сустав правый (13-14)" Click="joint10_button_Click"/>
+                            <Button Grid.Row="10" Grid.Column="0" x:Name="joint11_button" Content="Локтевой сустав правый (14-15)" Click="joint11_button_Click"/>
+                            <Button Grid.Row="11" Grid.Column="0" x:Name="joint12_button" Content="Луче-запястный сустав правый (15-16)" Click="joint12_button_Click"/>
+                            <Button Grid.Row="12" Grid.Column="0" x:Name="joint13_button" Content="Тазобедренный сустав левый (5-10)" Click="joint13_button_Click"/>
                             <Button Grid.Row="13" Grid.Column="0" x:Name="joint14_button" Content="Колено левое (10-11)" Click="joint14_button_Click"/>
                             <Button Grid.Row="14" Grid.Column="0" x:Name="joint15_button" Content="Голеностоп левый (11-12)" Click="joint15_button_Click"/>
-                            <Button Grid.Row="15" Grid.Column="0" x:Name="joint16_button" Content="Тазобедренный правый (5-17)" Click="joint16_button_Click"/>
+                            <Button Grid.Row="15" Grid.Column="0" x:Name="joint16_button" Content="Тазобедренный сустав правый (5-17)" Click="joint16_button_Click"/>
                             <Button Grid.Row="16" Grid.Column="0" x:Name="joint17_button" Content="Колено правое (17-18)" Click="joint17_button_Click"/>
                             <Button Grid.Row="17" Grid.Column="0" x:Name="joint18_button" Content="Голеностоп правый (18-19)" Click="joint18_button_Click"/>
                         </Grid>
@@ -939,6 +869,140 @@
                             <wf:WebBrowser DocumentTitleChanged="wbWinForms_DocumentTitleChanged" />
                         </WindowsFormsHost.Child>
                     </WindowsFormsHost >
+                </Grid>
+            </TabItem>
+            <!-- *************************************************************************************************************************** -->
+            <TabItem Header="Траектории" >
+                <Grid Background="#FFE5E5E5" ShowGridLines="True" Margin="0,0,4.6,-3.2">
+                    <!-- main grid; sleva (column 0) -organy upravleniya, sprava (column 1) - grafiki -->
+                    <!-- 1 row -->
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <!-- 2 columns -->
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="4*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Place elements in grid -->
+                    <Grid Grid.Row="0" Grid.Column="0" ShowGridLines="True">
+                        <!-- pole s organami upravleniya -->
+                        <!-- control grid -->
+                        <!-- 3 rows -->
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="5*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <!-- 1 column -->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Place elements in grid -->
+                        <Grid Grid.Row="0" Grid.Column="0" ShowGridLines="True">
+                            <!-- metronome control grid -->
+                            <!-- 2 rows -->
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="2*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <!-- 2 columns -->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <!-- Place elements in grid -->
+                            
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="0" ShowGridLines="True">
+                            <!-- 2 rows -->
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <!-- 2 columns -->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <!-- Place elements in grid -->
+
+                        </Grid>
+
+                            
+                        <Grid Grid.Row="2" Grid.Column="0" ShowGridLines="True">
+                            <!-- pole s knopkami vybora sustava -->
+                            <!-- 21 rows -->
+                            <Grid.RowDefinitions>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                        </Grid.RowDefinitions>
+                            <!-- 1 column -->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Row="0" Grid.Column="0" x:Name="point1_button" Content="Голова" Click="point1_button_Click"/>
+                            <Button Grid.Row="1" Grid.Column="0" x:Name="point2_button" Content="Основание шеи" Click="point2_button_Click"/>
+                            <Button Grid.Row="2" Grid.Column="0" x:Name="point3_button" Content="Грудина" Click="point3_button_Click"/>
+                            <Button Grid.Row="3" Grid.Column="0" x:Name="point4_button" Content="Ключица левая" Click="point4_button_Click"/>
+                            <Button Grid.Row="4" Grid.Column="0" x:Name="point5_button" Content="Плечевой сустав левый" Click="point5_button_Click"/>
+                            <Button Grid.Row="5" Grid.Column="0" x:Name="point6_button" Content="Локтевой сустав левый" Click="point6_button_Click"/>
+                            <Button Grid.Row="6" Grid.Column="0" x:Name="point7_button" Content="Луче-запястный сустав левый" Click="point7_button_Click"/>
+                            <Button Grid.Row="7" Grid.Column="0" x:Name="point8_button" Content="Кисть левая" Click="point8_button_Click"/>
+                            <Button Grid.Row="8" Grid.Column="0" x:Name="point9_button" Content="Ключица правая" Click="point9_button_Click"/>
+                            <Button Grid.Row="9" Grid.Column="0" x:Name="point10_button" Content="Плечевой сустав правый" Click="point10_button_Click"/>
+                            <Button Grid.Row="10" Grid.Column="0" x:Name="point11_button" Content="Локтевой сустав правый" Click="point11_button_Click"/>
+                            <Button Grid.Row="11" Grid.Column="0" x:Name="point12_button" Content="Луче-запястный сустав правый" Click="point12_button_Click"/>
+                            <Button Grid.Row="12" Grid.Column="0" x:Name="point13_button" Content="Кисть правая" Click="point13_button_Click"/>
+                            <Button Grid.Row="13" Grid.Column="0" x:Name="point14_button" Content="Тазобедренный сустав левый" Click="point14_button_Click"/>
+                            <Button Grid.Row="14" Grid.Column="0" x:Name="point15_button" Content="Колено левое" Click="point15_button_Click"/>
+                            <Button Grid.Row="15" Grid.Column="0" x:Name="point16_button" Content="Голеностоп левый" Click="point16_button_Click"/>
+                            <Button Grid.Row="16" Grid.Column="0" x:Name="point17_button" Content="Стопа левая" Click="point17_button_Click"/>
+                            <Button Grid.Row="17" Grid.Column="0" x:Name="point18_button" Content="Тазобедренный сустав правый" Click="point18_button_Click"/>
+                            <Button Grid.Row="18" Grid.Column="0" x:Name="point19_button" Content="Колено правое" Click="point19_button_Click"/>
+                            <Button Grid.Row="19" Grid.Column="0" x:Name="point20_button" Content="Голеностоп правый" Click="point20_button_Click"/>
+                            <Button Grid.Row="20" Grid.Column="0" x:Name="point21_button" Content="Стопа правая" Click="point21_button_Click"/>
+                    </Grid>
+
+                    </Grid>
+                    
+                    <Grid Grid.Row="0" Grid.Column="1" ShowGridLines="True">
+                        <!-- pole s grafikami -->
+                        <!-- graphs grid -->
+                        <!-- 2 rows -->
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*"></RowDefinition>
+                            <RowDefinition Height="5*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <!-- 1 column -->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        
+                        
+                    </Grid>
                 </Grid>
             </TabItem>
             <!-- *************************************************************************************************************************** -->

@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interop;
 
 using System.Threading;
 using System.IO;
@@ -12,8 +13,9 @@ using System.Runtime.InteropServices;
 
 using OxyPlot;
 using OxyPlot.Series;
+using System.Text;
 
-
+using System.Drawing;
 
 namespace kinematics_20160720
 {
@@ -694,7 +696,7 @@ namespace kinematics_20160720
 
             foreach (joint_cls joint in skeleton.joints)
             {
-                mean_cycle_out.WriteLine(joint.name);
+                mean_cycle_out.WriteLine(joint.name_translit);
                 mean_cycle_out.WriteLine("main frontal sagittal horizontal");
                 for(int i=0; i<joint.mean_cycle_length; i++)
                 {
@@ -704,9 +706,42 @@ namespace kinematics_20160720
             mean_cycle_out.Close();
 
             //***** zapis' v bazu dannyh *****
+            ///		GET TIMELINE DATA
+			var research = new TimelineResearch();
+            //*
+            try
+            {
+
+                research.getTimelineData();
+                //tr("researchName: " + research.researchName);
+                foreach (var tso_id in research.tso_id_active)
+                {
+                    //tr("active: " + tso_id);
+
+                    // write file in table "applied files" **************************************************
+                    // 1. get file name
+                    string short_file_name = "\"" + file_prefix + "kinematics.txt\"";
+                    // 2. get byte-content of file
+                    byte[] file_byte_buffer = File.ReadAllBytes(out_file_name);
+                    // 3. create byte array - the command of timeline
+                    byte[] command0 = Encoding.ASCII.GetBytes("add_file " + (research.tso_id_active.ToArray()[0]).ToString() + " " + short_file_name + " ");
+                    byte[] command_add_file = (command0.Concat(file_byte_buffer)).ToArray();
+                    // 4. write command for timeline via pipeline
+                    TimelineConnector.send_file_command(command_add_file);
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                //tr("} getTimelineData exception: " + ex.Message);
+                return;
+            }
             ///			WRITE TO DB
-			//DBPostgreSQL.init( "127.0.0.1" , "postgres" , "postgres" , "0000" );
-            DBPostgreSQL.init("192.168.0.177", "postgres", "postgres", "0000");
+            //string server_ip = "127.0.0.1";
+            string server_ip = "192.168.0.7";
+            DBPostgreSQL.init(server_ip, "postgres" , "postgres" , "0000" );
+            //DBPostgreSQL.init("192.168.0.177", "postgres", "postgres", "0000");
             if (!DBPostgreSQL.create_schema() || !DBPostgreSQL.create_table())
             {
                 MessageBox.Show("ERROR");
@@ -720,7 +755,7 @@ namespace kinematics_20160720
             //tr("OK TABLE ");
             var buf = File.ReadAllBytes(out_file_name);      // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!   file for db saving
                                                                                                //if ( !DBPostgreSQL.insert_bytea( buf , research.researchID , research.tso_id_active.ToArray() ) )
-            if (!DBPostgreSQL.insert_bytea(buf, date_time_id, new int[] { 1, 2 }))
+            if (!DBPostgreSQL.insert_bytea(buf, research.researchID, research.tso_id_active.ToArray()))
             {
                 MessageBox.Show("ERROR");
                 return;
@@ -1048,6 +1083,14 @@ namespace kinematics_20160720
             joint_activation(11);
         }
 
+        private void angle_rotation_button_Click(object sender, RoutedEventArgs e)
+        {
+            if (angle_rotation_button.Content.ToString().Contains("Плоские углы"))
+                angle_rotation_button.Content = "Вращения";
+            else
+                angle_rotation_button.Content = "Плоские углы";
+        }
+
         private void joint13_button_Click(object sender, RoutedEventArgs e)
         {
             joint_activation(12);
@@ -1077,6 +1120,97 @@ namespace kinematics_20160720
         {
             joint_activation(17);
         }
+
+        //****************************************************************************
+
+        private void point1_button_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void point2_button_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void point3_button_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void point4_button_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void point5_button_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void point6_button_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void point7_button_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void point8_button_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void point9_button_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void point10_button_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void point11_button_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void point12_button_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void point13_button_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void point14_button_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void point15_button_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void point16_button_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void point17_button_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void point18_button_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void point19_button_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void point20_button_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void point21_button_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+
+        //****************************************************************************
+
+
 
         private void data_result_button_Click(object sender, RoutedEventArgs e)
         {
@@ -1163,8 +1297,13 @@ namespace kinematics_20160720
                 }
                 plotviews[3].InvalidatePlot();
             }
-            
-        }
+
+        }// end void show_result()
+
+
+        //***************************  3D BLOCK *************************************
+        
+        
 
     }//end public partial class MainWindow : Window
     //************************************************************************************************

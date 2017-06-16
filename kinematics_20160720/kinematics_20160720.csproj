@@ -98,6 +98,9 @@
     <Compile Include="skeleton_cls.cs" />
     <Compile Include="Smoother_cls.cs" />
     <Compile Include="tester_cls.cs" />
+    <Compile Include="timeline-connector-namedpipe.cs" />
+    <Compile Include="timeline-datastruct.cs" />
+    <Compile Include="timeline.cs" />
     <Compile Include="timeline_chart_cls.cs" />
     <Compile Include="udp_receiver_cls.cs" />
     <Page Include="chart0_window.xaml">

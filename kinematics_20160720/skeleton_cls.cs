@@ -84,41 +84,41 @@ namespace kinematics_20160720
             segments.Add(segment);
 
             // formiruem spisok sustavov
-            joint = new joint_cls(segments.ToArray()[2], segments.ToArray()[1], "Шея верх"); // neck high
+            joint = new joint_cls(segments.ToArray()[3], segments.ToArray()[1], "Шейный отдел", "sheynyi otdel"); // neck high
             Joints.Add(joint);
-            joint = new joint_cls(segments.ToArray()[3], segments.ToArray()[2], "Шея низ"); // neck low
+            joint = new joint_cls(segments.ToArray()[3], segments.ToArray()[2], "Шейно-грудной отдел", "sheyno-grudnoi otdel"); // neck low
             Joints.Add(joint);
-            joint = new joint_cls(segments.ToArray()[4], segments.ToArray()[3], "Грудной отдел"); // chest
+            joint = new joint_cls(segments.ToArray()[4], segments.ToArray()[3], "Грудной отдел", "grudnoi otdel"); // chest
             Joints.Add(joint);
-            joint = new joint_cls(segments.ToArray()[5], segments.ToArray()[4], "Поясничный отдел"); // reins
+            joint = new joint_cls(segments.ToArray()[5], segments.ToArray()[4], "Поясничный отдел", "poyasnichnyi otdel"); // reins
             Joints.Add(joint);
-            joint = new joint_cls(segments.ToArray()[3], segments.ToArray()[6], "Ключица левая"); // collarbone left
+            joint = new joint_cls(segments.ToArray()[3], segments.ToArray()[6], "Ключица левая", "klyuchica levaya"); // collarbone left
             Joints.Add(joint);
-            joint = new joint_cls(segments.ToArray()[6], segments.ToArray()[7], "Плечо левое"); // sholder left
+            joint = new joint_cls(segments.ToArray()[6], segments.ToArray()[7], "Плечевой сустав левый", "plecho levoe"); // sholder left
             Joints.Add(joint);
-            joint = new joint_cls(segments.ToArray()[7], segments.ToArray()[8], "Локоть левый"); // elbow left
+            joint = new joint_cls(segments.ToArray()[7], segments.ToArray()[8], "Локтевой сустав левый", "lokot levyi"); // elbow left
             Joints.Add(joint);
-            joint = new joint_cls(segments.ToArray()[8], segments.ToArray()[9], "Запястье левое"); // wrist left
+            joint = new joint_cls(segments.ToArray()[8], segments.ToArray()[9], "Луче-запястный сустав левый", "zapyastie levoe"); // wrist left
             Joints.Add(joint);
-            joint = new joint_cls(segments.ToArray()[3], segments.ToArray()[13], "Ключица правая"); // collarbone right
+            joint = new joint_cls(segments.ToArray()[3], segments.ToArray()[13], "Ключица правая", "klyuchica pravaya"); // collarbone right
             Joints.Add(joint);
-            joint = new joint_cls(segments.ToArray()[13], segments.ToArray()[14], "Плечо правое"); // sholder right
+            joint = new joint_cls(segments.ToArray()[13], segments.ToArray()[14], "Плечевой сустав правый", "plecho pravoe"); // sholder right
             Joints.Add(joint);
-            joint = new joint_cls(segments.ToArray()[14], segments.ToArray()[15], "Локоть правый"); // elbow right
+            joint = new joint_cls(segments.ToArray()[14], segments.ToArray()[15], "Локтевой сустав правый", "lokot pravyi"); // elbow right
             Joints.Add(joint);
-            joint = new joint_cls(segments.ToArray()[15], segments.ToArray()[16], "Запястье правое"); // wrist right
+            joint = new joint_cls(segments.ToArray()[15], segments.ToArray()[16], "Луче-запястный сустав правый", "zapyastie pravoe"); // wrist right
             Joints.Add(joint);
-            joint = new joint_cls(segments.ToArray()[5], segments.ToArray()[10], "Тазобедренный левый"); // hip left
+            joint = new joint_cls(segments.ToArray()[5], segments.ToArray()[10], "Тазобедренный сустав левый", "tazobedrennyi levyi"); // hip left
             Joints.Add(joint);
-            joint = new joint_cls(segments.ToArray()[10], segments.ToArray()[11], "Колено левое"); // knee left
+            joint = new joint_cls(segments.ToArray()[10], segments.ToArray()[11], "Колено левое", "koleno levoe"); // knee left
             Joints.Add(joint);
-            joint = new joint_cls(segments.ToArray()[11], segments.ToArray()[12], "Голеностоп левый"); // ankle left
+            joint = new joint_cls(segments.ToArray()[11], segments.ToArray()[12], "Голеностоп левый", "golenostop levyi"); // ankle left
             Joints.Add(joint);
-            joint = new joint_cls(segments.ToArray()[5], segments.ToArray()[17], "Тазобедренный правый"); // hip right
+            joint = new joint_cls(segments.ToArray()[5], segments.ToArray()[17], "Тазобедренный сустав правый", "tazobedrennyi pravyi"); // hip right
             Joints.Add(joint);
-            joint = new joint_cls(segments.ToArray()[17], segments.ToArray()[18], "Колено правое"); // knee right
+            joint = new joint_cls(segments.ToArray()[17], segments.ToArray()[18], "Колено правое", "koleno pravoe"); // knee right
             Joints.Add(joint);
-            joint = new joint_cls(segments.ToArray()[18], segments.ToArray()[19], "Голеностоп правый"); // ankle right
+            joint = new joint_cls(segments.ToArray()[18], segments.ToArray()[19], "Голеностоп правый", "golenostop pravyi"); // ankle right
             Joints.Add(joint);
 
         }

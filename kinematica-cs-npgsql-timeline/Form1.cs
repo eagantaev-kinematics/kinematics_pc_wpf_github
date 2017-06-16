@@ -24,7 +24,7 @@ namespace WindowsFormsApplication1
 		{
 			///		GET TIMELINE DATA
 			var research = new TimelineResearch();
-            /*
+            //*
 			try
 			{
 
@@ -39,10 +39,10 @@ namespace WindowsFormsApplication1
 				tr( "} getTimelineData exception: " + ex.Message );
 				return;
 			}
-            */
+            //*/
 			///			WRITE TO DB
-			//DBPostgreSQL.init( "127.0.0.1" , "postgres" , "postgres" , "0000" );
-            DBPostgreSQL.init( "192.168.0.177" , "postgres" , "postgres" , "0000" );
+			DBPostgreSQL.init( "127.0.0.1" , "postgres" , "postgres" , "0000" );
+            //DBPostgreSQL.init( "192.168.0.177" , "postgres" , "postgres" , "0000" );
 			if ( !DBPostgreSQL.create_schema() || !DBPostgreSQL.create_table() )
 			{
 				MessageBox.Show( "ERROR" );
@@ -54,7 +54,7 @@ namespace WindowsFormsApplication1
 				return;
 			}
 			tr( "OK TABLE " );
-			var buf = File.ReadAllBytes(@"c:\temp\2017_04_03__20_19_47__kinematics.txt");      // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!   file for db saving
+			var buf = File.ReadAllBytes(@"c:\temp\2017_04_15__18_36_17__kinematics.txt");      // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!   file for db saving
 			//if ( !DBPostgreSQL.insert_bytea( buf , research.researchID , research.tso_id_active.ToArray() ) )
             if (!DBPostgreSQL.insert_bytea(buf, "12345", new int[] {1, 2}))
             {

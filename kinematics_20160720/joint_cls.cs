@@ -13,6 +13,11 @@ namespace kinematics_20160720
         {
             get { return Name; }
         }
+        private String Name_translit;
+        public String name_translit
+        {
+            get { return Name_translit; }
+        }
         private segment_cls segment0, segment1;
         private Double YY_axis_angle;
         public Double yy_axis_angle
@@ -55,7 +60,7 @@ namespace kinematics_20160720
 
         //........................................................
 
-        public joint_cls(segment_cls segment0_parameter, segment_cls segment1_parameter, String name_parameter)
+        public joint_cls(segment_cls segment0_parameter, segment_cls segment1_parameter, String name_parameter, String name_translit_parameter)
         {
             id = new int[2];
 
@@ -66,6 +71,7 @@ namespace kinematics_20160720
             id[1] = segment1.id;
 
             Name = name_parameter;
+            Name_translit = name_translit_parameter;
 
             Angles = new Double[4];
         }

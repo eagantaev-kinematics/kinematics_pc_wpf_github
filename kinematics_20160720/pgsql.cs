@@ -157,7 +157,7 @@ namespace kinematics_20160720
 							byte[] result = (byte[])reader[i++];
 							int research_id = (int)reader[i++];
 							var tso_ids_active = (int[])reader[i++];
-							Console.WriteLine( Encoding.UTF8.GetString( result ) + "  research_id: " + research_id );
+							//Console.WriteLine( Encoding.UTF8.GetString( result ) + "  research_id: " + research_id );
 							foreach ( var tso_id in tso_ids_active )
 								tr( "active: " + tso_id );
 						}
