@@ -28,7 +28,7 @@
                         <!--<Image x:Name="model_joints_image" Source="pack://application:,,,/Resources/model_schema.jpg" />-->
                     </Border>
 
-                   
+
                     <Label Grid.Row="0" Grid.Column="0" Content="" HorizontalAlignment="Left" Margin="553,184,0,0" VerticalAlignment="Top" Width="384" Height="490" Background="White"/>
                 </Grid>
             </TabItem>
@@ -914,7 +914,7 @@
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <!-- Place elements in grid -->
-                            
+
                         </Grid>
                         <Grid Grid.Row="1" Grid.Column="0" ShowGridLines="True">
                             <!-- 2 rows -->
@@ -931,7 +931,7 @@
 
                         </Grid>
 
-                            
+
                         <Grid Grid.Row="2" Grid.Column="0" ShowGridLines="True">
                             <!-- pole s knopkami vybora sustava -->
                             <!-- 21 rows -->
@@ -957,7 +957,7 @@
                                 <RowDefinition ></RowDefinition>
                                 <RowDefinition ></RowDefinition>
                                 <RowDefinition ></RowDefinition>
-                        </Grid.RowDefinitions>
+                            </Grid.RowDefinitions>
                             <!-- 1 column -->
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition></ColumnDefinition>
@@ -983,26 +983,31 @@
                             <Button Grid.Row="18" Grid.Column="0" x:Name="point19_button" Content="Колено правое" Click="point19_button_Click"/>
                             <Button Grid.Row="19" Grid.Column="0" x:Name="point20_button" Content="Голеностоп правый" Click="point20_button_Click"/>
                             <Button Grid.Row="20" Grid.Column="0" x:Name="point21_button" Content="Стопа правая" Click="point21_button_Click"/>
-                    </Grid>
+                        </Grid>
 
                     </Grid>
-                    
+
                     <Grid Grid.Row="0" Grid.Column="1" ShowGridLines="True">
                         <!-- pole s grafikami -->
                         <!-- graphs grid -->
                         <!-- 2 rows -->
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="2*"></RowDefinition>
                             <RowDefinition Height="5*"></RowDefinition>
+                            <RowDefinition Height="1*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <!-- 1 column -->
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
 
-                        
-                        
+                        <Grid Grid.Row="0" Grid.Column="0" Background="Black" ShowGridLines="True">
+                        </Grid>
+
+                        <Button Grid.Column="0" x:Name="play_button" HorizontalAlignment="Left" Height="21" Width="54" VerticalAlignment="Top" Content="Play" Margin="0,630,0,0" Grid.RowSpan="2"/>
+                        <Slider Grid.Row="1" Grid.Column="0" x:Name="play_slider" HorizontalAlignment="Right" Height="21" VerticalAlignment="Top" Width="1150" Background="#FFE1E1E1" Foreground="Black" BorderBrush="Black" BorderThickness="1"/>
+
                     </Grid>
+
                 </Grid>
             </TabItem>
             <!-- *************************************************************************************************************************** -->
