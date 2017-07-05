@@ -33,6 +33,7 @@ namespace kinematics_20160720
     {
         // variables ***************************
         OxyPlot.Wpf.PlotView[] plotviews;
+        OxyPlot.Wpf.PlotView[] plotviews_viewMode;
         int active_plotview_index = 0;
         int cycle_counter = 0;
 
@@ -60,6 +61,8 @@ namespace kinematics_20160720
             metronome = new metronome_cls();
             joint_chart_pannel = new joint_chart_pannel_cls(main_joint_angle_timeline_plot_view, main_joint_angle_plot_view, frontal_projection_plot_view,
                                                             sagittal_projection_plot_view, horizontal_projection_plot_view);
+            joint_chart_pannel_viewMode = new joint_chart_pannel_cls(main_joint_angle_timeline_plot_view_viewMode, main_joint_angle_plot_view_viewMode, frontal_projection_plot_view_viewMode,
+                                                            sagittal_projection_plot_view_viewMode, horizontal_projection_plot_view_viewMode);
             raw_data_storage = new raw_data_storage_cls(udp_receiver);
             skeleton = new skeleton_cls(raw_data_storage);
 
@@ -122,8 +125,13 @@ namespace kinematics_20160720
             plotviews[1] = frontal_projection_plot_view;
             plotviews[2] = sagittal_projection_plot_view;
             plotviews[3] = horizontal_projection_plot_view;
+            plotviews_viewMode = new OxyPlot.Wpf.PlotView[4];
+            plotviews_viewMode[0] = main_joint_angle_plot_view_viewMode;
+            plotviews_viewMode[1] = frontal_projection_plot_view_viewMode;
+            plotviews_viewMode[2] = sagittal_projection_plot_view_viewMode;
+            plotviews_viewMode[3] = horizontal_projection_plot_view_viewMode;
 
-            
+
 
         }// end constructor
         //***********************************************************************************************************************************
@@ -327,7 +335,7 @@ namespace kinematics_20160720
         OxyPlot.Series.LineSeries aux0_series;
 
         joint_chart_pannel_cls joint_chart_pannel;
-
+        joint_chart_pannel_cls joint_chart_pannel_viewMode;
 
 
         /*
@@ -969,6 +977,45 @@ namespace kinematics_20160720
 
         }
 
+        private void mean_graph0_double_click_viewMode(object sender, MouseButtonEventArgs e)
+        {
+            clear_scene();
+
+            active_plotview_index = 0;
+            skeleton.active_angle_index = 0;
+        }
+
+        private void mean_graph1_double_click_viewMode(object sender, MouseButtonEventArgs e)
+        {
+            clear_scene();
+
+            active_plotview_index = 1;
+            skeleton.active_angle_index = 1;
+        }
+
+        //*
+        private void mean_graph2_double_click_viewMode(object sender, MouseButtonEventArgs e)
+        {
+            clear_scene();
+
+            active_plotview_index = 2;
+            skeleton.active_angle_index = 2;
+        }
+
+        private void mean_graph3_double_click_viewMode(object sender, MouseButtonEventArgs e)
+        {
+            clear_scene();
+
+            active_plotview_index = 3;
+            skeleton.active_angle_index = 3;
+        }
+        //*/
+
+        private void main_joint_angle_timeline_double_click_viewMode(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
 
         //                                        ********************
         //                                            JOINT BUTTONS
@@ -1015,10 +1062,43 @@ namespace kinematics_20160720
 
                         plotviews[j].Model = model;
                     }
+
+                    for (int j = 0; j < 4; j++)
+                    {
+                        model = new PlotModel();
+                        series = new LineSeries();
+                        time_axis = new OxyPlot.Axes.LinearAxis();
+                        angle_axis = new OxyPlot.Axes.LinearAxis();
+                        time_axis.Position = OxyPlot.Axes.AxisPosition.Bottom;
+                        angle_axis.Position = OxyPlot.Axes.AxisPosition.Left;
+
+                        int length = skeleton.joints.ToArray()[joint_index].mean_cycle_length;
+                        for (int i = 0; i < length; i++)
+                        {
+                            series.Points.Add(new DataPoint(i * 0.025, skeleton.joints.ToArray()[joint_index].mean_cycle[j, i]));
+                        }
+
+                        time_axis.Minimum = 0;
+                        time_axis.Maximum = length * 0.025;
+                        if (j == 0) angle_axis.Minimum = 0; else angle_axis.Minimum = -180;
+                        angle_axis.Maximum = 180;
+                        model.Axes.Add(time_axis);
+                        model.Axes.Add(angle_axis);
+                        model.Series.Add(series);
+
+                        plotviews_viewMode[j].Model = model;
+                    }
+
+
                     plotviews[0].Model.Title = "Угол между осями";
                     plotviews[1].Model.Title = "Фронтальная проекция";
                     plotviews[2].Model.Title = "Сагиттальная проекция";
                     plotviews[3].Model.Title = "Горизонтальная проекция";
+
+                    plotviews_viewMode[0].Model.Title = "Угол между осями";
+                    plotviews_viewMode[1].Model.Title = "Фронтальная проекция";
+                    plotviews_viewMode[2].Model.Title = "Сагиттальная проекция";
+                    plotviews_viewMode[3].Model.Title = "Горизонтальная проекция";
                 }
             }
         }
@@ -1117,6 +1197,98 @@ namespace kinematics_20160720
         }
 
         private void joint18_button_Click(object sender, RoutedEventArgs e)
+        {
+            joint_activation(17);
+        }
+
+        //****************************************************************************
+
+        private void joint1_view_button_Click(object sender, RoutedEventArgs e)
+        {
+            joint_activation(0);
+        }
+
+        private void joint2_view_button_Click(object sender, RoutedEventArgs e)
+        {
+            joint_activation(1);
+        }
+
+        private void joint3_view_button_Click(object sender, RoutedEventArgs e)
+        {
+            joint_activation(2);
+        }
+
+        private void joint4_view_button_Click(object sender, RoutedEventArgs e)
+        {
+            joint_activation(3);
+        }
+
+        private void joint5_view_button_Click(object sender, RoutedEventArgs e)
+        {
+            joint_activation(4);
+        }
+
+        private void joint6_view_button_Click(object sender, RoutedEventArgs e)
+        {
+            joint_activation(5);
+        }
+
+        private void joint7_view_button_Click(object sender, RoutedEventArgs e)
+        {
+            joint_activation(6);
+        }
+
+        private void joint8_view_button_Click(object sender, RoutedEventArgs e)
+        {
+            joint_activation(7);
+        }
+
+        private void joint9_view_button_Click(object sender, RoutedEventArgs e)
+        {
+            joint_activation(8);
+        }
+
+        private void joint10_view_button_Click(object sender, RoutedEventArgs e)
+        {
+            joint_activation(9);
+        }
+
+        private void joint11_view_button_Click(object sender, RoutedEventArgs e)
+        {
+            joint_activation(10);
+        }
+
+        private void joint12_view_button_Click(object sender, RoutedEventArgs e)
+        {
+            joint_activation(11);
+        }
+
+        private void joint13_view_button_Click(object sender, RoutedEventArgs e)
+        {
+            joint_activation(12);
+        }
+
+        private void joint14_view_button_Click(object sender, RoutedEventArgs e)
+        {
+            joint_activation(13);
+        }
+
+        private void joint15_view_button_Click(object sender, RoutedEventArgs e)
+        {
+            joint_activation(14);
+        }
+
+        private void joint16_view_button_Click(object sender, RoutedEventArgs e)
+        {
+            joint_activation(15);
+        }
+
+        private void joint17_view_button_Click(object sender, RoutedEventArgs e)
+        {
+            joint_activation(16);
+        }
+
+        private void joint18_view_button_Click(object sender, RoutedEventArgs e)
         {
             joint_activation(17);
         }

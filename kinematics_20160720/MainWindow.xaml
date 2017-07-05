@@ -504,6 +504,170 @@
             </TabItem>
             <!-- Регистрация * -->
             <!-- *************************************************************************************************************************** -->
+            <!-- Просмотр -->
+            <!-- *************************************************************************************************************************** -->
+            <TabItem x:Name="view_tab" Header="Двухэтапный анализ">
+                <Grid Background="#FFE5E5E5" ShowGridLines="True" Margin="0,0,4.6,-3.2">
+                    <!-- main grid; sleva (column 0) -organy upravleniya, sprava (column 1) - grafiki -->
+                    <!-- 1 row -->
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <!-- 2 columns -->
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="4*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Place elements in grid -->
+                    <Grid Grid.Row="0" Grid.Column="0" ShowGridLines="True">
+                        <!-- pole s organami upravleniya -->
+                        <!-- control grid -->
+                        <!-- 3 rows -->
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="5*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <!-- 1 column -->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Place elements in grid -->
+                        <Grid Grid.Row="0" Grid.Column="0" >
+                            <!-- mode and vie control grid -->
+                            <!-- 2 rows -->
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="2*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <!-- 2 columns -->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <!-- Place elements in grid -->
+                            <Label Grid.Row="0" Grid.Column="0" x:Name="current_2stage_object_info_label" Content="Углы" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Label Grid.Row="0" Grid.Column="1" x:Name="current_2stage_view_info_label" Content="Испытание 1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Button Grid.Row="1" Grid.Column="0" x:Name="object_2stage_switch_button" Content="Параметр" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <Button Grid.Row="1" Grid.Column="1" x:Name="view_2stage_switch_button" Content="Вид" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="0" ShowGridLines="True">
+                            
+                        </Grid>
+                        <Grid Grid.Row="2" Grid.Column="0" ShowGridLines="True">
+                            <!-- pole s knopkami vybora sustava -->
+                            <!-- 18 rows -->
+                            <Grid.RowDefinitions>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <!-- 1 column -->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Row="0" Grid.Column="0" x:Name="joint1_view_button" Content="Шейный отдел (3-1)" Click="joint1_view_button_Click"/>
+                            <Button Grid.Row="1" Grid.Column="0" x:Name="joint2_view_button" Content="Шейно-грудной отдел (3-2)" Click="joint2_view_button_Click"/>
+                            <Button Grid.Row="2" Grid.Column="0" x:Name="joint3_view_button" Content="Грудной отдел (4-3)" Click="joint3_view_button_Click"/>
+                            <Button Grid.Row="3" Grid.Column="0" x:Name="joint4_view_button" Content="Поясничный отдел (5-4)" Click="joint4_view_button_Click"/>
+                            <Button Grid.Row="4" Grid.Column="0" x:Name="joint5_view_button" Content="Ключица левая (3-6)" Click="joint5_view_button_Click"/>
+                            <Button Grid.Row="5" Grid.Column="0" x:Name="joint6_view_button" Content="Плечевой сустав левый (6-7)" Click="joint6_view_button_Click"/>
+                            <Button Grid.Row="6" Grid.Column="0" x:Name="joint7_view_button" Content="Локтевой сустав левый (7-8)" Click="joint7_view_button_Click"/>
+                            <Button Grid.Row="7" Grid.Column="0" x:Name="joint8_view_button" Content="Луче-запястный сустав левый (8-9)" Click="joint8_view_button_Click"/>
+                            <Button Grid.Row="8" Grid.Column="0" x:Name="joint9_view_button" Content="Ключица правая (3-13)" Click="joint9_view_button_Click"/>
+                            <Button Grid.Row="9" Grid.Column="0" x:Name="joint10_view_button" Content="Плечевой сустав правый (13-14)" Click="joint10_view_button_Click"/>
+                            <Button Grid.Row="10" Grid.Column="0" x:Name="joint11_view_button" Content="Локтевой сустав правый (14-15)" Click="joint11_view_button_Click"/>
+                            <Button Grid.Row="11" Grid.Column="0" x:Name="joint12_view_button" Content="Луче-запястный сустав правый (15-16)" Click="joint12_view_button_Click"/>
+                            <Button Grid.Row="12" Grid.Column="0" x:Name="joint13_view_button" Content="Тазобедренный сустав левый (5-10)" Click="joint13_view_button_Click"/>
+                            <Button Grid.Row="13" Grid.Column="0" x:Name="joint14_view_button" Content="Колено левое (10-11)" Click="joint14_view_button_Click"/>
+                            <Button Grid.Row="14" Grid.Column="0" x:Name="joint15_view_button" Content="Голеностоп левый (11-12)" Click="joint15_view_button_Click"/>
+                            <Button Grid.Row="15" Grid.Column="0" x:Name="joint16_view_button" Content="Тазобедренный сустав правый (5-17)" Click="joint16_view_button_Click"/>
+                            <Button Grid.Row="16" Grid.Column="0" x:Name="joint17_view_button" Content="Колено правое (17-18)" Click="joint17_view_button_Click"/>
+                            <Button Grid.Row="17" Grid.Column="0" x:Name="joint18_view_button" Content="Голеностоп правый (18-19)" Click="joint18_view_button_Click"/>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="1" ShowGridLines="True">
+                        <!-- pole s grafikami -->
+                        <!-- graphs grid -->
+                        <!-- 2 rows -->
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*"></RowDefinition>
+                            <RowDefinition Height="5*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <!-- 1 column -->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- okno grafika ugla mezhdu segmentami sustava -->
+                        <Border Grid.Row="0" Grid.Column="1"
+                        x:Name="main_joint_angle_pannel_viewMode"
+                        BorderThickness="2"
+                        BorderBrush="Black"
+                        Background="LightGray">
+                            <oxy:PlotView x:Name="main_joint_angle_timeline_plot_view_viewMode" MouseDoubleClick="main_joint_angle_timeline_double_click_viewMode" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"/>
+                        </Border>
+                        <Grid Grid.Row="1" Grid.Column="0" ShowGridLines="True">
+                            <!-- mean cycle graphs grid -->
+                            <!-- 2 rows -->
+                            <Grid.RowDefinitions>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <!-- 2 columns -->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <!-- Place elements in grid -->
+                            <Border Grid.Row="0" Grid.Column="0"
+                            BorderThickness="2"
+                            BorderBrush="Black"
+                            Background="LightGray">
+                                <oxy:PlotView x:Name="main_joint_angle_plot_view_viewMode" MouseDoubleClick="mean_graph0_double_click_viewMode" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"/>
+                            </Border>
+                            <Border Grid.Row="0" Grid.Column="1"
+                            BorderThickness="2"
+                            BorderBrush="Black"
+                            Background="LightGray">
+                                <oxy:PlotView x:Name="frontal_projection_plot_view_viewMode" MouseDoubleClick="mean_graph1_double_click_viewMode" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"/>
+                            </Border>
+                            <Border Grid.Row="1" Grid.Column="0"
+                            BorderThickness="2"
+                            BorderBrush="Black"
+                            Background="LightGray">
+                                <oxy:PlotView x:Name="sagittal_projection_plot_view_viewMode" MouseDoubleClick="mean_graph2_double_click_viewMode" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"/>
+                            </Border>
+                            <Border Grid.Row="1" Grid.Column="1"
+                            BorderThickness="2"
+                            BorderBrush="Black"
+                            Background="LightGray">
+                                <oxy:PlotView x:Name="horizontal_projection_plot_view_viewMode" MouseDoubleClick="mean_graph3_double_click_viewMode" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"/>
+                            </Border>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <!-- Просмотр * -->
+            <!-- *************************************************************************************************************************** -->
 
             <TabItem Header="Калибровка" Visibility="Collapsed">
                 <Grid Background="#FFE5E5E5" ShowGridLines="True" Margin="0,0,4.6,-3.2">
@@ -901,8 +1065,8 @@
                         </Grid.ColumnDefinitions>
 
                         <!-- Place elements in grid -->
-                        <Grid Grid.Row="0" Grid.Column="0" ShowGridLines="True">
-                            <!-- metronome control grid -->
+                        <Grid Grid.Row="0" Grid.Column="0" >
+                            <!-- mode and vie control grid -->
                             <!-- 2 rows -->
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"></RowDefinition>
@@ -914,9 +1078,13 @@
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <!-- Place elements in grid -->
+                            <Label Grid.Row="0" Grid.Column="0" x:Name="current_mode_info_labl" Content="Все циклы" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Label Grid.Row="0" Grid.Column="1" x:Name="current_view_info_labl" Content="Испытание 1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Button Grid.Row="1" Grid.Column="0" x:Name="mode_switch_button" Content="Режим" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <Button Grid.Row="1" Grid.Column="1" x:Name="view_switch_button" Content="Вид" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
                         </Grid>
-                        <Grid Grid.Row="1" Grid.Column="0" ShowGridLines="True">
+                        <Grid Grid.Row="1" Grid.Column="0" >
                             <!-- 2 rows -->
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
@@ -990,9 +1158,10 @@
                     <Grid Grid.Row="0" Grid.Column="1" ShowGridLines="True">
                         <!-- pole s grafikami -->
                         <!-- graphs grid -->
-                        <!-- 2 rows -->
+                        <!-- 3 rows -->
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="5*"></RowDefinition>
+                            <RowDefinition Height="1*"></RowDefinition>
+                            <RowDefinition Height="24*"></RowDefinition>
                             <RowDefinition Height="1*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <!-- 1 column -->
@@ -1000,11 +1169,26 @@
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
 
-                        <Grid Grid.Row="0" Grid.Column="0" Background="Black" ShowGridLines="True">
+                        <Label Grid.Row="0" Grid.Column="0" Content="3D график траектории" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                        <Grid Grid.Row="1" Grid.Column="0" Background="Black" ShowGridLines="True">
                         </Grid>
 
-                        <Button Grid.Column="0" x:Name="play_button" HorizontalAlignment="Left" Height="21" Width="54" VerticalAlignment="Top" Content="Play" Margin="0,630,0,0" Grid.RowSpan="2"/>
-                        <Slider Grid.Row="1" Grid.Column="0" x:Name="play_slider" HorizontalAlignment="Right" Height="21" VerticalAlignment="Top" Width="1150" Background="#FFE1E1E1" Foreground="Black" BorderBrush="Black" BorderThickness="1"/>
+                        <Grid Grid.Row="2" Grid.Column="0" ShowGridLines="True">
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="20*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <Button Grid.Column="0" Grid.Row="0" x:Name="play_button" HorizontalAlignment="Left" Height="21" Width="54" VerticalAlignment="Center" Content="Play"/>
+                            <Slider Grid.Column="1" Grid.Row="0" x:Name="play_slider" HorizontalAlignment="Right" Height="21" VerticalAlignment="Center" Width="1150" Background="#FFE1E1E1" Foreground="Black" BorderBrush="Black" BorderThickness="1"/>
+                        </Grid>
+
+                        
+                        
 
                     </Grid>
 
