@@ -34,6 +34,7 @@ namespace kinematics_20160720
         // variables ***************************
         OxyPlot.Wpf.PlotView[] plotviews;
         OxyPlot.Wpf.PlotView[] plotviews_viewMode;
+        OxyPlot.Wpf.PlotView[] plotviews_trajectories;
         int active_plotview_index = 0;
         int cycle_counter = 0;
 
@@ -47,6 +48,8 @@ namespace kinematics_20160720
         udp_receiver_cls udp_receiver;
         raw_data_storage_cls raw_data_storage;
         skeleton_cls skeleton;
+
+        private Double trajectories_time = 0;
 
         //                                        ********************
         //                                         PUBLIC CONSTRUCTOR
@@ -131,6 +134,35 @@ namespace kinematics_20160720
             plotviews_viewMode[2] = sagittal_projection_plot_view_viewMode;
             plotviews_viewMode[3] = horizontal_projection_plot_view_viewMode;
 
+            plotviews_trajectories = new OxyPlot.Wpf.PlotView[3];
+            plotviews_trajectories[0] = trajectory_front_plot_view;
+            plotviews_trajectories[1] = trajectory_sagittal_plot_view;
+            plotviews_trajectories[2] = trajectory_horizontal_plot_view;
+            // tune axices of trajectory charts
+            PlotModel model;
+            LineSeries series;
+            OxyPlot.Axes.LinearAxis abscissa_axis;
+            OxyPlot.Axes.LinearAxis ordinata_axis;
+            for (int j = 0; j < 3; j++)
+            {
+                model = new PlotModel();
+                series = new LineSeries();
+                abscissa_axis = new OxyPlot.Axes.LinearAxis();
+                ordinata_axis = new OxyPlot.Axes.LinearAxis();
+                abscissa_axis.Position = OxyPlot.Axes.AxisPosition.Bottom;
+                ordinata_axis.Position = OxyPlot.Axes.AxisPosition.Left;
+
+                abscissa_axis.Minimum = -1.78;
+                abscissa_axis.Maximum = 1.78;
+                ordinata_axis.Minimum = -1;
+                ordinata_axis.Maximum = 1;
+                model.Axes.Add(abscissa_axis);
+                model.Axes.Add(ordinata_axis);
+
+                model.Series.Add(series);
+
+                plotviews_trajectories[j].Model = model;
+            }
 
 
         }// end constructor
@@ -224,6 +256,8 @@ namespace kinematics_20160720
             // redraw charts
             Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
                            new NoArgDelegate(add_point_to_main_timeline_chart));
+            //Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                           //new NoArgDelegate(add_points_to_trajectory_charts));
         }
 
 
@@ -232,6 +266,22 @@ namespace kinematics_20160720
         {
             Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
                            new NoArgDelegate(add_point_to_main_timeline_chart));
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+                           new NoArgDelegate(add_points_to_trajectory_charts));
+        }
+
+        void add_points_to_trajectory_charts()
+        {
+
+
+            for (int j = 0; j < 3; j++)
+            {
+                LineSeries series = (LineSeries)(plotviews_trajectories[j].Model.Series.ToArray()[0]);
+                series.Points.Add(new DataPoint(Math.Cos(Math.PI/5.0*time), Math.Sin(Math.PI / 5.0 * time)));
+                plotviews_trajectories[j].Model.Series.ToArray()[0] = series;
+
+                plotviews_trajectories[j].InvalidatePlot();
+            }
         }
 
         Double time = 0;
@@ -276,6 +326,54 @@ namespace kinematics_20160720
 
                     plotviews[active_plotview_index].InvalidatePlot();  
                 }
+
+                //debug!!!!!!!!!!!!!!!!!!
+                /*
+                for (int j = 0; j < 3; j++)
+                {
+                    LineSeries series = (LineSeries)(plotviews_trajectories[j].Model.Series.ToArray()[0]);
+                    if (series.Points.Count() >= 10 * 40)
+                        series.Points.Clear();
+                    series.Points.Add(new DataPoint(Math.Cos(Math.PI / 5.0 * time), Math.Sin(Math.PI / 5.0 * time)));
+
+                    plotviews_trajectories[j].InvalidatePlot();
+                }
+                trajectories_time += 0.025;
+                */
+                //*
+                //*
+                {
+                    LineSeries series = (LineSeries)(plotviews_trajectories[0].Model.Series.ToArray()[0]);
+                    if (series.Points.Count() >= 10 * 40)
+                        series.Points.Clear(); 
+                    series.Points.Add(new DataPoint(Math.Cos(Math.PI /5.0 * trajectories_time), Math.Sin(Math.PI / 5.0 * trajectories_time)));
+                    plotviews_trajectories[0].InvalidatePlot();
+                    
+                }
+                //*/
+                //*
+                {
+                    LineSeries series = (LineSeries)(plotviews_trajectories[1].Model.Series.ToArray()[0]);
+                    if (series.Points.Count() >= 10 * 40)
+                        series.Points.Clear();
+                    series.Points.Add(new DataPoint(Math.Cos(Math.PI / 5.0 * trajectories_time), Math.Sin(Math.PI / 5.0 * trajectories_time)));
+                    plotviews_trajectories[1].InvalidatePlot();
+
+                }
+                //*/
+                /*
+                {
+                    LineSeries series = (LineSeries)(plotviews_trajectories[0].Model.Series.ToArray()[0]);
+                    if (series.Points.Count() >= 10 * 40)
+                        series.Points.Clear();
+                    series.Points.Add(new DataPoint((skeleton.Segments).ToArray()[skeleton.active_joint_index].get_X(), (skeleton.Segments).ToArray()[skeleton.active_joint_index].get_Y()));
+                    plotviews_trajectories[0].InvalidatePlot();
+                    
+                }
+                */
+                trajectories_time += 0.025;
+                //*/
+                //debug!!!!!!!!!!!!!!!!!!
             }
 
         }
@@ -1016,6 +1114,20 @@ namespace kinematics_20160720
 
         }
 
+        private void trajectory_front_double_click(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void trajectory_sagittal_double_click(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void trajectory_horizontal_double_click(object sender, MouseButtonEventArgs e)
+        {
+
+        }
 
         //                                        ********************
         //                                            JOINT BUTTONS

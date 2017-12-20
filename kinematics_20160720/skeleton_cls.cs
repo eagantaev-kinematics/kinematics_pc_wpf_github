@@ -8,6 +8,10 @@ namespace kinematics_20160720
         private int NUMBER_OF_SEGMENTS = 19;
 
         private List<segment_cls> segments;
+        public List<segment_cls> Segments
+        {
+            get { return segments; }
+        }
         private List<joint_cls> Joints;
         public List<joint_cls> joints
         {

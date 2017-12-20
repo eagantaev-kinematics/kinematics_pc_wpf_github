@@ -1066,7 +1066,7 @@
 
                         <!-- Place elements in grid -->
                         <Grid Grid.Row="0" Grid.Column="0" >
-                            <!-- mode and vie control grid -->
+                            <!-- mode and view control grid -->
                             <!-- 2 rows -->
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"></RowDefinition>
@@ -1171,7 +1171,41 @@
 
                         <Label Grid.Row="0" Grid.Column="0" Content="3D график траектории" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-                        <Grid Grid.Row="1" Grid.Column="0" Background="Black" ShowGridLines="True">
+                        <Grid Grid.Row="1" Grid.Column="0" ShowGridLines="True">
+                            <!-- panel grafikov trajectorij -->
+                            <!-- delaem 3 proekcii na ploskosti -->
+                            <!-- 2 stroki, 2 stolbca (odna panel pustaya) -->
+                            <Grid.RowDefinitions>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- populate grid with graphical components -->
+                            <Border Grid.Row="0" Grid.Column="0"
+                            BorderThickness="2"
+                            BorderBrush="Black"
+                            Background="LightGray">
+                                <oxy:PlotView x:Name="trajectory_front_plot_view" MouseDoubleClick="trajectory_front_double_click" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"/>
+                            </Border>
+
+                            <Border Grid.Row="0" Grid.Column="1"
+                            BorderThickness="2"
+                            BorderBrush="Black"
+                            Background="LightGray">
+                                <oxy:PlotView x:Name="trajectory_sagittal_plot_view" MouseDoubleClick="trajectory_sagittal_double_click" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"/>
+                            </Border>
+
+                            <Border Grid.Row="1" Grid.Column="0"
+                            BorderThickness="2"
+                            BorderBrush="Black"
+                            Background="LightGray">
+                                <oxy:PlotView x:Name="trajectory_horizontal_plot_view" MouseDoubleClick="trajectory_horizontal_double_click" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"/>
+                            </Border>
+
                         </Grid>
 
                         <Grid Grid.Row="2" Grid.Column="0" ShowGridLines="True">

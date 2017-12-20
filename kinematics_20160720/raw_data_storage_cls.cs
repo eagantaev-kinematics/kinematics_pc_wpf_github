@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace kinematics_20160720
 {
@@ -19,6 +20,8 @@ namespace kinematics_20160720
             set { Registering_now_flag = value; }
             get { return Registering_now_flag; }
         }
+
+        BinaryWriter raw_frame_file_storage;
         //..................................................
 
         // public constructor
